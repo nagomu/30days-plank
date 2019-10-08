@@ -4,5 +4,9 @@
   "repository": "git@github.com:nagomu/30days-plank.git",
   "author": "@nagomu",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "engines": {
+    "node": ">=10.16.0",
+    "yarn": ">=1.17.0"
+  }
 }

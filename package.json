@@ -9,6 +9,10 @@
     "node": ">=10.16.0",
     "yarn": ">=1.17.0"
   },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
   "devDependencies": {
     "prettier": "^1.18.2"
   }

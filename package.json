@@ -22,6 +22,25 @@
     "not ie <= 10",
     "not op_mini all"
   ],
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": [
+          "emotion"
+        ]
+      },
+      "development": {
+        "plugins": [
+          [
+            "emotion",
+            {
+              "sourceMap": true
+            }
+          ]
+        ]
+      }
+    }
+  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"

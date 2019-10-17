@@ -91,7 +91,7 @@
       "react/prop-types": "off",
       "simple-import-sort/sort": "error"
     }
-  }
+  },
   "dependencies": {
     "@emotion/core": "^10.0.21",
     "@emotion/styled": "^10.0.17",

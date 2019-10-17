@@ -9,14 +9,133 @@
     "node": ">=10.16.0",
     "yarn": ">=1.17.0"
   },
+  "scripts": {
+    "dev": "NODE_ENV=development webpack-dev-server",
+    "build": "yarn clean && NODE_ENV=production webpack --config webpack.config.js --mode=production",
+    "test": "NODE_ENV=test jest --env=jsdom",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "clean": "rimraf public"
+  },
+  "browserslist": [
+    "defaults",
+    "not ie <= 10",
+    "not op_mini all"
+  ],
+  "jest": {
+    "preset": "ts-jest",
+    "setupFiles": [
+      "<rootDir>/jest.setup.ts"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "^~/(.+)": "<rootDir>/src/$1"
+    }
+  },
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": [
+          "emotion"
+        ]
+      },
+      "development": {
+        "plugins": [
+          [
+            "emotion",
+            {
+              "sourceMap": true
+            }
+          ]
+        ]
+      }
+    }
+  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
   },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended",
+      "plugin:react/recommended",
+      "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+      "@typescript-eslint",
+      "simple-import-sort"
+    ],
+    "env": {
+      "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "rules": {
+      "react/prop-types": "off",
+      "simple-import-sort/sort": "error"
+    }
+  },
   "dependencies": {
-    "firebase": "^7.1.0"
+    "@emotion/core": "^10.0.21",
+    "@emotion/styled": "^10.0.17",
+    "firebase": "^7.1.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "@babel/core": "^7.6.4",
+    "@types/enzyme": "^3.10.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^24.0.19",
+    "@types/react": "^16.9.9",
+    "@types/react-dom": "^16.9.2",
+    "@types/react-redux": "^7.1.4",
+    "@types/redux-mock-store": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.4.0",
+    "@typescript-eslint/parser": "^2.4.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-emotion": "^10.0.21",
+    "copy-webpack-plugin": "^5.0.4",
+    "dotenv": "^8.2.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme-to-json": "^3.4.2",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "fork-ts-checker-webpack-plugin": "^1.5.1",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "redux-mock-store": "^1.5.3",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.0",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
   }
 }

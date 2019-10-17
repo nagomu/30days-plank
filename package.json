@@ -17,6 +17,11 @@
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "clean": "rimraf public"
   },
+  "browserslist": [
+    "defaults",
+    "not ie <= 10",
+    "not op_mini all"
+  ],
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"

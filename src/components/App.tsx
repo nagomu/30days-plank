@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
 
+import { UseAuth } from '~/hooks/common/useAuth';
+
 const globalStyles = `
   * {
     box-sizing: border-box;
@@ -28,11 +30,35 @@ const globalStyles = `
   }
 `;
 
-const App: React.FC = () => (
-  <div>
-    <Global styles={css(globalStyles)} />
-    Hello
-  </div>
-);
+type Props = UseAuth;
+
+const App: React.FC<Props> = props => {
+  const { user, isLoading, onSignIn, onSignOut } = props;
+  const title = isLoading
+    ? 'Loading...'
+    : user
+    ? `Hello! ${user.name}`
+    : 'Authentication required';
+
+  return (
+    <div>
+      <Global styles={css(globalStyles)} />
+      <h1>{title}</h1>
+      {!isLoading && (
+        <p>
+          {user ? (
+            <button type="button" onClick={onSignOut}>
+              Sign out
+            </button>
+          ) : (
+            <button type="button" onClick={onSignIn}>
+              Sign in with GitHub
+            </button>
+          )}
+        </p>
+      )}
+    </div>
+  );
+};
 
 export default App;

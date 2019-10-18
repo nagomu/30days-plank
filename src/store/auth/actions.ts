@@ -13,6 +13,8 @@ import {
   SIGN_OUT,
   User,
 } from '~/store/auth';
+import fetchUserFromFirestore from '~/store/auth/utils/fetchUserFromFirestore';
+import setUserToFirestore from '~/store/auth/utils/setUserToFirestore';
 import firebase from '~/utils/firebase';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
@@ -53,10 +55,9 @@ export const onAddUser = async (
   user: User,
 ): Promise<void> => {
   dispatch(addUser());
-  const collection = firebase.firestore().collection('/users');
 
   try {
-    await collection.doc(user.uid).set(user);
+    await setUserToFirestore(user);
     dispatch(addUserSuccess());
   } catch {
     // FIXME / TODO: Add error handling
@@ -71,10 +72,9 @@ export const onFetchUser = async (
   user: FirebaseUser,
 ): Promise<void> => {
   dispatch(fetchUser());
-  const collection = firebase.firestore().collection('/users');
 
   try {
-    const doc = await collection.doc(user.uid).get();
+    const doc = await fetchUserFromFirestore(user.uid);
     // NOTE: firebase.firestore.DocumentData
     // [field: string]: any
     // ref: https://firebase.google.com/docs/reference/js/firebase.firestore.html#document-data

@@ -26,7 +26,7 @@ export const withProvider = (params: WithProviderParam): ReactWrapper => {
 export const withHook = (hook: any, store?: any): any => {
   let result;
 
-  const Component = () => {
+  const Component = (): null => {
     result = hook();
     return null;
   };

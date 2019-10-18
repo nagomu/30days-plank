@@ -16,6 +16,20 @@ import {
 } from '~/store/auth';
 import { mockStore } from '~/utils/testHelpers';
 
+jest.mock('~/store/auth/utils/setUserToFirestore');
+jest.mock('~/store/auth/utils/fetchUserFromFirestore', () =>
+  jest
+    .fn()
+    .mockReturnValueOnce({
+      exists: true,
+      data: () => ({ uid: 'xxx' }),
+    })
+    .mockReturnValueOnce({
+      exists: false,
+      data: () => undefined,
+    }),
+);
+
 describe('auth: actions', () => {
   describe('observeAuthStateChanged', () => {
     it('should create valid action', () => {
@@ -117,8 +131,8 @@ describe('auth: actions', () => {
     });
   });
 
-  describe.skip('onAddUser', () => {
-    it('xxx', async () => {
+  describe('onAddUser', () => {
+    it('should create valid action', async () => {
       const store = mockStore({ auth: initialState });
       const user = {
         uid: 'xxx',
@@ -127,35 +141,68 @@ describe('auth: actions', () => {
       };
       await onAddUser(store.dispatch, user);
 
-      // WIP
-      const expected = [{ type: 'ADD_USER' }];
+      const expected = [{ type: 'ADD_USER' }, { type: 'ADD_USER_SUCCESS' }];
       expect(store.getActions()).toEqual(expected);
     });
   });
 
-  describe.skip('onFetchUser', () => {
-    it('xxx', async () => {
-      const store = mockStore({ auth: initialState });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const user: any = {
-        displayName: 'yyy',
-        photoURL: 'zzz',
-        uid: 'xxx',
-      };
-      await onFetchUser(store.dispatch, user as User);
+  describe('onFetchUser', () => {
+    describe('user exists', () => {
+      it('should create valid action', async () => {
+        const store = mockStore({ auth: initialState });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const user: any = {
+          displayName: 'yyy',
+          photoURL: 'zzz',
+          uid: 'xxx',
+        };
+        await onFetchUser(store.dispatch, user as User);
 
-      // WIP
-      const expected = [{ type: 'FETCH_USER' }];
-      expect(store.getActions()).toEqual(expected);
+        const expected = [
+          {
+            type: 'FETCH_USER',
+          },
+          {
+            type: 'SET_USER',
+            payload: {
+              user: {
+                name: undefined,
+                photoURL: undefined,
+                uid: 'xxx',
+              },
+            },
+          },
+        ];
+        expect(store.getActions()).toEqual(expected);
+      });
+    });
+
+    describe('not found user', () => {
+      it('should create valid action', async () => {
+        const store = mockStore({ auth: initialState });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const user: any = {
+          displayName: 'yyy',
+          photoURL: 'zzz',
+          uid: 'xxx',
+        };
+        await onFetchUser(store.dispatch, user as User);
+
+        const expected = [
+          { type: 'FETCH_USER' },
+          { type: 'ADD_USER' },
+          { type: 'ADD_USER_SUCCESS' },
+        ];
+        expect(store.getActions()).toEqual(expected);
+      });
     });
   });
 
-  describe.skip('onAuthStateChanged', () => {
-    it('xxx', async () => {
+  describe('onAuthStateChanged', () => {
+    it('should create valid action', async () => {
       const store = mockStore({ auth: initialState });
       onAuthStateChanged(store.dispatch);
 
-      // WIP
       const expected = [{ type: 'OBSERVE_AUTH_STATE_CHANGED' }];
       expect(store.getActions()).toEqual(expected);
     });

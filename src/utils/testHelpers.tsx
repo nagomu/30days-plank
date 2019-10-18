@@ -21,3 +21,17 @@ export const withProvider = (params: WithProviderParam): ReactWrapper => {
     </Provider>,
   );
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const withHook = (hook: any, store?: any): any => {
+  let result;
+
+  const Component = () => {
+    result = hook();
+    return null;
+  };
+
+  withProvider({ Component, props: {}, store });
+
+  return result;
+};

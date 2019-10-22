@@ -10,8 +10,8 @@
     "yarn": ">=1.17.0"
   },
   "scripts": {
-    "dev": "NODE_ENV=development webpack-dev-server",
-    "build": "yarn clean && NODE_ENV=production webpack --config webpack.config.js --mode=production",
+    "dev": "yarn sprite && NODE_ENV=development webpack-dev-server",
+    "build": "yarn clean && yarn sprite && NODE_ENV=production webpack --config webpack.config.js --mode=production",
     "test": "NODE_ENV=test jest --env=jsdom",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",

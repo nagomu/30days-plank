@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -16,6 +17,9 @@ const env = {
     FIREBASE_AUTH_DOMAIN: JSON.stringify(process.env.APP_FIREBASE_AUTH_DOMAIN),
   },
 };
+
+const svgPath = path.resolve(__dirname, 'src/assets/sprite.svg');
+const svg = fs.readFileSync(svgPath).toString();
 
 const config = {
   entry: path.resolve('src/index.tsx'),
@@ -52,6 +56,7 @@ const config = {
         removeComments: true,
       },
       template: 'src/index.html',
+      svg,
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(env),

@@ -15,6 +15,7 @@
     "test": "NODE_ENV=test jest --env=jsdom",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "sprite": "svg-sprite -s --symbol-dest=src/assets --symbol-sprite=sprite.svg src/assets/icons/*.svg",
     "clean": "rimraf public"
   },
   "browserslist": [

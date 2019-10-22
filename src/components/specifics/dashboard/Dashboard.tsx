@@ -16,6 +16,9 @@ const Dashboard: React.FC<Props> = props => {
       <h1>Hello! {user && user.name && <strong>{user.name}</strong>}</h1>
       <p>
         <button type="button" onClick={onSignOut}>
+          <svg width="16" height="16">
+            <use xlinkHref="#exit_to_app" />
+          </svg>
           Sign out
         </button>
       </p>

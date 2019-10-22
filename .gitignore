@@ -4,3 +4,4 @@
 .node-version
 node_modules
 public
+src/assets/sprite.svg

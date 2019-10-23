@@ -135,7 +135,7 @@ const Nav: React.FC<Props> = ({ onSignOut, user }) => (
           <Icon name="history" />
           <ButtonText>Archives</ButtonText>
         </Button>
-        <SignOutButton onClick={onSignOut}>
+        <SignOutButton onClick={onSignOut} type="button">
           <Icon name="exit_to_app" />
           <ButtonText>Sign out</ButtonText>
         </SignOutButton>

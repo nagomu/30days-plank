@@ -11,10 +11,11 @@ const Button = styled.button`
   height: 48px;
   margin: 48px 0 0;
   padding: 12px 56px;
+  transition: box-shadow 0.25s ease-in-out;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
   background-color: #fff;
-  box-shadow: 0 2px 4px ${rgba('#e0e0e0', 0)};
+  box-shadow: 0 2px 4px ${rgba('#000', 0)};
   color: inherit;
   font-size: 14px;
   font-weight: 500;
@@ -22,18 +23,17 @@ const Button = styled.button`
   white-space: nowrap;
   cursor: pointer;
 
-  &:hover {
-    box-shadow: 0 2px 4px ${rgba('#e0e0e0', 0.4)};
-  }
-
-  &:active {
-    box-shadow: 0 2px 4px ${rgba('#e0e0e0', 0.8)};
-  }
-
   &:focus {
-    border-color: #1e88e5;
     outline: none;
-    box-shadow: 0 2px 4px ${rgba('#e0e0e0', 0)};
+  }
+
+  &:hover {
+    box-shadow: 0 2px 4px ${rgba('#000', 0.4)};
+  }
+
+  &:active,
+  &:focus {
+    box-shadow: 0 2px 8px ${rgba('#000', 0.4)};
   }
 `;
 

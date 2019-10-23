@@ -101,7 +101,8 @@
       "stylelint-config-standard"
     ],
     "rules": {
-      "no-empty-source": null
+      "no-empty-source": null,
+      "declaration-colon-newline-after": null
     }
   },
   "dependencies": {

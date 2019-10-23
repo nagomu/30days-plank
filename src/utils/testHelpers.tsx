@@ -2,12 +2,13 @@ import { mount, ReactWrapper } from 'enzyme';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { BrowserRouter } from 'react-router-dom';
 
 export const mockStore = configureStore([]);
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type WithProviderParam = {
-  Component: React.FC;
+  Component: React.FC<any>;
   props?: any;
   store?: any;
 };
@@ -17,7 +18,9 @@ export const withProvider = (params: WithProviderParam): ReactWrapper => {
   const { Component, props, store } = params;
   return mount(
     <Provider store={store || mockStore()}>
-      <Component {...props} />
+      <BrowserRouter>
+        <Component {...props} />
+      </BrowserRouter>
     </Provider>,
   );
 };

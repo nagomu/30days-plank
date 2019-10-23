@@ -29,9 +29,6 @@
     "setupFiles": [
       "<rootDir>/jest.setup.ts"
     ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/"
@@ -136,7 +133,6 @@
     "dotenv": "^8.2.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
-    "enzyme-to-json": "^3.4.2",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",

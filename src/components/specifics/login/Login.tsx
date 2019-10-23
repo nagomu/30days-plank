@@ -4,8 +4,6 @@ import * as React from 'react';
 import SignInButton from '~/components/specifics/login/SignInButton';
 import { AuthActions } from '~/store/auth';
 
-type Props = Pick<AuthActions, 'onSignIn'>;
-
 const Container = styled.div`
   display: flex;
   align-items: flex-start;
@@ -34,6 +32,8 @@ const Title = styled.h2`
     font-size: 32px;
   }
 `;
+
+type Props = Pick<AuthActions, 'onSignIn'>;
 
 const Login: React.FC<Props> = ({ onSignIn }) => (
   <Container>

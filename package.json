@@ -93,6 +93,19 @@
       "simple-import-sort/sort": "error"
     }
   },
+  "stylelint": {
+    "processors": [
+      "stylelint-processor-styled-components"
+    ],
+    "extends": [
+      "stylelint-config-property-sort-order-smacss",
+      "stylelint-config-prettier",
+      "stylelint-config-standard"
+    ],
+    "rules": {
+      "no-empty-source": null
+    }
+  },
   "dependencies": {
     "@emotion/core": "^10.0.21",
     "@emotion/styled": "^10.0.17",

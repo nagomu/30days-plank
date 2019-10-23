@@ -7,6 +7,5 @@ describe('Loading', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<Loading />);
     expect(wrapper.find('Styled(div)').length).toEqual(2);
-    expect(wrapper.find('Styled(p)').length).toEqual(1);
   });
 });

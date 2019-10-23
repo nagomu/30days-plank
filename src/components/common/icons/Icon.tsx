@@ -19,6 +19,7 @@ type IconName =
   | 'home'
   | 'info'
   | 'logo'
+  | 'logo_google'
   | 'pause'
   | 'play_arrow';
 

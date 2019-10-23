@@ -1,0 +1,24 @@
+---
+to: src/components/<%= type %>/<%= sub %>/<%= h.inflection.camelize(name) %>.tsx
+---
+<%
+  camelizedName = h.inflection.camelize(name)
+-%>
+import styled from '@emotion/styled';
+import * as React from 'react';
+
+import rgba from '~/utils/rgba';
+
+const Foo = styled.div``;
+const Bar = styled.div``;
+
+type Props = {
+}
+
+const <%= camelizedName %>: React.FC<Props> = props => (
+  <Foo>
+    <Bar />
+  </Foo>
+);
+
+export default <%= camelizedName %>;

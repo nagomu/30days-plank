@@ -4,25 +4,37 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import App from '~/components/common/layouts/App';
 import Login from '~/components/specifics/login/Login';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
-import { useAuth } from '~/hooks/common/useAuth';
+import { useAuth } from '~/hooks/specifics/routes/useAuth';
 
 const Routes: React.FC = () => {
-  const props = useAuth();
+  const {
+    isAuthenticatedOrWaiting,
+    isAuthenticationWaiting,
+    onSignIn,
+    onSignOut,
+    redirectTo,
+    user,
+  } = useAuth();
 
   return (
     <BrowserRouter>
-      <App {...props}>
-        {props.user ? (
+      <App
+        isLoading={isAuthenticationWaiting}
+        onSignOut={onSignOut}
+        user={user}
+      >
+        {isAuthenticatedOrWaiting ? (
           <Switch>
-            <Route path="/dashboard">
-              <Dashboard user={props.user} />
+            <Route exact path="/dashboard">
+              <Dashboard user={user} />
             </Route>
+            <Redirect to={redirectTo} />
             <Redirect from="/" to="/dashboard" />
           </Switch>
         ) : (
           <Switch>
             <Route exact path="/">
-              <Login onSignIn={props.onSignIn} />
+              <Login onSignIn={onSignIn} />
             </Route>
             <Redirect to="/" />
           </Switch>

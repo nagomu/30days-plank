@@ -1,4 +1,4 @@
-import { useAuth } from '~/hooks/common/useAuth';
+import { useAuth } from '~/hooks/specifics/routes/useAuth';
 import { mockStore, withHook } from '~/utils/testHelpers';
 
 describe('useAuth', () => {
@@ -15,6 +15,11 @@ describe('useAuth', () => {
   const hook = withHook(useAuth, store);
 
   it('returns state correctly', () => {
+    expect(hook.user.uid).toEqual('xxx');
+    expect(hook.isLoading).toEqual(true);
+  });
+
+  it('returns isLoading correctly', () => {
     expect(hook.user.uid).toEqual('xxx');
     expect(hook.isLoading).toEqual(true);
   });

@@ -24,6 +24,21 @@ describe('useAuth', () => {
     expect(hook.isLoading).toEqual(true);
   });
 
+  it('returns isAuthenticatedOrWaiting correctly', () => {
+    expect(hook.isAuthenticatedOrWaiting).toEqual(true);
+  });
+
+  it('returns isAuthenticationWaiting correctly', () => {
+    expect(hook.isAuthenticationWaiting).toEqual(false);
+  });
+
+  it('returns getRedirectTo correctly', () => {
+    const expected = '/dashboard';
+    localStorage.setItem('REDIRECT_TYPE', 'isAuthenticating');
+    localStorage.removeItem(expected);
+    expect(hook.redirectTo).toEqual(expected);
+  });
+
   it('returns onSignIn action correctly', () => {
     store.clearActions();
 

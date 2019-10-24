@@ -1,6 +1,6 @@
 import rgba from '~/utils/rgba';
 
-describe('rgba', () => {
+describe('utils: rgba', () => {
   it('handles hex code', () => {
     expect(rgba('#98FB98', 0.1)).toEqual('rgba(152, 251, 152, 0.1)');
     expect(rgba('#000', 0.1)).toEqual('rgba(0, 0, 0, 0.1)');

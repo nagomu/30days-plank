@@ -32,7 +32,7 @@ export const useAuth = (): UseAuth => {
       setIsRedirectingIfNeed(auth.user),
     );
     return (): void =>
-      window.addEventListener('beforeunload', () =>
+      window.removeEventListener('beforeunload', () =>
         setIsRedirectingIfNeed(auth.user),
       );
   });

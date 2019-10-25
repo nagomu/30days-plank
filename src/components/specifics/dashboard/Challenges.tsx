@@ -25,7 +25,7 @@ const Challenges: React.FC = () => {
       scheduledDate: firebase.firestore.Timestamp.fromDate(
         new Date(2019, 9, i),
       ),
-      title: `Day ${i}`,
+      title: i === 6 || i === 13 || i === 19 || i === 26 ? 'REST' : `Day ${i}`,
     }));
   };
 

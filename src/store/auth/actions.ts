@@ -16,6 +16,7 @@ import {
 import fetchUserFromFirestore from '~/store/auth/utils/fetchUserFromFirestore';
 import setUserToFirestore from '~/store/auth/utils/setUserToFirestore';
 import firebase from '~/utils/firebase';
+import { clearRedirectStorage, setIsAuthenticating } from '~/utils/redirect';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
   type: OBSERVE_AUTH_STATE_CHANGED,
@@ -94,6 +95,7 @@ export const onFetchUser = async (
         photoURL: data.photoURL,
       };
       dispatch(setUser(params));
+      clearRedirectStorage();
     }
   } catch {
     // FIXME / TODO: Add error handling
@@ -123,6 +125,7 @@ export const onAuthStateChanged = (dispatch: Dispatch): void => {
 export const onSignIn = (dispatch: Dispatch): void => {
   try {
     dispatch(signIn());
+    setIsAuthenticating();
     const provider = new firebase.auth.GithubAuthProvider();
     firebase.auth().signInWithRedirect(provider);
   } catch {
@@ -138,6 +141,7 @@ export const onSignOut = (dispatch: Dispatch): void => {
     dispatch(signOut());
     dispatch(setUser(undefined));
     firebase.auth().signOut();
+    clearRedirectStorage();
   } catch {
     // FIXME / TODO: Add error handling
     console.error('Error: firebase.auth().signInWithRedirect');

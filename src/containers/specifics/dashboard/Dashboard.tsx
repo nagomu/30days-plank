@@ -1,14 +1,10 @@
 import * as React from 'react';
 
 import WrapperComponent from '~/components/specifics/dashboard/Dashboard';
-import { useAuth } from '~/hooks/common/useAuth';
+import { AuthState } from '~/store/auth';
 
-const Dashboard: React.FC = () => {
-  const { isLoading, onSignOut, user } = useAuth();
-
-  return (
-    <WrapperComponent isLoading={isLoading} onSignOut={onSignOut} user={user} />
-  );
-};
+const Dashboard: React.FC<Pick<AuthState, 'user'>> = props => (
+  <WrapperComponent {...props} />
+);
 
 export default Dashboard;

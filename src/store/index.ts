@@ -2,13 +2,16 @@ import { combineReducers, compose, createStore } from 'redux';
 
 import config from '~/config';
 import { authReducer, initialState as auth } from '~/store/auth';
+import { initialState as workout, workoutReducer } from '~/store/workout';
 
 const initialState = {
   auth,
+  workout,
 };
 
 const reducer = combineReducers({
   auth: authReducer,
+  workout: workoutReducer,
 });
 
 declare global {

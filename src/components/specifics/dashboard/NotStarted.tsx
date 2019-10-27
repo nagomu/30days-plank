@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
 
-import SignInButton from '~/components/specifics/login/SignInButton';
-import { AuthActions } from '~/store/auth';
+import PrimaryButton from '~/components/common/buttons/PrimaryButton';
 
 const Container = styled.div`
   display: flex;
@@ -33,9 +32,15 @@ const Title = styled.h2`
   }
 `;
 
-type Props = Pick<AuthActions, 'onSignIn'>;
+const Button = styled(PrimaryButton)`
+  margin-top: 48px;
+`;
 
-const Login: React.FC<Props> = ({ onSignIn }) => (
+type Props = {
+  onClick: () => void;
+};
+
+const NotStarted: React.FC<Props> = ({ onClick }) => (
   <Container>
     <Section>
       <Title>
@@ -43,9 +48,9 @@ const Login: React.FC<Props> = ({ onSignIn }) => (
         <br />
         30 Days Plank Challenge
       </Title>
-      <SignInButton onClick={onSignIn} />
+      <Button onClick={onClick}>Start now</Button>
     </Section>
   </Container>
 );
 
-export default Login;
+export default NotStarted;

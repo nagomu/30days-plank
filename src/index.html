@@ -5,6 +5,26 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,viewport-fit=cover" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>30days plank challenge</title>
+<link rel="dns-prefetch preconnect" href="//fonts.googleapis.com" />
+<link rel="dns-prefetch preconnect" href="//fonts.gstatic.com" />
+<link rel="dns-prefetch preconnect" href="//cdnjs.cloudflare.com" />
+<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<script src="//cdnjs.cloudflare.com/ajax/libs/loadCSS/2.1.0/cssrelpreload.min.js" async></script>
+<script>
+(function() {
+  var b = document.createElement('b');
+  b.textContent = 'b';
+  b.style.fontWeight = '700';
+  b.style.opacity = '0';
+  b.style.position = 'absolute';
+  document.documentElement.appendChild(b);
+  function removeFontLoader() {
+    b.remove();
+    document.removeEventListener('DOMContentLoaded', removeFontLoader);
+  }
+  document.addEventListener('DOMContentLoaded', removeFontLoader);
+})();
+</script>
 </head>
 <body>
 <div id="root"></div>

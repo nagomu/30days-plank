@@ -9,11 +9,18 @@ const circumference = `${Math.PI * 188}px`;
 
 const Container = styled.figure`
   display: block;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 192px;
   height: 192px;
   margin: 0;
   padding: 0;
+  transform: translate(-50%, -50%);
+
+  @media all and (orientation: landscape) and (max-height: 460px) {
+    top: 104px;
+  }
 `;
 
 const Svg = styled.svg`

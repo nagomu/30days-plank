@@ -7,12 +7,16 @@ import rgba from '~/utils/rgba';
 
 const Button = styled.button`
   display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   align-items: center;
   justify-content: center;
   width: 48px;
   height: 48px;
   margin: 0;
   padding: 0;
+  transform: translate(-50%, -50%);
   transition: box-shadow 0.25s ease-in-out;
   border: 0;
   border-radius: 999em;

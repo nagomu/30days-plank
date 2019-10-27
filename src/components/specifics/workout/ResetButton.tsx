@@ -4,11 +4,15 @@ import rgba from '~/utils/rgba';
 
 const ResetButton = styled.button`
   display: flex;
+  position: absolute;
+  top: 50%;
+  left: 16px;
   align-items: center;
   justify-content: center;
   height: 36px;
   margin: 0;
   padding: 6px 16px;
+  transform: translateY(-50%);
   transition: background-color 0.25s ease-in-out;
   border: 0;
   border-radius: 2px;

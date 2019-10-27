@@ -1,5 +1,5 @@
 import { WorkoutActionTypes, WorkoutState } from '~/store/workout';
-import firebase from '~/utils/firebase';
+import { timestampFromDate } from '~/utils/firebase';
 
 // TODO
 export const initialState: WorkoutState = {
@@ -9,8 +9,7 @@ export const initialState: WorkoutState = {
     isCompleted: false,
     isRest: false,
     menu: 20,
-    pathname: '/dashboard',
-    scheduledDate: firebase.firestore.Timestamp.fromDate(new Date()),
+    scheduledDate: timestampFromDate(new Date()),
     title: 'Day 1',
   },
 };

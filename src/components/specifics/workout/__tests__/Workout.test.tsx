@@ -1,7 +1,6 @@
-import firebase from 'firebase';
-
 import Workout from '~/components/specifics/workout/Workout';
 import { Status } from '~/store/workout';
+import { timestampFromDate } from '~/utils/firebase';
 import { withProvider } from '~/utils/testHelpers';
 
 describe('Timer', () => {
@@ -16,7 +15,7 @@ describe('Timer', () => {
     onTogglePause: jest.fn(),
     pathname: '/',
     progress: 20,
-    scheduledDate: firebase.firestore.Timestamp.fromDate(new Date()),
+    scheduledDate: timestampFromDate(new Date()),
     status: Status.standby,
     title: 'Day 1',
   };

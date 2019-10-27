@@ -4,7 +4,7 @@ import * as React from 'react';
 import Workout, {
   Props as WorkoutProps,
 } from '~/components/specifics/dashboard/Workout';
-import firebase from '~/utils/firebase';
+import { timestampFromDate } from '~/utils/firebase';
 
 const Workouts = styled.ul`
   margin: 0;
@@ -22,9 +22,7 @@ const Challenges: React.FC = () => {
       isRest: i === 6 || i === 13 || i === 19 || i === 26,
       menu: 20,
       pathname: `/challenges/1/workouts/${i}`,
-      scheduledDate: firebase.firestore.Timestamp.fromDate(
-        new Date(2019, 9, i),
-      ),
+      scheduledDate: timestampFromDate(new Date(2019, 9, i)),
       title: i === 6 || i === 13 || i === 19 || i === 26 ? 'REST' : `Day ${i}`,
     }));
   };

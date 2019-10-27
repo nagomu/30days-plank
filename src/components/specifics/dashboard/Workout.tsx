@@ -3,7 +3,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Icon from '~/components/common/icons/Icon';
-import firebase from '~/utils/firebase';
+import { Timestamp } from '~/utils/firebase';
 import rgba from '~/utils/rgba';
 
 type ContainerProps = {
@@ -104,7 +104,7 @@ export type Props = {
   isRest: boolean;
   menu: number;
   pathname: string;
-  scheduledDate: firebase.firestore.Timestamp;
+  scheduledDate: Timestamp;
   title: string;
 };
 

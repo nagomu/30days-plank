@@ -112,6 +112,7 @@ class Workout extends React.Component<Props, State> {
   render(): ReturnType<typeof WrappedComponent> {
     const props = {
       ...this.props,
+      pathname: '/dashboard',
       progress: this.state.progress,
       status: this.state.status,
       onReset: this.handleReset,

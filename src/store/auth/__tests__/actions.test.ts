@@ -16,8 +16,8 @@ import {
 } from '~/store/auth';
 import { mockStore } from '~/utils/testHelpers';
 
-jest.mock('~/store/auth/utils/setUserToFirestore');
-jest.mock('~/store/auth/utils/fetchUserFromFirestore', () =>
+jest.mock('~/services/firebase/setUserToFirestore');
+jest.mock('~/services/firebase/fetchUserFromFirestore', () =>
   jest
     .fn()
     .mockReturnValueOnce({

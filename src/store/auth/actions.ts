@@ -1,6 +1,8 @@
 import { User as FirebaseUser } from 'firebase';
 import { Dispatch } from 'redux';
 
+import fetchUserFromFirestore from '~/services/firebase/fetchUserFromFirestore';
+import setUserToFirestore from '~/services/firebase/setUserToFirestore';
 import {
   ADD_USER,
   ADD_USER_SUCCESS,
@@ -13,8 +15,6 @@ import {
   SIGN_OUT,
   User,
 } from '~/store/auth';
-import fetchUserFromFirestore from '~/store/auth/utils/fetchUserFromFirestore';
-import setUserToFirestore from '~/store/auth/utils/setUserToFirestore';
 import firebase from '~/utils/firebase';
 import { clearRedirectStorage, setIsAuthenticating } from '~/utils/redirect';
 

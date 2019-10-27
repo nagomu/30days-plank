@@ -25,7 +25,7 @@ const StyledContainer = styled(Container)`
   border-top: 1px solid #e0e0e0;
   color: ${(props: ContainerProps) => props.color};
 
-  &:first-child {
+  &:first-of-type {
     border-top: 0;
   }
 `;

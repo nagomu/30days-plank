@@ -1,5 +1,4 @@
 import { Dispatch } from 'redux';
-import timekeeper from 'timekeeper';
 
 import addChallengeToFirestore from '~/services/firebase/addChallengeToFirestore';
 import fetchChallengeFromFirestore from '~/services/firebase/fetchChallengeFromFirestore';
@@ -107,5 +106,3 @@ export const onUpdateChallenge = async (
   }
   return;
 };
-
-timekeeper.reset();

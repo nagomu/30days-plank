@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import firebase from 'firebase';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Icon from '~/components/common/icons/Icon';
+import firebase from '~/utils/firebase';
 import rgba from '~/utils/rgba';
 
 type ContainerProps = {

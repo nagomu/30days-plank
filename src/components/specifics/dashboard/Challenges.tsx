@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import firebase from 'firebase';
 import * as React from 'react';
 
 import Workout, {
   Props as WorkoutProps,
 } from '~/components/specifics/dashboard/Workout';
+import firebase from '~/utils/firebase';
 
 const Workouts = styled.ul`
   margin: 0;

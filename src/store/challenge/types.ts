@@ -15,6 +15,18 @@ export type ChallengeState = {
   // TODO: error: any
 };
 
+export type AddChallengeParams = {
+  description?: string;
+  isActive: boolean;
+  createdAt: Timestamp;
+};
+
+export type UpdateChallengeParams = {
+  id: string;
+  description?: string;
+  isActive: boolean;
+};
+
 // Start db.collection('/users/{uid}/challenges').where('isActive', '==', true).get()
 export const FETCH_CHALLENGE = 'FETCH_CHALLENGE';
 export type FetchChallengeAction = {

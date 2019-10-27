@@ -5,6 +5,9 @@ import {
   addChallengeSuccess,
   fetchChallenge,
   initialState,
+  onAddChallenge,
+  onFetchChallenge,
+  onUpdateChallenge,
   setChallenge,
   updateChallenge,
   updateChallengeSuccess,
@@ -12,10 +15,17 @@ import {
 import { timestampFromDate } from '~/utils/firebase';
 import { mockStore } from '~/utils/testHelpers';
 
-describe('challenge: actions', () => {
-  const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
-  timekeeper.freeze(mockToday);
+const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
+timekeeper.freeze(mockToday);
 
+jest.mock('~/services/firebase/addChallengeToFirestore');
+// TODO: Add more better mock
+jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
+  jest.fn().mockReturnValue({ empty: true }),
+);
+jest.mock('~/services/firebase/updateChallengeToFirestore');
+
+describe('challenge: actions', () => {
   describe('fetchChallenge', () => {
     it('should create valid action', () => {
       const store = mockStore({ challenge: initialState });
@@ -99,5 +109,54 @@ describe('challenge: actions', () => {
     });
   });
 
-  timekeeper.reset();
+  describe('onFetchChallenge', () => {
+    // TODO: Add more tests
+    it('should create valid action', async () => {
+      const store = mockStore({ challenge: initialState });
+      await onFetchChallenge(store.dispatch, 'uid');
+
+      const expected = [{ type: 'FETCH_CHALLENGE' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('onAddChallenge', () => {
+    it('should create valid action', async () => {
+      const store = mockStore({ challenge: initialState });
+      const params = {
+        description: 'xxx',
+        isActive: true,
+        createdAt: timestampFromDate(new Date(mockToday)),
+      };
+      await onAddChallenge(store.dispatch, 'uid', params);
+
+      const expected = [
+        { type: 'ADD_CHALLENGE' },
+        { type: 'ADD_CHALLENGE_SUCCESS' },
+        { type: 'FETCH_CHALLENGE' },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('onUpdateChallenge', () => {
+    it('should create valid action', async () => {
+      const store = mockStore({ challenge: initialState });
+      const params = {
+        id: 'xxx',
+        description: 'xxx',
+        isActive: true,
+      };
+      await onUpdateChallenge(store.dispatch, 'uid', params);
+
+      const expected = [
+        { type: 'UPDATE_CHALLENGE' },
+        { type: 'UPDATE_CHALLENGE_SUCCESS' },
+        { type: 'FETCH_CHALLENGE' },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
 });
+
+timekeeper.reset();

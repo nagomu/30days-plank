@@ -4,6 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import App from '~/components/common/layouts/App';
 import Login from '~/components/specifics/login/Login';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
+import Workout from '~/containers/specifics/workout/Workout';
 import { useAuth } from '~/hooks/specifics/routes/useAuth';
 
 const Routes: React.FC = () => {
@@ -28,6 +29,8 @@ const Routes: React.FC = () => {
             <Route exact path="/dashboard">
               <Dashboard user={user} />
             </Route>
+            {/* FIXME */}
+            <Route path="/challenges/1/workouts" component={Workout} />
             <Redirect to={redirectTo} />
             <Redirect from="/" to="/dashboard" />
           </Switch>

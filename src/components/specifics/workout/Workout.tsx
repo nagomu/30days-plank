@@ -28,7 +28,11 @@ const ButtonGroup = styled.div`
   }
 `;
 
-type Props = StoreProps & Omit<StateProps, 'timer'> & HandlerProps;
+type OwnProps = {
+  pathname: string;
+};
+
+type Props = OwnProps & StoreProps & Omit<StateProps, 'timer'> & HandlerProps;
 
 const Workout: React.FC<Props> = props => {
   const {

@@ -9,7 +9,6 @@ export const initialState: WorkoutState = {
     isCompleted: false,
     isRest: false,
     menu: 20,
-    pathname: '/dashboard',
     scheduledDate: timestampFromDate(new Date()),
     title: 'Day 1',
   },

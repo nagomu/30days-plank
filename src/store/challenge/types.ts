@@ -1,12 +1,12 @@
 import { Workout } from '~/store/workout';
-import firebase from '~/utils/firebase';
+import { Timestamp } from '~/utils/firebase';
 
 export type Challenge = {
   id: string;
   description?: string;
   isActive: boolean;
   workouts: Workout[];
-  createdAt: firebase.firestore.Timestamp;
+  createdAt: Timestamp;
 };
 
 export type ChallengeState = {

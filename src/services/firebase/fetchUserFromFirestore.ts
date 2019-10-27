@@ -1,8 +1,8 @@
-import firebase from '~/utils/firebase';
+import firebase, { DocumentSnapshot } from '~/utils/firebase';
 
 const fetchUserFromFirestore = async (
   id: string,
-): Promise<firebase.firestore.DocumentSnapshot> => {
+): Promise<DocumentSnapshot> => {
   const collection = firebase.firestore().collection('/users');
   return await collection.doc(id).get();
 };

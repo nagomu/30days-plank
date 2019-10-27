@@ -9,7 +9,7 @@ import {
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
-import firebase from '~/utils/firebase';
+import { timestampFromDate } from '~/utils/firebase';
 import { mockStore } from '~/utils/testHelpers';
 
 describe('challenge: actions', () => {
@@ -34,7 +34,7 @@ describe('challenge: actions', () => {
         description: 'xxx',
         isActive: true,
         workouts: [],
-        createdAt: firebase.firestore.Timestamp.fromDate(mockToday),
+        createdAt: timestampFromDate(mockToday),
       };
       store.dispatch(setChallenge(challenge));
 

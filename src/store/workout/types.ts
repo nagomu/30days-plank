@@ -1,4 +1,4 @@
-import firebase from '~/utils/firebase';
+import { Timestamp } from '~/utils/firebase';
 
 export enum Status {
   finish,
@@ -14,7 +14,7 @@ export type Workout = {
   isCompleted: boolean;
   isRest: boolean;
   menu: number;
-  scheduledDate: firebase.firestore.Timestamp;
+  scheduledDate: Timestamp;
   title: string;
 };
 

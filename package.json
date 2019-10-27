@@ -12,10 +12,11 @@
   "scripts": {
     "dev": "yarn sprite && NODE_ENV=development webpack-dev-server",
     "build": "yarn clean && yarn sprite && NODE_ENV=production webpack --config webpack.config.js --mode=production",
-    "test": "NODE_ENV=test jest --env=jsdom",
-    "lint": "eslint src --ext .ts,.tsx && yarn stylelint",
-    "lint:fix": "eslint src --ext .ts,.tsx --fix && yarn stylelint",
-    "stylelint": "stylelint src/**/*.{ts,tsx} ",
+    "test": "NODE_ENV=test jest --env=jsdom --cache",
+    "lint": "yarn eslint && yarn stylelint",
+    "lint:fix": "yarn eslint --fix --cache && yarn stylelint",
+    "eslint": "eslint src --ext .ts,.tsx --cache --cache-location=.cache/eslint",
+    "stylelint": "stylelint src/**/*.{ts,tsx} --cache --cache-location=.cache/stylelint",
     "sprite": "svg-sprite -s --symbol-dest=src/assets --symbol-sprite=sprite.svg src/assets/icons/*.svg",
     "clean": "rimraf public"
   },

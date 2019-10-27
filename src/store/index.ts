@@ -2,15 +2,18 @@ import { combineReducers, compose, createStore } from 'redux';
 
 import config from '~/config';
 import { authReducer, initialState as auth } from '~/store/auth';
+import { challengeReducer, initialState as challenge } from '~/store/challenge';
 import { initialState as workout, workoutReducer } from '~/store/workout';
 
 const initialState = {
   auth,
+  challenge,
   workout,
 };
 
 const reducer = combineReducers({
   auth: authReducer,
+  challenge: challengeReducer,
   workout: workoutReducer,
 });
 

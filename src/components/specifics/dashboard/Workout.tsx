@@ -99,7 +99,6 @@ const Title = styled.span`
 `;
 
 export type Props = {
-  description?: string;
   id: string;
   isCompleted: boolean;
   isRest: boolean;

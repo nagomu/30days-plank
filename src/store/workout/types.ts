@@ -9,12 +9,11 @@ export enum Status {
 }
 
 // TODO
-type Workout = {
+export type Workout = {
   id: string;
   isCompleted: boolean;
   isRest: boolean;
   menu: number;
-  pathname: string;
   scheduledDate: firebase.firestore.Timestamp;
   title: string;
 };

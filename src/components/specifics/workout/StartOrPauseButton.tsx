@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 
 import Icon from '~/components/common/icons/Icon';
-import { Status } from '~/containers/specifics/workout/Workout';
+import { Status } from '~/store/workout';
 import rgba from '~/utils/rgba';
 
 const Button = styled.button`

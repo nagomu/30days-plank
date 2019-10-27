@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 
 import Workout from '~/components/specifics/workout/Workout';
-import { Status } from '~/containers/specifics/workout/Workout';
+import { Status } from '~/store/workout';
 import { withProvider } from '~/utils/testHelpers';
 
 describe('Timer', () => {

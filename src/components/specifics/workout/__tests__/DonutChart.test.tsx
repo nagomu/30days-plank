@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 
 import DonutChart from '~/components/specifics/workout/DonutChart';
-import { Status } from '~/containers/specifics/workout/Workout';
+import { Status } from '~/store/workout';
 
 describe('DonutChart', () => {
   const props = {

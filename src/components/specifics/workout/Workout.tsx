@@ -3,11 +3,15 @@ import * as React from 'react';
 
 import Icon from '~/components/common/icons/Icon';
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
-import { Props as WorkoutProps } from '~/components/specifics/dashboard/Workout';
 import DonutChart from '~/components/specifics/workout/DonutChart';
 import ResetButton from '~/components/specifics/workout/ResetButton';
 import StartOrPauseButton from '~/components/specifics/workout/StartOrPauseButton';
-import { Status } from '~/containers/specifics/workout/Workout';
+import {
+  HandlerProps,
+  Props as StoreProps,
+  State as StateProps,
+} from '~/containers/specifics/workout/Workout';
+import { Status } from '~/store/workout';
 
 const Container = styled.div`
   position: relative;
@@ -24,24 +28,7 @@ const ButtonGroup = styled.div`
   }
 `;
 
-type OwnProps = {
-  isLoading?: boolean;
-};
-
-export type TimerProps = OwnProps & WorkoutProps;
-
-type StateProps = {
-  progress: number;
-  status: Status;
-};
-
-type HandlerProps = {
-  onStart: () => void;
-  onTogglePause: () => void;
-  onReset: () => void;
-};
-
-type Props = TimerProps & StateProps & HandlerProps;
+type Props = StoreProps & Omit<StateProps, 'timer'> & HandlerProps;
 
 const Workout: React.FC<Props> = props => {
   const {

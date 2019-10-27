@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 
 import StartOrPauseButton from '~/components/specifics/workout/StartOrPauseButton';
-import { Status } from '~/containers/specifics/workout/Workout';
+import { Status } from '~/store/workout';
 
 describe('StartOrPauseButton', () => {
   const mockStart = jest.fn();

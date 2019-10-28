@@ -1,23 +1,10 @@
 import Challenge from '~/components/specifics/dashboard/Challenge';
-import { Workout } from '~/store/workout';
-import { timestampFromDate } from '~/utils/firebase';
+import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { withProvider } from '~/utils/testHelpers';
 
 describe('Challenge', () => {
-  const mockWorkuts = (): Workout[] => {
-    const arr = Array.from(Array(30), (_v, k) => k + 1);
-    return arr.map(i => ({
-      id: `${i}`,
-      isCompleted: true,
-      isRest: i === 6 || i === 13 || i === 19 || i === 26,
-      menu: 20,
-      scheduledDate: timestampFromDate(new Date(2019, 9, i)),
-      title: i === 6 || i === 13 || i === 19 || i === 26 ? 'REST' : `Day ${i}`,
-    }));
-  };
-
   const props = {
-    workouts: mockWorkuts(),
+    workouts: mockWorkouts(),
   };
 
   const wrapper = withProvider({ Component: Challenge, props });

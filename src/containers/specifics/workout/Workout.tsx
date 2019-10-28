@@ -22,7 +22,7 @@ const Workout: React.FC<
     }
   }, []);
 
-  if (!user || !challenge) return null;
+  if (!user || !challenge || !challenge.workouts) return null;
 
   const workoutProps = challenge.workouts.find(w => w.id === params.id);
 

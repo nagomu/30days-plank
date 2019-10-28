@@ -26,6 +26,16 @@ export type UpdateWorkoutParams = {
   isCompleted: boolean;
 };
 
+export const FETCH_WORKOUT = 'FETCH_WORKOUT';
+export type FetchWorkoutAction = {
+  type: typeof FETCH_WORKOUT;
+};
+
+export const FETCH_WORKOUT_SUCCESS = 'FETCH_WORKOUT_SUCCESS';
+export type FetchWorkoutSuccessAction = {
+  type: typeof FETCH_WORKOUT_SUCCESS;
+};
+
 export const FETCH_ALL_WORKOUTS = 'FETCH_ALL_WORKOUTS';
 export type FetchAllWorkoutsAction = {
   type: typeof FETCH_ALL_WORKOUTS;
@@ -83,6 +93,8 @@ export type UpdateWorkoutSuccessAction = {
 // };
 
 export type WorkoutActionTypes =
+  | FetchWorkoutAction
+  | FetchWorkoutSuccessAction
   | FetchAllWorkoutsAction
   | FetchAllWorkoutsSuccessAction
   | SetWorkoutAction

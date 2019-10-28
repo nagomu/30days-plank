@@ -98,7 +98,7 @@ const Title = styled.span`
   font-weight: 700;
 `;
 
-export type Props = {
+type Props = {
   id: string;
   isCompleted: boolean;
   isRest: boolean;

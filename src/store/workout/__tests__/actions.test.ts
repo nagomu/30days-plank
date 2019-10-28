@@ -3,17 +3,18 @@ import timekeeper from 'timekeeper';
 import {
   addWorkout,
   addWorkoutSuccess,
-  fetchWorkout,
+  fetchAllWorkouts,
+  fetchAllWorkoutsSuccess,
   initialState,
+  onAddWorkouts,
+  onFetchAllWorkouts,
+  onUpdateWorkout,
   setWorkout,
   updateWorkout,
   updateWorkoutSuccess,
-  onFetchAllWorkouts,
-  onAddWorkouts,
-  onUpdateWorkout,
 } from '~/store/workout';
-import { mockStore } from '~/utils/testHelpers';
 import { timestampFromDate } from '~/utils/firebase';
+import { mockStore } from '~/utils/testHelpers';
 
 jest.mock('~/services/firebase/addWorkoutsToFirestore', () =>
   jest.fn().mockReturnValue(Promise.resolve()),
@@ -30,12 +31,22 @@ const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
 
 describe('workout: actions', () => {
-  describe('fetchWorkout', () => {
+  describe('fetchAllWorkouts', () => {
     it('should create valid action', () => {
       const store = mockStore({ workout: initialState });
-      store.dispatch(fetchWorkout());
+      store.dispatch(fetchAllWorkouts());
 
-      const expected = [{ type: 'FETCH_WORKOUT' }];
+      const expected = [{ type: 'FETCH_ALL_WORKOUTS' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('fetchAllWorkoutsSuccess', () => {
+    it('should create valid action', () => {
+      const store = mockStore({ workout: initialState });
+      store.dispatch(fetchAllWorkoutsSuccess());
+
+      const expected = [{ type: 'FETCH_ALL_WORKOUTS_SUCCESS' }];
       expect(store.getActions()).toEqual(expected);
     });
   });
@@ -103,7 +114,10 @@ describe('workout: actions', () => {
       };
       await onFetchAllWorkouts(store.dispatch, 'uid', challenge);
 
-      const expected = [{ type: 'FETCH_WORKOUT' }];
+      const expected = [
+        { type: 'FETCH_ALL_WORKOUTS' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+      ];
       expect(store.getActions()).toEqual(expected);
     });
   });
@@ -123,7 +137,8 @@ describe('workout: actions', () => {
       const expected = [
         { type: 'ADD_WORKOUT' },
         { type: 'ADD_WORKOUT_SUCCESS' },
-        { type: 'FETCH_WORKOUT' },
+        { type: 'FETCH_ALL_WORKOUTS' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -148,7 +163,8 @@ describe('workout: actions', () => {
       const expected = [
         { type: 'UPDATE_WORKOUT' },
         { type: 'UPDATE_WORKOUT_SUCCESS' },
-        { type: 'FETCH_WORKOUT' },
+        { type: 'FETCH_ALL_WORKOUTS' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
       ];
       expect(store.getActions()).toEqual(expected);
     });

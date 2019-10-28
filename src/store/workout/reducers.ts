@@ -1,7 +1,8 @@
 import {
   ADD_WORKOUT,
   ADD_WORKOUT_SUCCESS,
-  FETCH_WORKOUT,
+  FETCH_ALL_WORKOUTS,
+  FETCH_ALL_WORKOUTS_SUCCESS,
   SET_WORKOUT,
   UPDATE_WORKOUT,
   UPDATE_WORKOUT_SUCCESS,
@@ -18,15 +19,16 @@ export const workoutReducer = (
   action: WorkoutActionTypes,
 ): WorkoutState => {
   switch (action.type) {
-    case SET_WORKOUT:
     case ADD_WORKOUT_SUCCESS:
+    case FETCH_ALL_WORKOUTS_SUCCESS:
+    case SET_WORKOUT:
     case UPDATE_WORKOUT_SUCCESS:
       return {
         ...state,
         isLoading: false,
       };
     case ADD_WORKOUT:
-    case FETCH_WORKOUT:
+    case FETCH_ALL_WORKOUTS:
     case UPDATE_WORKOUT:
       return {
         ...state,

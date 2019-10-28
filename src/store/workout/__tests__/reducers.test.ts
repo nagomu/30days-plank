@@ -1,7 +1,8 @@
 import {
   addWorkout,
   addWorkoutSuccess,
-  fetchWorkout,
+  fetchAllWorkouts,
+  fetchAllWorkoutsSuccess,
   initialState,
   setWorkout,
   updateWorkout,
@@ -10,9 +11,15 @@ import {
 } from '~/store/workout';
 
 describe('workout: reducers', () => {
-  it('handles FETCH_WORKOUT', () => {
+  it('handles FETCH_ALL_WORKOUTS', () => {
     const expected = { isLoading: true };
-    const action = fetchWorkout();
+    const action = fetchAllWorkouts();
+    expect(reducer(initialState, action)).toEqual(expected);
+  });
+
+  it('handles FETCH_ALL_SUCCESS', () => {
+    const expected = { isLoading: false };
+    const action = fetchAllWorkoutsSuccess();
     expect(reducer(initialState, action)).toEqual(expected);
   });
 

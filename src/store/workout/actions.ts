@@ -7,7 +7,8 @@ import { Challenge, setChallenge } from '~/store/challenge';
 import {
   ADD_WORKOUT,
   ADD_WORKOUT_SUCCESS,
-  FETCH_WORKOUT,
+  FETCH_ALL_WORKOUTS,
+  FETCH_ALL_WORKOUTS_SUCCESS,
   SET_WORKOUT,
   UPDATE_WORKOUT,
   UPDATE_WORKOUT_SUCCESS,
@@ -17,8 +18,12 @@ import {
 } from '~/store/workout';
 import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
 
-export const fetchWorkout = (): WorkoutActionTypes => ({
-  type: FETCH_WORKOUT,
+export const fetchAllWorkouts = (): WorkoutActionTypes => ({
+  type: FETCH_ALL_WORKOUTS,
+});
+
+export const fetchAllWorkoutsSuccess = (): WorkoutActionTypes => ({
+  type: FETCH_ALL_WORKOUTS_SUCCESS,
 });
 
 export const setWorkout = (): WorkoutActionTypes => ({
@@ -46,13 +51,14 @@ export const onFetchAllWorkouts = async (
   uid: string,
   challenge: Challenge,
 ): Promise<void> => {
-  dispatch(fetchWorkout());
+  dispatch(fetchAllWorkouts());
 
   try {
     const snapshot: QuerySnapshot = await fetchAllWorkoutsFromFirestore(
       uid,
       challenge.id,
     );
+    dispatch(fetchAllWorkoutsSuccess());
     if (snapshot.empty) return;
 
     dispatch(setWorkout());

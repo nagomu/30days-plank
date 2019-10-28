@@ -132,6 +132,7 @@ describe('challenge: actions', () => {
         description: 'xxx',
         isActive: true,
         createdAt: timestampFromDate(new Date(mockToday)),
+        workouts: [],
       };
       await onAddChallenge(store.dispatch, 'uid', params);
 

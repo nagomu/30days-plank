@@ -73,6 +73,7 @@ describe('Workout', () => {
       };
       const wrapper = withProvider(params).find('Workout');
       const container = wrapper.find('Container');
+      expect(wrapper.find('a').length).toEqual(0);
       expect(container.prop('color')).toEqual('rgba(211, 47, 47, 0.6)');
     });
   });

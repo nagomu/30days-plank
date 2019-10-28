@@ -35,7 +35,7 @@ describe('challenge: reducers', () => {
     };
     const expected = {
       isLoading: false,
-      challenge,
+      challenge: challenge,
     };
     const action = setChallenge(challenge);
     expect(reducer(initialState, action)).toEqual(expected);

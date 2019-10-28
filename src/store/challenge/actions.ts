@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
-import timekeeper from 'timekeeper';
 
 import addChallengeToFirestore from '~/services/firebase/addChallengeToFirestore';
+import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
 import fetchChallengeFromFirestore from '~/services/firebase/fetchChallengeFromFirestore';
 import updateChallengeToFirestore from '~/services/firebase/updateChallengeToFirestore';
 import {
@@ -16,6 +16,7 @@ import {
   UPDATE_CHALLENGE_SUCCESS,
   UpdateChallengeParams,
 } from '~/store/challenge';
+import { onFetchAllWorkouts } from '~/store/workout';
 import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
@@ -64,6 +65,7 @@ export const onFetchChallenge = async (
         ...doc.data(),
       };
       dispatch(setChallenge(challenge as Challenge));
+      onFetchAllWorkouts(dispatch, uid, challenge as Challenge);
     });
   } catch {
     // FIXME / TODO: Add error handling
@@ -80,8 +82,12 @@ export const onAddChallenge = async (
   dispatch(addChallenge());
 
   try {
-    await addChallengeToFirestore(uid, challenge);
+    const challengeDoc = await addChallengeToFirestore(uid, challenge);
     dispatch(addChallengeSuccess());
+    const snapshot = await challengeDoc.get();
+    if (snapshot.exists) {
+      addWorkoutsToFirestore(uid, snapshot.id);
+    }
     onFetchChallenge(dispatch, uid);
   } catch {
     // FIXME / TODO: Add error handling
@@ -107,5 +113,3 @@ export const onUpdateChallenge = async (
   }
   return;
 };
-
-timekeeper.reset();

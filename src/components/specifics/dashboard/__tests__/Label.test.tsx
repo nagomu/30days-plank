@@ -16,6 +16,7 @@ describe('Label', () => {
   it('renders correctly', () => {
     const wrapper = mount(<Label {...props} />);
     expect(wrapper.find('span Icon[name="done"]').length).toEqual(1);
+    expect(wrapper.find('span.isCompleted').length).toEqual(1);
     expect(wrapper.find('span span').length).toEqual(3);
 
     const day = wrapper.find('span span').at(0);
@@ -47,7 +48,7 @@ describe('Label', () => {
         isCompleted: false,
       };
       const wrapper = mount(<Label {..._props} />);
-      expect(wrapper.find('span Icon[name="done"]').length).toEqual(0);
+      expect(wrapper.find('span.isCompleted').length).toEqual(0);
     });
   });
 });

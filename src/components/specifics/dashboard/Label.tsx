@@ -11,8 +11,12 @@ const Completed = styled.span`
   min-height: 48px;
   margin: 0;
   padding: 12px 8px 12px 16px;
-  color: #4caf50;
+  color: #e0e0e0;
   font-size: 24px;
+
+  &.isCompleted {
+    color: #4caf50;
+  }
 `;
 
 const Calendar = styled.span`
@@ -67,10 +71,13 @@ type Props = {
 
 const Label: React.FC<Props> = props => {
   const { day, isCompleted, isRest, menu, month, title } = props;
+  const completedClass = isCompleted ? 'isCompleted' : '';
 
   return (
     <>
-      <Completed>{isCompleted ? <Icon name="done" /> : null}</Completed>
+      <Completed className={completedClass}>
+        <Icon name="done" />
+      </Completed>
       <Calendar>
         <CalendarDay>{day}</CalendarDay>
         <CalendarMonth>{month}</CalendarMonth>

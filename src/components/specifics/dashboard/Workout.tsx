@@ -138,7 +138,7 @@ const Workout: React.FC<Props> = props => {
           <CalendarMonth>{month}</CalendarMonth>
         </Calendar>
         <Label>
-          <Title>{title}</Title>
+          <Title>{isRest ? 'Rest' : title}</Title>
           {!isRest ? `- ${menu} sec` : null}
         </Label>
       </Button>

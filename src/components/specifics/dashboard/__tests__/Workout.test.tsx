@@ -74,6 +74,9 @@ describe('Workout', () => {
       const wrapper = withProvider(params).find('Workout');
       const container = wrapper.find('Container');
       expect(container.prop('color')).toEqual('rgba(211, 47, 47, 0.6)');
+
+      const title = wrapper.find('span span').at(2);
+      expect(title.text()).toEqual('Rest');
     });
   });
 

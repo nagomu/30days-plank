@@ -12,7 +12,7 @@ const Workouts = styled.ul`
   list-style: none;
 `;
 
-const Challenges: React.FC = () => {
+const Challenge: React.FC = () => {
   const generateMock = (): WorkoutProps[] => {
     const arr = Array.from(Array(30), (_v, k) => k + 1);
 
@@ -36,4 +36,4 @@ const Challenges: React.FC = () => {
   );
 };
 
-export default Challenges;
+export default Challenge;

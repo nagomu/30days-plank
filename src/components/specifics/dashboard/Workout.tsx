@@ -131,6 +131,7 @@ const Workout: React.FC<Props> = props => {
 
   return (
     <StyledContainer color={color}>
+      {/* TODO: It should not link if isRest is true */}
       <Button exact to={pathname} role="button">
         <Completed>{isCompleted ? <Icon name="done" /> : null}</Completed>
         <Calendar>

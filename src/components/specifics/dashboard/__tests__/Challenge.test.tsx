@@ -4,6 +4,7 @@ import { withProvider } from '~/utils/testHelpers';
 
 describe('Challenge', () => {
   const props = {
+    challengeId: 'xxx',
     workouts: mockWorkouts(),
   };
 

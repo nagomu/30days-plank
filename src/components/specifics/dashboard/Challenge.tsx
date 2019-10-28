@@ -11,16 +11,17 @@ const Workouts = styled.ul`
 `;
 
 type Props = {
+  challengeId: string;
   workouts: WorkoutType[];
 };
 
-const Challenge: React.FC<Props> = ({ workouts }) => (
+const Challenge: React.FC<Props> = ({ challengeId, workouts }) => (
   <Workouts>
     {workouts.map(workout => (
       <Workout
         {...workout}
         key={workout.id}
-        pathname={`/workouts/${workout.id}`}
+        pathname={`/challenges/${challengeId}/workouts/${workout.id}`}
       />
     ))}
   </Workouts>

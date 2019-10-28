@@ -21,7 +21,7 @@ const Dashboard: React.FC<Props> = props => {
   return (
     <>
       {challenge.workouts.length > 0 ? (
-        <Challenge workouts={challenge.workouts} />
+        <Challenge challengeId={challenge.id} workouts={challenge.workouts} />
       ) : (
         <NotStarted onClick={onAddChallenge} />
       )}

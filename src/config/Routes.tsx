@@ -29,8 +29,11 @@ const Routes: React.FC = () => {
             <Route exact path="/dashboard">
               <Dashboard user={user} />
             </Route>
-            {/* FIXME */}
-            <Route path="/challenges/1/workouts" component={Workout} />
+            <Route
+              exact
+              path="/challenges/:challengeId/workouts/:id"
+              component={Workout}
+            />
             <Redirect to={redirectTo} />
             <Redirect from="/" to="/dashboard" />
           </Switch>

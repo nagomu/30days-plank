@@ -1,11 +1,32 @@
 import * as React from 'react';
 
-import Challenges from '~/components/specifics/dashboard/Challenges';
-import { AuthState } from '~/store/auth';
+import Loading from '~/components/common/loaders/Loading';
+import Challenge from '~/components/specifics/dashboard/Challenge';
+import NotStarted from '~/components/specifics/dashboard/NotStarted';
+import { Challenge as ChallengeType } from '~/store/challenge';
 
-const Dashboard: React.FC<Pick<AuthState, 'user'>> = ({ user }) => {
-  console.log(user);
-  return <Challenges />;
+type Props = {
+  challenge?: ChallengeType;
+  isLoading: boolean;
+  onAddChallenge: () => void;
+};
+
+const Dashboard: React.FC<Props> = props => {
+  const { challenge, isLoading, onAddChallenge } = props;
+
+  if (isLoading || !challenge || !challenge.workouts) {
+    return <Loading />;
+  }
+
+  return (
+    <>
+      {challenge.workouts.length > 0 ? (
+        <Challenge workouts={challenge.workouts} />
+      ) : (
+        <NotStarted onClick={onAddChallenge} />
+      )}
+    </>
+  );
 };
 
 export default Dashboard;

@@ -19,6 +19,7 @@ export type AddChallengeParams = {
   description?: string;
   isActive: boolean;
   createdAt: Timestamp;
+  workouts: Workout[];
 };
 
 export type UpdateChallengeParams = {

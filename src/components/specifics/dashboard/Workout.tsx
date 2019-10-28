@@ -98,7 +98,7 @@ const Title = styled.span`
   font-weight: 700;
 `;
 
-export type Props = {
+type Props = {
   id: string;
   isCompleted: boolean;
   isRest: boolean;
@@ -131,6 +131,7 @@ const Workout: React.FC<Props> = props => {
 
   return (
     <StyledContainer color={color}>
+      {/* TODO: It should not link if isRest is true */}
       <Button exact to={pathname} role="button">
         <Completed>{isCompleted ? <Icon name="done" /> : null}</Completed>
         <Calendar>
@@ -138,7 +139,7 @@ const Workout: React.FC<Props> = props => {
           <CalendarMonth>{month}</CalendarMonth>
         </Calendar>
         <Label>
-          <Title>{title}</Title>
+          <Title>{isRest ? 'Rest' : title}</Title>
           {!isRest ? `- ${menu} sec` : null}
         </Label>
       </Button>

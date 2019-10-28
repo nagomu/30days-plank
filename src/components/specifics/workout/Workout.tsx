@@ -10,7 +10,7 @@ import {
   HandlerProps,
   Props as StoreProps,
   State as StateProps,
-} from '~/containers/specifics/workout/Workout';
+} from '~/containers/specifics/workout/WorkoutTimer';
 import { Status } from '~/store/workout';
 
 const Container = styled.div`

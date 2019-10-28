@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import Icon from '~/components/common/icons/Icon';
+import Label from '~/components/specifics/dashboard/Label';
 import { Timestamp } from '~/utils/firebase';
 import rgba from '~/utils/rgba';
 
@@ -45,59 +45,6 @@ const Button = styled(NavLink)`
   text-transform: uppercase;
 `;
 
-const Completed = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 48px;
-  min-height: 48px;
-  margin: 0;
-  padding: 12px 8px 12px 16px;
-  color: #4caf50;
-  font-size: 24px;
-`;
-
-const Calendar = styled.span`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  min-height: 48px;
-  padding: 8px;
-  line-height: 1;
-`;
-
-const CalendarDay = styled.span`
-  display: block;
-  font-size: 24px;
-  text-align: center;
-`;
-
-const CalendarMonth = styled.span`
-  display: block;
-  font-size: 12px;
-  text-align: center;
-`;
-
-const Label = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 16px;
-  font-weight: 400;
-
-  @media all and (min-width: 680px) {
-    font-size: 24px;
-  }
-`;
-
-const Title = styled.span`
-  font-weight: 700;
-`;
-
 type Props = {
   id: string;
   isCompleted: boolean;
@@ -131,17 +78,15 @@ const Workout: React.FC<Props> = props => {
 
   return (
     <StyledContainer color={color}>
-      {/* TODO: It should not link if isRest is true */}
       <Button exact to={pathname} role="button">
-        <Completed>{isCompleted ? <Icon name="done" /> : null}</Completed>
-        <Calendar>
-          <CalendarDay>{day}</CalendarDay>
-          <CalendarMonth>{month}</CalendarMonth>
-        </Calendar>
-        <Label>
-          <Title>{isRest ? 'Rest' : title}</Title>
-          {!isRest ? `- ${menu} sec` : null}
-        </Label>
+        <Label
+          day={day}
+          isCompleted={isCompleted}
+          isRest={isRest}
+          menu={menu}
+          month={month}
+          title={title}
+        />
       </Button>
     </StyledContainer>
   );

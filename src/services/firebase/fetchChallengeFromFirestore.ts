@@ -6,6 +6,7 @@ const fetchChallengeFromFirestore = async (
   const pathname = `/users/${uid}/challenges`;
   const collection = firebase.firestore().collection(pathname);
   return await collection
+    .orderBy('createdAt', 'desc')
     .where('isActive', '==', true)
     .limit(1)
     .get();

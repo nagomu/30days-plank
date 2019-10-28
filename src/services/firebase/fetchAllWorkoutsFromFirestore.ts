@@ -6,7 +6,7 @@ const fetchAllWorkoutsFromFirestore = async (
 ): Promise<QuerySnapshot> => {
   const pathname = `/users/${uid}/challenges/${challengeId}/workouts`;
   const collection = firebase.firestore().collection(pathname);
-  return await collection.get();
+  return await collection.orderBy('scheduledDate', 'asc').get();
 };
 
 export default fetchAllWorkoutsFromFirestore;

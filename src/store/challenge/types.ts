@@ -10,7 +10,7 @@ export type Challenge = {
 };
 
 export type ChallengeState = {
-  challenge?: Challenge;
+  payload?: Challenge;
   isLoading?: boolean;
   // TODO: error: any
 };
@@ -38,7 +38,7 @@ export type FetchChallengeAction = {
 export const SET_CHALLENGE = 'SET_CHALLENGE';
 export type SetChallengeAction = {
   type: typeof SET_CHALLENGE;
-  payload: {
+  payload?: {
     challenge?: Challenge;
   };
 };

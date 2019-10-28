@@ -3,6 +3,8 @@ import {
   ADD_WORKOUT_SUCCESS,
   FETCH_ALL_WORKOUTS,
   FETCH_ALL_WORKOUTS_SUCCESS,
+  FETCH_WORKOUT,
+  FETCH_WORKOUT_SUCCESS,
   SET_WORKOUT,
   UPDATE_WORKOUT,
   UPDATE_WORKOUT_SUCCESS,
@@ -21,6 +23,7 @@ export const workoutReducer = (
   switch (action.type) {
     case ADD_WORKOUT_SUCCESS:
     case FETCH_ALL_WORKOUTS_SUCCESS:
+    case FETCH_WORKOUT_SUCCESS:
     case SET_WORKOUT:
     case UPDATE_WORKOUT_SUCCESS:
       return {
@@ -29,6 +32,7 @@ export const workoutReducer = (
       };
     case ADD_WORKOUT:
     case FETCH_ALL_WORKOUTS:
+    case FETCH_WORKOUT:
     case UPDATE_WORKOUT:
       return {
         ...state,

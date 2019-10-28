@@ -9,6 +9,8 @@ import {
   ADD_WORKOUT_SUCCESS,
   FETCH_ALL_WORKOUTS,
   FETCH_ALL_WORKOUTS_SUCCESS,
+  FETCH_WORKOUT,
+  FETCH_WORKOUT_SUCCESS,
   SET_WORKOUT,
   UPDATE_WORKOUT,
   UPDATE_WORKOUT_SUCCESS,
@@ -17,6 +19,14 @@ import {
   WorkoutActionTypes,
 } from '~/store/workout';
 import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
+
+export const fetchWorkout = (): WorkoutActionTypes => ({
+  type: FETCH_WORKOUT,
+});
+
+export const fetchWorkoutSuccess = (): WorkoutActionTypes => ({
+  type: FETCH_WORKOUT_SUCCESS,
+});
 
 export const fetchAllWorkouts = (): WorkoutActionTypes => ({
   type: FETCH_ALL_WORKOUTS,

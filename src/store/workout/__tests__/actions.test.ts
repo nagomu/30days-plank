@@ -5,6 +5,8 @@ import {
   addWorkoutSuccess,
   fetchAllWorkouts,
   fetchAllWorkoutsSuccess,
+  fetchWorkout,
+  fetchWorkoutSuccess,
   initialState,
   onAddWorkouts,
   onFetchAllWorkouts,
@@ -31,6 +33,26 @@ const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
 
 describe('workout: actions', () => {
+  describe('fetchWorkout', () => {
+    it('should create valid action', () => {
+      const store = mockStore({ workout: initialState });
+      store.dispatch(fetchWorkout());
+
+      const expected = [{ type: 'FETCH_WORKOUT' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('fetchWorkoutSuccess', () => {
+    it('should create valid action', () => {
+      const store = mockStore({ workout: initialState });
+      store.dispatch(fetchWorkoutSuccess());
+
+      const expected = [{ type: 'FETCH_WORKOUT_SUCCESS' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
   describe('fetchAllWorkouts', () => {
     it('should create valid action', () => {
       const store = mockStore({ workout: initialState });

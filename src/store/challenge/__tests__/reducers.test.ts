@@ -19,7 +19,7 @@ describe('challenge: reducers', () => {
   it('handles FETCH_CHALLENGE', () => {
     const expected = {
       isLoading: true,
-      payload: undefined,
+      challenge: undefined,
     };
     const action = fetchChallenge();
     expect(reducer(initialState, action)).toEqual(expected);
@@ -35,7 +35,7 @@ describe('challenge: reducers', () => {
     };
     const expected = {
       isLoading: false,
-      payload: challenge,
+      challenge: challenge,
     };
     const action = setChallenge(challenge);
     expect(reducer(initialState, action)).toEqual(expected);
@@ -44,7 +44,7 @@ describe('challenge: reducers', () => {
   it('handles ADD_CHALLENGE', () => {
     const expected = {
       isLoading: true,
-      payload: undefined,
+      challenge: undefined,
     };
     const action = addChallenge();
     expect(reducer(initialState, action)).toEqual(expected);
@@ -53,7 +53,7 @@ describe('challenge: reducers', () => {
   it('handles ADD_CHALLENGE_SUCCESS', () => {
     const expected = {
       isLoading: false,
-      payload: undefined,
+      challenge: undefined,
     };
     const action = addChallengeSuccess();
     expect(reducer(initialState, action)).toEqual(expected);
@@ -62,7 +62,7 @@ describe('challenge: reducers', () => {
   it('handles UPDATE_CHALLENGE', () => {
     const expected = {
       isLoading: true,
-      payload: undefined,
+      challenge: undefined,
     };
     const action = updateChallenge();
     expect(reducer(initialState, action)).toEqual(expected);
@@ -71,7 +71,7 @@ describe('challenge: reducers', () => {
   it('handles UPDATE_CHALLENGE_SUCCESS', () => {
     const expected = {
       isLoading: false,
-      payload: undefined,
+      challenge: undefined,
     };
     const action = updateChallengeSuccess();
     expect(reducer(initialState, action)).toEqual(expected);

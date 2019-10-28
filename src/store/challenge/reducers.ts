@@ -10,7 +10,7 @@ import {
 } from '~/store/challenge';
 
 export const initialState: ChallengeState = {
-  payload: undefined,
+  challenge: undefined,
   isLoading: undefined,
 };
 
@@ -23,7 +23,7 @@ export const challengeReducer = (
       return {
         ...state,
         isLoading: false,
-        payload: action.payload.challenge,
+        challenge: action.payload.challenge,
       };
     case ADD_CHALLENGE_SUCCESS:
     case UPDATE_CHALLENGE_SUCCESS:

@@ -1,20 +1,17 @@
 import * as React from 'react';
 
 import WrappedComponent from '~/components/specifics/workout/Workout';
-import { Status, Workout, WorkoutState } from '~/store/workout';
+import { Status, Workout } from '~/store/workout';
 
-export type Props = Workout & WorkoutState;
+export type Props = {
+  isLoading: boolean;
+  workout?: Workout;
+};
 
-export type State = {
+type State = {
   progress: number;
   status: Status;
   timer?: number;
-};
-
-export type HandlerProps = {
-  onStart: () => void;
-  onTogglePause: () => void;
-  onReset: () => void;
 };
 
 class WorkoutTimer extends React.Component<Props, State> {
@@ -22,7 +19,7 @@ class WorkoutTimer extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      progress: this.props.menu,
+      progress: props.workout ? props.workout.menu : 0,
       status: Status.standby,
       timer: undefined,
     };
@@ -32,6 +29,12 @@ class WorkoutTimer extends React.Component<Props, State> {
     this.handleTogglePause = this.handleTogglePause.bind(this);
     this.countDown = this.countDown.bind(this);
     this.finish = this.finish.bind(this);
+  }
+
+  public componentDidUpdate(prevProps: Props): void {
+    if (!prevProps.workout && this.props.workout) {
+      this.setState({ progress: this.props.workout.menu });
+    }
   }
 
   public componentWillUnmount(): void {
@@ -48,7 +51,7 @@ class WorkoutTimer extends React.Component<Props, State> {
 
     this.setState({
       timer: undefined,
-      progress: this.props.menu,
+      progress: this.props.workout ? this.props.workout.menu : 0,
       status: Status.standby,
     });
     return;
@@ -85,6 +88,10 @@ class WorkoutTimer extends React.Component<Props, State> {
   }
 
   private finish = (): void => {
+    const { workout } = this.props;
+
+    if (!workout) return;
+
     if (this.state.timer) {
       window.clearInterval(this.state.timer);
     }
@@ -96,7 +103,7 @@ class WorkoutTimer extends React.Component<Props, State> {
 
     const formatDate = (date: number): string =>
       new Intl.DateTimeFormat('en-US').format(date);
-    const today = this.props.scheduledDate.toDate().getTime();
+    const today = workout.scheduledDate.toDate().getTime();
 
     if (formatDate(Date.now()) === formatDate(today)) {
       // TODO: Update isCompleted if today is the scheduled date
@@ -107,13 +114,14 @@ class WorkoutTimer extends React.Component<Props, State> {
 
   render(): ReturnType<typeof WrappedComponent> {
     const props = {
-      ...this.props,
-      pathname: '/dashboard',
-      progress: this.state.progress,
-      status: this.state.status,
+      isLoading: this.props.isLoading,
       onReset: this.handleReset,
       onStart: this.handleStart,
       onTogglePause: this.handleTogglePause,
+      pathname: '/dashboard',
+      progress: this.state.progress,
+      status: this.state.status,
+      workout: this.props.workout,
     };
 
     return <WrappedComponent {...props} />;

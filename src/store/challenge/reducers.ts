@@ -27,15 +27,23 @@ export const challengeReducer = (
         challenge: action.payload.challenge,
       };
     case SET_PARTIAL_WORKOUT:
+      if (state.challenge) {
+        return {
+          isLoading: false,
+          challenge: {
+            ...state.challenge,
+            workouts: [
+              ...state.challenge.workouts.filter(
+                w => w.id !== action.payload.workout.id,
+              ),
+              action.payload.workout,
+            ],
+          },
+        };
+      }
       return {
         ...state,
         isLoading: false,
-        challenge: state.challenge
-          ? {
-              ...state.challenge,
-              workouts: [...state.challenge.workouts, action.payload.workout],
-            }
-          : undefined,
       };
     case ADD_CHALLENGE_SUCCESS:
     case UPDATE_CHALLENGE_SUCCESS:

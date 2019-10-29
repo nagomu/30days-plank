@@ -2,8 +2,9 @@ import { Dispatch } from 'redux';
 
 import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
 import fetchAllWorkoutsFromFirestore from '~/services/firebase/fetchAllWorkoutsFromFirestore';
+import fetchWorkoutFromFirestore from '~/services/firebase/fetchWorkoutFromFirestore';
 import updateWorkoutToFirestore from '~/services/firebase/updateWorkoutToFirestore';
-import { Challenge, setChallenge } from '~/store/challenge';
+import { Challenge, setChallenge, setPartialWorkout } from '~/store/challenge';
 import {
   ADD_WORKOUT,
   ADD_WORKOUT_SUCCESS,
@@ -55,6 +56,34 @@ export const updateWorkout = (): WorkoutActionTypes => ({
 export const updateWorkoutSuccess = (): WorkoutActionTypes => ({
   type: UPDATE_WORKOUT_SUCCESS,
 });
+
+export const onFetchWorkout = async (
+  dispatch: Dispatch,
+  uid: string,
+  challengeId: string,
+  workoutId: string,
+): Promise<void> => {
+  dispatch(fetchWorkout());
+
+  try {
+    const doc = await fetchWorkoutFromFirestore(uid, challengeId, workoutId);
+    dispatch(fetchWorkoutSuccess());
+
+    const data = doc.data();
+    if (!data) return;
+    const workout = {
+      id: doc.id,
+      ...data,
+    } as Workout;
+
+    dispatch(setPartialWorkout(workout));
+    dispatch(setWorkout());
+    return;
+  } catch {
+    // FIXME / TODO: Add error handling
+    console.error('Error: fetchWorkoutFromFirestore');
+  }
+};
 
 export const onFetchAllWorkouts = async (
   dispatch: Dispatch,
@@ -122,7 +151,7 @@ export const onUpdateWorkout = async (
   try {
     await updateWorkoutToFirestore(uid, challenge.id, workout);
     dispatch(updateWorkoutSuccess());
-    onFetchAllWorkouts(dispatch, uid, challenge);
+    onFetchWorkout(dispatch, uid, challenge.id, workout.id);
   } catch (error) {
     // FIXME / TODO: Add error handling
     console.error('Error: onUpdateWorkout');

@@ -15,6 +15,7 @@ export type Workout = {
   menu: number;
   scheduledDate: Timestamp;
   title: string;
+  updatedAt?: Timestamp;
 };
 
 export type WorkoutState = {

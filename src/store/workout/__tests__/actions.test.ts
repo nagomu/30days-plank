@@ -10,6 +10,7 @@ import {
   initialState,
   onAddWorkouts,
   onFetchAllWorkouts,
+  onFetchWorkout,
   onUpdateWorkout,
   setWorkout,
   updateWorkout,
@@ -20,6 +21,9 @@ import { mockStore } from '~/utils/testHelpers';
 
 jest.mock('~/services/firebase/addWorkoutsToFirestore', () =>
   jest.fn().mockReturnValue(Promise.resolve()),
+);
+jest.mock('~/services/firebase/fetchWorkoutFromFirestore', () =>
+  jest.fn().mockReturnValue({ data: jest.fn() }),
 );
 // TODO: Add more better mock
 jest.mock('~/services/firebase/fetchAllWorkoutsFromFirestore', () =>
@@ -123,6 +127,19 @@ describe('workout: actions', () => {
     });
   });
 
+  describe('onFetchWorkout', () => {
+    it('should create valid action', async () => {
+      const store = mockStore({ workout: initialState });
+      await onFetchWorkout(store.dispatch, 'uid', 'cid', 'wid');
+
+      const expected = [
+        { type: 'FETCH_WORKOUT' },
+        { type: 'FETCH_WORKOUT_SUCCESS' },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
   describe('onFetchAllWorkouts', () => {
     // TODO: Add more tests
     it('should create valid action', async () => {
@@ -185,8 +202,8 @@ describe('workout: actions', () => {
       const expected = [
         { type: 'UPDATE_WORKOUT' },
         { type: 'UPDATE_WORKOUT_SUCCESS' },
-        { type: 'FETCH_ALL_WORKOUTS' },
-        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'FETCH_WORKOUT' },
+        { type: 'FETCH_WORKOUT_SUCCESS' },
       ];
       expect(store.getActions()).toEqual(expected);
     });

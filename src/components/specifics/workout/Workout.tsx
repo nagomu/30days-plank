@@ -6,12 +6,7 @@ import DrawerScreen from '~/components/common/layouts/DrawerScreen';
 import DonutChart from '~/components/specifics/workout/DonutChart';
 import ResetButton from '~/components/specifics/workout/ResetButton';
 import StartOrPauseButton from '~/components/specifics/workout/StartOrPauseButton';
-import {
-  HandlerProps,
-  Props as StoreProps,
-  State as StateProps,
-} from '~/containers/specifics/workout/WorkoutTimer';
-import { Status } from '~/store/workout';
+import { Status, Workout as WorkoutProps } from '~/store/workout';
 
 const Container = styled.div`
   position: relative;
@@ -28,29 +23,35 @@ const ButtonGroup = styled.div`
   }
 `;
 
-type OwnProps = {
-  pathname: string;
+type Props = {
+  isLoading: boolean;
+  pathname?: string;
+  progress: number;
+  status: Status;
+  workout?: WorkoutProps;
+  onReset: () => void;
+  onStart: () => void;
+  onTogglePause: () => void;
 };
-
-type Props = OwnProps & StoreProps & Omit<StateProps, 'timer'> & HandlerProps;
 
 const Workout: React.FC<Props> = props => {
   const {
-    isCompleted,
     isLoading,
-    menu,
     onReset,
     onStart,
     onTogglePause,
     pathname,
     progress,
     status,
-    title,
+    workout,
   } = props;
+
+  const title = workout ? `${workout.title} - ${workout.menu} sec` : '';
+  const isCompleted = workout ? workout.isCompleted : undefined;
 
   return (
     <DrawerScreen
-      title={`${title} - ${menu} sec`}
+      title={title}
       pathname={pathname || '/dashboard'}
       icon={
         isCompleted ? (
@@ -61,21 +62,27 @@ const Workout: React.FC<Props> = props => {
       }
       isLoading={isLoading}
     >
-      <Container>
-        <DonutChart progress={progress} seconds={menu} status={status} />
-        <ButtonGroup>
-          <StartOrPauseButton
-            onStart={onStart}
-            onTogglePause={onTogglePause}
+      {workout && (
+        <Container>
+          <DonutChart
+            progress={progress}
+            seconds={workout.menu}
             status={status}
           />
-          {status !== Status.standby && (
-            <ResetButton role="button" onClick={onReset}>
-              Reset
-            </ResetButton>
-          )}
-        </ButtonGroup>
-      </Container>
+          <ButtonGroup>
+            <StartOrPauseButton
+              onStart={onStart}
+              onTogglePause={onTogglePause}
+              status={status}
+            />
+            {status !== Status.standby && (
+              <ResetButton role="button" onClick={onReset}>
+                Reset
+              </ResetButton>
+            )}
+          </ButtonGroup>
+        </Container>
+      )}
     </DrawerScreen>
   );
 };

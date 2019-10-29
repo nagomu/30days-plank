@@ -45,7 +45,7 @@ export const useWorkout = (): UseWorkout => {
 
   const onUpdate = (params: UpdateWorkoutParams): void => {
     if (!user || !challenge || !workout) {
-      throw new Error('Could not execute onUpdateWorkout');
+      throw new Error('Could not execute onUpdate');
     }
     onUpdateWorkout(dispatch, user.uid, challenge, params);
     return;

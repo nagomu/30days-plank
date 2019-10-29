@@ -7,9 +7,9 @@ import { AppState } from '~/store';
 import { onFetchChallenge } from '~/store/challenge';
 import { Workout } from '~/store/workout';
 
-const Workout: React.FC<
-  RouteComponentProps<{ id: string; challengeId: string }>
-> = props => {
+type Props = RouteComponentProps<{ id: string; challengeId: string }>;
+
+const Workout: React.FC<Props> = props => {
   const dispatch = useDispatch();
   const { params } = props.match;
   const { user } = useSelector((state: AppState) => state.auth);

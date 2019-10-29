@@ -4,11 +4,12 @@ import { useParams } from 'react-router-dom';
 
 import { AppState } from '~/store';
 import { onFetchChallenge } from '~/store/challenge';
-import { Workout } from '~/store/workout';
+import { onUpdateWorkout, UpdateWorkoutParams, Workout } from '~/store/workout';
 
 type UseWorkout = {
   isLoading: boolean;
   workout?: Workout;
+  onUpdate: (params: UpdateWorkoutParams) => void;
 };
 
 export const useWorkout = (): UseWorkout => {
@@ -42,8 +43,17 @@ export const useWorkout = (): UseWorkout => {
       ? challenge.workouts.find(w => w.id === id)
       : undefined;
 
+  const onUpdate = (params: UpdateWorkoutParams): void => {
+    if (!user || !challenge || !workout) {
+      throw new Error('Could not execute onUpdateWorkout');
+    }
+    onUpdateWorkout(dispatch, user.uid, challenge, params);
+    return;
+  };
+
   return {
     isLoading,
     workout,
+    onUpdate,
   };
 };

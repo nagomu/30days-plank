@@ -23,6 +23,7 @@ describe('WorkoutTimerContainer', () => {
       scheduledDate: timestampFromDate(mockToday),
       title: 'Day 1',
     },
+    onUpdate: jest.fn(),
   };
 
   const createWrapper = (props: Props): ReactWrapper =>

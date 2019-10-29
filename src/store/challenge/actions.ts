@@ -12,11 +12,12 @@ import {
   ChallengeActionTypes,
   FETCH_CHALLENGE,
   SET_CHALLENGE,
+  SET_PARTIAL_WORKOUT,
   UPDATE_CHALLENGE,
   UPDATE_CHALLENGE_SUCCESS,
   UpdateChallengeParams,
 } from '~/store/challenge';
-import { onFetchAllWorkouts } from '~/store/workout';
+import { onFetchAllWorkouts, Workout } from '~/store/workout';
 import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
@@ -26,6 +27,11 @@ export const fetchChallenge = (): ChallengeActionTypes => ({
 export const setChallenge = (challenge?: Challenge): ChallengeActionTypes => ({
   type: SET_CHALLENGE,
   payload: { challenge },
+});
+
+export const setPartialWorkout = (workout: Workout): ChallengeActionTypes => ({
+  type: SET_PARTIAL_WORKOUT,
+  payload: { workout },
 });
 
 export const addChallenge = (): ChallengeActionTypes => ({

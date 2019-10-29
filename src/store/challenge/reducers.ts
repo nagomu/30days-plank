@@ -5,6 +5,7 @@ import {
   ChallengeState,
   FETCH_CHALLENGE,
   SET_CHALLENGE,
+  SET_PARTIAL_WORKOUT,
   UPDATE_CHALLENGE,
   UPDATE_CHALLENGE_SUCCESS,
 } from '~/store/challenge';
@@ -24,6 +25,17 @@ export const challengeReducer = (
         ...state,
         isLoading: false,
         challenge: action.payload.challenge,
+      };
+    case SET_PARTIAL_WORKOUT:
+      return {
+        ...state,
+        isLoading: false,
+        challenge: state.challenge
+          ? {
+              ...state.challenge,
+              workouts: [...state.challenge.workouts, action.payload.workout],
+            }
+          : undefined,
       };
     case ADD_CHALLENGE_SUCCESS:
     case UPDATE_CHALLENGE_SUCCESS:

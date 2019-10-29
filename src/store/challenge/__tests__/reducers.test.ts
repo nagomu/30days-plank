@@ -7,10 +7,11 @@ import {
   fetchChallenge,
   initialState,
   setChallenge,
+  setPartialWorkout,
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
-import firebase from '~/utils/firebase';
+import { timestampFromDate } from '~/utils/firebase';
 
 describe('challenge: reducers', () => {
   const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
@@ -31,7 +32,7 @@ describe('challenge: reducers', () => {
       description: 'xxx',
       isActive: true,
       workouts: [],
-      createdAt: firebase.firestore.Timestamp.fromDate(mockToday),
+      createdAt: timestampFromDate(mockToday),
     };
     const expected = {
       isLoading: false,
@@ -39,6 +40,41 @@ describe('challenge: reducers', () => {
     };
     const action = setChallenge(challenge);
     expect(reducer(initialState, action)).toEqual(expected);
+  });
+
+  it('handles SET_PARTIAL_WORKOUT', () => {
+    const workout = {
+      id: 'xxx',
+      isCompleted: false,
+      isRest: false,
+      menu: 20,
+      scheduledDate: timestampFromDate(mockToday),
+      title: 'Day 1',
+    };
+
+    const challenge = {
+      id: 'xxx',
+      description: 'xxx',
+      isActive: true,
+      workouts: [],
+      createdAt: timestampFromDate(mockToday),
+    };
+
+    const state = {
+      isLoading: false,
+      challenge,
+    };
+
+    const expected = {
+      isLoading: false,
+      challenge: {
+        ...challenge,
+        workouts: [workout],
+      },
+    };
+
+    const action = setPartialWorkout(workout);
+    expect(reducer(state, action)).toEqual(expected);
   });
 
   it('handles ADD_CHALLENGE', () => {

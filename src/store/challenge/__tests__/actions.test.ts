@@ -9,6 +9,7 @@ import {
   onFetchChallenge,
   onUpdateChallenge,
   setChallenge,
+  setPartialWorkout,
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
@@ -67,6 +68,46 @@ describe('challenge: actions', () => {
               isActive: true,
               workouts: [],
             },
+          },
+        },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('setPartialWorkout', () => {
+    it('should create valid action', () => {
+      const challenge = {
+        id: 'xxx',
+        description: 'xxx',
+        isActive: true,
+        workouts: [],
+        createdAt: timestampFromDate(mockToday),
+      };
+
+      const store = mockStore({
+        challenge: {
+          isLoading: false,
+          challenge,
+        },
+      });
+
+      const workout = {
+        id: 'xxx',
+        isCompleted: false,
+        isRest: false,
+        menu: 20,
+        scheduledDate: timestampFromDate(mockToday),
+        title: 'Day 1',
+      };
+
+      store.dispatch(setPartialWorkout(workout));
+
+      const expected = [
+        {
+          type: 'SET_PARTIAL_WORKOUT',
+          payload: {
+            workout,
           },
         },
       ];

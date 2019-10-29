@@ -51,6 +51,15 @@ export type SetChallengeAction = {
 //   error: any;
 // };
 
+// Set fetch result of individual workout
+export const SET_PARTIAL_WORKOUT = 'SET_PARTIAL_WORKOUT';
+export type SetPartialWorkoutAction = {
+  type: typeof SET_PARTIAL_WORKOUT;
+  payload: {
+    workout: Workout;
+  };
+};
+
 // Start db.collection('/users/{uid}/challenges').doc().set()
 export const ADD_CHALLENGE = 'ADD_CHALLENGE';
 export type AddChallengeAction = {
@@ -90,6 +99,7 @@ export type UpdateChallengeSuccessAction = {
 export type ChallengeActionTypes =
   | FetchChallengeAction
   | SetChallengeAction
+  | SetPartialWorkoutAction
   | AddChallengeAction
   | AddChallengeSuccessAction
   | UpdateChallengeAction

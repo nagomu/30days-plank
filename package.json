@@ -18,6 +18,7 @@
     "eslint": "eslint src --ext .ts,.tsx --cache --cache-location=.cache/eslint",
     "stylelint": "stylelint src/**/*.{ts,tsx} --cache --cache-location=.cache/stylelint",
     "sprite": "svg-sprite -s --symbol-dest=src/assets --symbol-sprite=sprite.svg src/assets/icons/*.svg",
+    "component": "hygen new component",
     "clean": "rimraf public"
   },
   "browserslist": [

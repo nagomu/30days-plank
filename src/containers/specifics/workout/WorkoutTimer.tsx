@@ -3,7 +3,7 @@ import * as React from 'react';
 import WrappedComponent from '~/components/specifics/workout/Workout';
 import { Status, Workout } from '~/store/workout';
 
-type Props = {
+export type Props = {
   isLoading: boolean;
   workout?: Workout;
 };
@@ -29,6 +29,12 @@ class WorkoutTimer extends React.Component<Props, State> {
     this.handleTogglePause = this.handleTogglePause.bind(this);
     this.countDown = this.countDown.bind(this);
     this.finish = this.finish.bind(this);
+  }
+
+  public componentDidUpdate(prevProps: Props): void {
+    if (!prevProps.workout && this.props.workout) {
+      this.setState({ progress: this.props.workout.menu });
+    }
   }
 
   public componentWillUnmount(): void {

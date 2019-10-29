@@ -11,6 +11,12 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: (): useParams => ({ id: '1' }),
 }));
+jest.mock('~/services/firebase/fetchAllWorkoutsFromFirestore', () =>
+  jest.fn().mockReturnValue({ empty: true }),
+);
+jest.mock('~/services/firebase/updateWorkoutToFirestore', () =>
+  jest.fn().mockReturnValue(''),
+);
 
 describe('useWorkout', () => {
   it('returns correct values if initial state', () => {
@@ -32,6 +38,7 @@ describe('useWorkout', () => {
 
     expect(hook.workout).toEqual(undefined);
     expect(hook.isLoading).toEqual(true);
+    expect(hook.onUpdate).toThrowError();
   });
 
   it('returns correct values if loading finished', () => {
@@ -80,5 +87,6 @@ describe('useWorkout', () => {
     const hook = withHook(useWorkout, store);
     const expected = state.challenge.challenge.workouts[0];
     expect(hook.workout).toEqual(expected);
+    expect(hook.onUpdate).not.toThrowError();
   });
 });

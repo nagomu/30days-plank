@@ -1,11 +1,12 @@
 import * as React from 'react';
 
 import WrappedComponent from '~/components/specifics/workout/Workout';
-import { Status, Workout } from '~/store/workout';
+import { Status, UpdateWorkoutParams, Workout } from '~/store/workout';
 
 export type Props = {
   isLoading: boolean;
   workout?: Workout;
+  onUpdate: (params: UpdateWorkoutParams) => void;
 };
 
 type State = {
@@ -88,7 +89,7 @@ class WorkoutTimer extends React.Component<Props, State> {
   }
 
   private finish = (): void => {
-    const { workout } = this.props;
+    const { workout, onUpdate } = this.props;
 
     if (!workout) return;
 
@@ -106,7 +107,7 @@ class WorkoutTimer extends React.Component<Props, State> {
     const today = workout.scheduledDate.toDate().getTime();
 
     if (formatDate(Date.now()) === formatDate(today)) {
-      // TODO: Update isCompleted if today is the scheduled date
+      onUpdate({ id: workout.id, isCompleted: true });
     }
 
     return;

@@ -23,6 +23,12 @@ const ButtonGroup = styled.div`
   }
 `;
 
+const DoneIcon = styled(Icon)`
+  width: 24px;
+  height: 24px;
+  fill: #4caf50;
+`;
+
 type Props = {
   isLoading: boolean;
   pathname?: string;
@@ -53,13 +59,7 @@ const Workout: React.FC<Props> = props => {
     <DrawerScreen
       title={title}
       pathname={pathname || '/dashboard'}
-      icon={
-        isCompleted ? (
-          <Icon name="done" style={{ width: '24px', height: '24px' }} />
-        ) : (
-          undefined
-        )
-      }
+      icon={isCompleted ? <DoneIcon name="done" /> : undefined}
       isLoading={isLoading}
     >
       {workout && (

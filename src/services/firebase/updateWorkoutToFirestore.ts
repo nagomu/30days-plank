@@ -6,7 +6,7 @@ const updateWorkoutToFirestore = async (
   challengeId: string,
   workout: UpdateWorkoutParams,
 ): Promise<void> => {
-  const pathname = `/users/${uid}/challenges${challengeId}`;
+  const pathname = `/users/${uid}/challenges/${challengeId}/workouts`;
   const collection = firebase.firestore().collection(pathname);
   const { id, isCompleted } = workout;
   return await collection.doc(id).update({ isCompleted });

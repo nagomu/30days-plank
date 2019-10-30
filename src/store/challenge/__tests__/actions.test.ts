@@ -35,10 +35,6 @@ jest.mock('~/services/firebase/updateChallengeToFirestore');
 jest.mock('~/services/firebase/addArchiveToFirestore', () =>
   jest.fn().mockReturnValue(Promise.resolve()),
 );
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchArchivesFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
 
 describe('challenge: actions', () => {
   describe('fetchChallenge', () => {
@@ -258,7 +254,6 @@ describe('challenge: actions', () => {
         },
         { type: 'ADD_ARCHIVE' },
         { type: 'ADD_ARCHIVE_SUCCESS' },
-        { type: 'FETCH_ARCHIVES' },
         { type: 'FETCH_CHALLENGE' },
         {
           type: 'SET_CHALLENGE',

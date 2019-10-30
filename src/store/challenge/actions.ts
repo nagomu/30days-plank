@@ -4,7 +4,7 @@ import addChallengeToFirestore from '~/services/firebase/addChallengeToFirestore
 import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
 import fetchChallengeFromFirestore from '~/services/firebase/fetchChallengeFromFirestore';
 import updateChallengeToFirestore from '~/services/firebase/updateChallengeToFirestore';
-import { onAddArchive, onFetchArchives } from '~/store/archive';
+import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
   ADD_CHALLENGE_SUCCESS,
@@ -138,7 +138,6 @@ export const onArchiveChallenge = async (
 
     await onUpdateChallenge(dispatch, uid, updateParams);
     await onAddArchive(dispatch, uid, challenge.workouts);
-    await onFetchArchives(dispatch, uid);
     onFetchChallenge(dispatch, uid);
   } catch {
     // FIXME / TODO: Add error handling

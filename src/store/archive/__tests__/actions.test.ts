@@ -47,6 +47,7 @@ describe('archive: actions', () => {
       const archives = [
         {
           id: 'xxx',
+          challengeId: 'xxx',
           title: 'xxx',
           achievementRate: 80,
           createdAt: timestampFromDate(new Date()),
@@ -116,9 +117,10 @@ describe('archive: actions', () => {
     it('should create valid action', async () => {
       const workouts = mockWorkouts();
       const uid = 'xxx';
+      const challengeId = 'xxx';
       const store = mockStore({ archive: initialState });
 
-      await onAddArchive(store.dispatch, uid, workouts);
+      await onAddArchive(store.dispatch, uid, challengeId, workouts);
 
       const expected = [
         { type: 'ADD_ARCHIVE' },

@@ -137,7 +137,7 @@ export const onArchiveChallenge = async (
     };
 
     await onUpdateChallenge(dispatch, uid, updateParams);
-    await onAddArchive(dispatch, uid, challenge.workouts);
+    await onAddArchive(dispatch, uid, challenge.id, challenge.workouts);
     onFetchChallenge(dispatch, uid);
   } catch {
     // FIXME / TODO: Add error handling

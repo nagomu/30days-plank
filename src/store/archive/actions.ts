@@ -74,12 +74,14 @@ export const onFetchArchives = async (
 export const onAddArchive = async (
   dispatch: Dispatch,
   uid: string,
+  challengeId: string,
   workouts: Workout[],
 ): Promise<void> => {
   dispatch(addArchive());
 
   try {
     const params = {
+      challengeId,
       title: generateTitle(workouts),
       achievementRate: calculateRate(workouts),
       createdAt: timestampFromDate(new Date()),

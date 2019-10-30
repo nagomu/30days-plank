@@ -20,10 +20,10 @@ const Dashboard: React.FC<Props> = props => {
 
   return (
     <>
-      {!challenge || !challenge.workouts ? (
-        <NotStarted onClick={onAddChallenge} />
-      ) : (
+      {challenge && challenge.workouts && challenge.workouts.length > 0 ? (
         <Challenge challengeId={challenge.id} workouts={challenge.workouts} />
+      ) : (
+        <NotStarted onClick={onAddChallenge} />
       )}
     </>
   );

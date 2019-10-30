@@ -1,7 +1,7 @@
 import Dashboard from '~/components/specifics/dashboard/Dashboard';
 import { timestampFromDate } from '~/utils/firebase';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
-import { withProvider } from '~/utils/testHelpers';
+import { mockStore, withProvider } from '~/utils/testHelpers';
 
 describe('Challenge', () => {
   const props = {
@@ -14,9 +14,20 @@ describe('Challenge', () => {
     isLoading: false,
     onAddChallenge: jest.fn(),
   };
+  const state = {
+    auth: {
+      user: { uid: 'xxx' },
+      isLoading: false,
+    },
+    challenge: {
+      challenge: undefined,
+      isLoading: undefined,
+    },
+  };
+  const store = mockStore(state);
 
   it('renders correctly', () => {
-    const wrapper = withProvider({ Component: Dashboard, props });
+    const wrapper = withProvider({ Component: Dashboard, props, store });
     expect(wrapper.find('Challenge').length).toEqual(1);
     expect(wrapper.find('Workout').length).toEqual(30);
   });
@@ -27,7 +38,11 @@ describe('Challenge', () => {
         ...props,
         isLoading: true,
       };
-      const wrapper = withProvider({ Component: Dashboard, props: _props });
+      const wrapper = withProvider({
+        Component: Dashboard,
+        props: _props,
+        store,
+      });
       expect(wrapper.find('Loading').length).toEqual(1);
     });
   });
@@ -41,7 +56,11 @@ describe('Challenge', () => {
           workouts: [],
         },
       };
-      const wrapper = withProvider({ Component: Dashboard, props: _props });
+      const wrapper = withProvider({
+        Component: Dashboard,
+        props: _props,
+        store,
+      });
       expect(wrapper.find('NotStarted').length).toEqual(1);
     });
   });

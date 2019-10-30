@@ -13,48 +13,8 @@ describe('DashboardContainer', () => {
     user: { uid: 'xxx' },
   };
 
-  const store = {
-    auth: {
-      user: undefined,
-      isLoading: undefined,
-    },
-    challenge: {
-      challenge: undefined,
-      isLoading: undefined,
-    },
-    workout: {
-      isLoading: undefined,
-    },
-  };
-
-  it('should render null if store is empty', () => {
-    const wrapper = withProvider({
-      Component: Dashboard,
-      props,
-      store: mockStore(store),
-    }).find('Dashboard');
-    expect(wrapper.html()).toEqual(null);
-  });
-
-  it('should render null if challenge is empty', () => {
-    const _store = {
-      ...store,
-      auth: {
-        user: { uid: 'xxx' },
-        isLoading: false,
-      },
-    };
-    const wrapper = withProvider({
-      Component: Dashboard,
-      props,
-      store: mockStore(_store),
-    }).find('Dashboard');
-
-    expect(wrapper.html()).toEqual(null);
-  });
-
   it('renders correctly if challenge is not empty', () => {
-    const _store = {
+    const store = {
       auth: {
         user: { uid: 'xxx' },
         isLoading: false,
@@ -75,7 +35,7 @@ describe('DashboardContainer', () => {
     const wrapper = withProvider({
       Component: Dashboard,
       props,
-      store: mockStore(_store),
+      store: mockStore(store),
     }).find('Dashboard');
 
     expect(wrapper.find('Challenge').length).toEqual(1);

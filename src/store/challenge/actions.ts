@@ -4,6 +4,7 @@ import addChallengeToFirestore from '~/services/firebase/addChallengeToFirestore
 import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
 import fetchChallengeFromFirestore from '~/services/firebase/fetchChallengeFromFirestore';
 import updateChallengeToFirestore from '~/services/firebase/updateChallengeToFirestore';
+import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
   ADD_CHALLENGE_SUCCESS,
@@ -58,7 +59,10 @@ export const onFetchChallenge = async (
 
   try {
     const snapshot: QuerySnapshot = await fetchChallengeFromFirestore(uid);
-    if (snapshot.empty) return;
+    if (snapshot.empty) {
+      dispatch(setChallenge(undefined));
+      return;
+    }
 
     /*
       NOTE: Here forEach is used.
@@ -112,6 +116,28 @@ export const onUpdateChallenge = async (
   try {
     await updateChallengeToFirestore(uid, challenge);
     dispatch(updateChallengeSuccess());
+    onFetchChallenge(dispatch, uid);
+  } catch {
+    // FIXME / TODO: Add error handling
+    console.error('Error: setChallengeToFirestore');
+  }
+  return;
+};
+
+export const onArchiveChallenge = async (
+  dispatch: Dispatch,
+  uid: string,
+  challenge: Challenge,
+): Promise<void> => {
+  try {
+    const updateParams: UpdateChallengeParams = {
+      id: challenge.id,
+      description: '',
+      isActive: false,
+    };
+
+    await onUpdateChallenge(dispatch, uid, updateParams);
+    await onAddArchive(dispatch, uid, challenge.id, challenge.workouts);
     onFetchChallenge(dispatch, uid);
   } catch {
     // FIXME / TODO: Add error handling

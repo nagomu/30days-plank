@@ -3,6 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import App from '~/components/common/layouts/App';
 import Login from '~/components/specifics/login/Login';
+import Archives from '~/containers/specifics/archive/Archives';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
 import Workout from '~/containers/specifics/workout/Workout';
 import { useAuth } from '~/hooks/specifics/routes/useAuth';
@@ -29,6 +30,7 @@ const Routes: React.FC = () => {
             <Route exact path="/dashboard">
               <Dashboard user={user} />
             </Route>
+            <Route exact path="/archives" component={Archives} />
             <Route
               exact
               path="/challenges/:challengeId/workouts/:id"

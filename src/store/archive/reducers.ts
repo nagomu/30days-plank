@@ -7,6 +7,7 @@ import {
   FETCH_ARCHIVES_SUCCESS,
   SET_ARCHIVES,
 } from '~/store/archive';
+import { mergeArchives } from '~/store/archive/utils/mergeArchives';
 
 export const initialState: ArchiveState = {
   archives: [],
@@ -24,8 +25,10 @@ export const archiveReducer = (
         return {
           ...state,
           isLoading: false,
-          archives: [...state.archives, ...action.payload.archives],
-          size: action.payload.size,
+          archives: mergeArchives(state.archives, action.payload.archives),
+          size: state.size
+            ? state.size + action.payload.size
+            : action.payload.size,
         };
       }
       return {

@@ -2,6 +2,15 @@ import { Timestamp } from '~/utils/firebase';
 
 export type Archive = {
   id: string;
+  challengeId: string;
+  title: string;
+  description?: string;
+  achievementRate: number;
+  createdAt: Timestamp;
+};
+
+export type AddArchiveParams = {
+  challengeId: string;
   title: string;
   description?: string;
   achievementRate: number;

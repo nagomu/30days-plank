@@ -39,8 +39,6 @@ const Dashboard: React.FC<Props> = ({ user }) => {
 
   const isLoading = !user || !!challenge.isLoading || !!workout.isLoading;
 
-  if (!user || !challenge.challenge) return null;
-
   return (
     <WrappedComponent
       challenge={challenge.challenge}

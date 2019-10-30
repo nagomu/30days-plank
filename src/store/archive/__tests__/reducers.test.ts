@@ -34,6 +34,7 @@ describe('archive: reducers', () => {
     const archives = [
       {
         id: 'xxx',
+        challengeId: 'xxx',
         title: '',
         description: undefined,
         achievementRate: 80,

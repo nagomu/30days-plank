@@ -6,6 +6,7 @@ import {
   fetchChallenge,
   initialState,
   onAddChallenge,
+  onArchiveChallenge,
   onFetchChallenge,
   onUpdateChallenge,
   setChallenge,
@@ -14,6 +15,7 @@ import {
   updateChallengeSuccess,
 } from '~/store/challenge';
 import { timestampFromDate } from '~/utils/firebase';
+import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore } from '~/utils/testHelpers';
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
@@ -30,6 +32,9 @@ jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
   jest.fn().mockReturnValue({ empty: true }),
 );
 jest.mock('~/services/firebase/updateChallengeToFirestore');
+jest.mock('~/services/firebase/addArchiveToFirestore', () =>
+  jest.fn().mockReturnValue(Promise.resolve()),
+);
 
 describe('challenge: actions', () => {
   describe('fetchChallenge', () => {
@@ -161,7 +166,15 @@ describe('challenge: actions', () => {
       const store = mockStore({ challenge: initialState });
       await onFetchChallenge(store.dispatch, 'uid');
 
-      const expected = [{ type: 'FETCH_CHALLENGE' }];
+      const expected = [
+        { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: undefined,
+          },
+        },
+      ];
       expect(store.getActions()).toEqual(expected);
     });
   });
@@ -181,6 +194,12 @@ describe('challenge: actions', () => {
         { type: 'ADD_CHALLENGE' },
         { type: 'ADD_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: undefined,
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -200,6 +219,48 @@ describe('challenge: actions', () => {
         { type: 'UPDATE_CHALLENGE' },
         { type: 'UPDATE_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: undefined,
+          },
+        },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('onArchiveChallenge', () => {
+    it('should create valid action', async () => {
+      const store = mockStore({ challenge: initialState });
+      const challenge = {
+        id: 'xxx',
+        description: 'xxx',
+        isActive: true,
+        workouts: mockWorkouts(),
+        createdAt: timestampFromDate(mockToday),
+      };
+      await onArchiveChallenge(store.dispatch, 'uid', challenge);
+
+      const expected = [
+        { type: 'UPDATE_CHALLENGE' },
+        { type: 'UPDATE_CHALLENGE_SUCCESS' },
+        { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: undefined,
+          },
+        },
+        { type: 'ADD_ARCHIVE' },
+        { type: 'ADD_ARCHIVE_SUCCESS' },
+        { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: undefined,
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });

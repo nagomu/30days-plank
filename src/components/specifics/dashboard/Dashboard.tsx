@@ -14,16 +14,16 @@ type Props = {
 const Dashboard: React.FC<Props> = props => {
   const { challenge, isLoading, onAddChallenge } = props;
 
-  if (isLoading || !challenge || !challenge.workouts) {
+  if (isLoading) {
     return <Loading />;
   }
 
   return (
     <>
-      {challenge.workouts.length > 0 ? (
-        <Challenge challengeId={challenge.id} workouts={challenge.workouts} />
-      ) : (
+      {!challenge || !challenge.workouts ? (
         <NotStarted onClick={onAddChallenge} />
+      ) : (
+        <Challenge challengeId={challenge.id} workouts={challenge.workouts} />
       )}
     </>
   );

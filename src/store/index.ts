@@ -4,12 +4,14 @@ import config from '~/config';
 import { archiveReducer, initialState as archive } from '~/store/archive';
 import { authReducer, initialState as auth } from '~/store/auth';
 import { challengeReducer, initialState as challenge } from '~/store/challenge';
+import { initialState as layout, layoutReducer } from '~/store/layout';
 import { initialState as workout, workoutReducer } from '~/store/workout';
 
 const initialState = {
   archive,
   auth,
   challenge,
+  layout,
   workout,
 };
 
@@ -17,6 +19,7 @@ const reducer = combineReducers({
   archive: archiveReducer,
   auth: authReducer,
   challenge: challengeReducer,
+  layout: layoutReducer,
   workout: workoutReducer,
 });
 

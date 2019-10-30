@@ -161,7 +161,15 @@ describe('challenge: actions', () => {
       const store = mockStore({ challenge: initialState });
       await onFetchChallenge(store.dispatch, 'uid');
 
-      const expected = [{ type: 'FETCH_CHALLENGE' }];
+      const expected = [
+        { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: undefined,
+          },
+        },
+      ];
       expect(store.getActions()).toEqual(expected);
     });
   });
@@ -181,6 +189,12 @@ describe('challenge: actions', () => {
         { type: 'ADD_CHALLENGE' },
         { type: 'ADD_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: undefined,
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });

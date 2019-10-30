@@ -58,7 +58,10 @@ export const onFetchChallenge = async (
 
   try {
     const snapshot: QuerySnapshot = await fetchChallengeFromFirestore(uid);
-    if (snapshot.empty) return;
+    if (snapshot.empty) {
+      dispatch(setChallenge(undefined));
+      return;
+    }
 
     /*
       NOTE: Here forEach is used.

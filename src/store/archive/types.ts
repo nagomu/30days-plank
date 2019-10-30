@@ -8,6 +8,13 @@ export type Archive = {
   createdAt: Timestamp;
 };
 
+export type AddArchiveParams = {
+  title: string;
+  description?: string;
+  achievementRate: number;
+  createdAt: Timestamp;
+};
+
 export type ArchiveState = {
   archives?: Archive[];
   isLoading?: boolean;

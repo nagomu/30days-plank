@@ -4,10 +4,16 @@ import {
   fetchArchives,
   fetchArchivesSuccess,
   initialState,
+  onAddArchive,
   setArchives,
 } from '~/store/archive';
 import { timestampFromDate } from '~/utils/firebase';
+import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore } from '~/utils/testHelpers';
+
+jest.mock('~/services/firebase/addArchiveToFirestore', () =>
+  jest.fn().mockReturnValue(Promise.resolve()),
+);
 
 describe('archive: actions', () => {
   describe('fetchArchives', () => {
@@ -81,6 +87,22 @@ describe('archive: actions', () => {
       store.dispatch(addArchiveSuccess());
 
       const expected = [{ type: 'ADD_ARCHIVE_SUCCESS' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('onAddArchive', () => {
+    it('should create valid action', async () => {
+      const workouts = mockWorkouts();
+      const uid = 'xxx';
+      const store = mockStore({ archive: initialState });
+
+      await onAddArchive(store.dispatch, uid, workouts);
+
+      const expected = [
+        { type: 'ADD_ARCHIVE' },
+        { type: 'ADD_ARCHIVE_SUCCESS' },
+      ];
       expect(store.getActions()).toEqual(expected);
     });
   });

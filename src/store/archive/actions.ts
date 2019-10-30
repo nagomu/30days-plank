@@ -15,9 +15,9 @@ import { calculateRate } from '~/store/archive/utils/calculateRate';
 import { generateTitle } from '~/store/archive/utils/generateTitle';
 import { Workout } from '~/store/workout';
 import {
-  timestampFromDate,
   QueryDocumentSnapshot,
   QuerySnapshot,
+  timestampFromDate,
 } from '~/utils/firebase';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
@@ -44,7 +44,10 @@ export const addArchiveSuccess = (): ArchiveActionTypes => ({
   type: ADD_ARCHIVE_SUCCESS,
 });
 
-export const onFetchArchives = async (dispatch: Dispatch, uid: string) => {
+export const onFetchArchives = async (
+  dispatch: Dispatch,
+  uid: string,
+): Promise<void> => {
   dispatch(fetchArchives());
 
   try {
@@ -53,7 +56,7 @@ export const onFetchArchives = async (dispatch: Dispatch, uid: string) => {
 
     dispatch(fetchArchivesSuccess());
 
-    let archives: Archive[] = [];
+    const archives: Archive[] = [];
     snapshot.forEach((doc: QueryDocumentSnapshot) => {
       archives.push({
         id: doc.id,

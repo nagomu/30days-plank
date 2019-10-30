@@ -5,6 +5,7 @@ import {
   fetchArchivesSuccess,
   initialState,
   onAddArchive,
+  onFetchArchives,
   setArchives,
 } from '~/store/archive';
 import { timestampFromDate } from '~/utils/firebase';
@@ -13,6 +14,10 @@ import { mockStore } from '~/utils/testHelpers';
 
 jest.mock('~/services/firebase/addArchiveToFirestore', () =>
   jest.fn().mockReturnValue(Promise.resolve()),
+);
+// TODO: Add more better mock
+jest.mock('~/services/firebase/fetchArchivesFromFirestore', () =>
+  jest.fn().mockReturnValue({ empty: true }),
 );
 
 describe('archive: actions', () => {
@@ -87,6 +92,19 @@ describe('archive: actions', () => {
       store.dispatch(addArchiveSuccess());
 
       const expected = [{ type: 'ADD_ARCHIVE_SUCCESS' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('onFetchArchives', () => {
+    it('should create valid action', async () => {
+      const uid = 'xxx';
+      const store = mockStore({ archive: initialState });
+
+      await onFetchArchives(store.dispatch, uid);
+
+      // TODO: Fix test
+      const expected = [{ type: 'FETCH_ARCHIVES' }];
       expect(store.getActions()).toEqual(expected);
     });
   });

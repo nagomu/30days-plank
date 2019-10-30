@@ -104,7 +104,10 @@ describe('archive: actions', () => {
       await onFetchArchives(store.dispatch, uid);
 
       // TODO: Fix test
-      const expected = [{ type: 'FETCH_ARCHIVES' }];
+      const expected = [
+        { type: 'FETCH_ARCHIVES' },
+        { type: 'FETCH_ARCHIVES_SUCCESS' },
+      ];
       expect(store.getActions()).toEqual(expected);
     });
   });

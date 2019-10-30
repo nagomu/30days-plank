@@ -52,9 +52,8 @@ export const onFetchArchives = async (
 
   try {
     const snapshot: QuerySnapshot = await fetchArchivesFromFirestore(uid);
-    if (snapshot.empty) return;
-
     dispatch(fetchArchivesSuccess());
+    if (snapshot.empty) return;
 
     const archives: Archive[] = [];
     snapshot.forEach((doc: QueryDocumentSnapshot) => {

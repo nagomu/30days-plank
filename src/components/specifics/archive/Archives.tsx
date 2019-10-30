@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
 
+// import { NavLink } from 'react-router-dom';
 import Icon from '~/components/common/icons/Icon';
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
 import { Archive } from '~/store/archive';
@@ -26,7 +26,20 @@ const Menu = styled.li`
   }
 `;
 
+/*
 const Link = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: ${rgba('#212121', 0.6)};
+  font-size: 12px;
+  text-decoration: none;
+`;
+*/
+const Link = styled.span`
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -72,7 +85,7 @@ const Archives: React.FC<Props> = ({ archives, isLoading }) => (
       <List>
         {archives.map((archive: Archive) => (
           <Menu key={archive.id}>
-            <Link to={`/challenges/${archive.challengeId}`} role="button">
+            <Link>
               <Completed
                 className={archive.achievementRate >= 80 ? 'isCompleted' : ''}
               >

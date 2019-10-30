@@ -52,6 +52,7 @@ describe('ArchivesContainer', () => {
       store: mockStore(store),
     });
 
-    expect(wrapper.find('ul NavLink').length).toEqual(3);
+    // expect(wrapper.find('ul NavLink').length).toEqual(3);
+    expect(wrapper.find('ul li').length).toEqual(3);
   });
 });

@@ -25,7 +25,9 @@ export const archiveReducer = (
           ...state,
           isLoading: false,
           archives: [...state.archives, ...action.payload.archives],
-          size: action.payload.size,
+          size: state.size
+            ? state.size + action.payload.size
+            : action.payload.size,
         };
       }
       return {

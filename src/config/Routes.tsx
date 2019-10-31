@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
+import NotFound from '~/components/common/errors/NotFound';
 import Login from '~/components/specifics/login/Login';
 import App from '~/containers/common/layouts/App';
 import Archives from '~/containers/specifics/archive/Archives';
@@ -38,6 +39,7 @@ const Routes: React.FC = () => {
             />
             <Redirect to={redirectTo} />
             <Redirect from="/" to="/dashboard" />
+            <Route component={NotFound} />
           </Switch>
         ) : (
           <Switch>
@@ -45,6 +47,7 @@ const Routes: React.FC = () => {
               <Login onSignIn={onSignIn} />
             </Route>
             <Redirect to="/" />
+            <Route component={NotFound} />
           </Switch>
         )}
       </App>

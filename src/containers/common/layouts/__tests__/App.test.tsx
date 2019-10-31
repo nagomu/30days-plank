@@ -12,7 +12,6 @@ describe('AppContainer', () => {
       user: { uid: 'xxx' },
       isLoading: false,
     },
-    isDrawerOpen: false,
     isNavOpen: false,
     isSmallScreen: true,
     toggleLayout: jest.fn(),

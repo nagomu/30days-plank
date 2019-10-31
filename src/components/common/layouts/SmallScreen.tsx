@@ -42,14 +42,13 @@ const Main = styled.main`
 const SmallScreen: React.FC<Props> = ({
   children,
   onSignOut,
-  isDrawerOpen,
   isLoading,
   isNavOpen,
   user,
 }) => {
   return (
     <Screen>
-      {!isDrawerOpen && !isNavOpen && (
+      {!isNavOpen ? (
         <Container>
           <NavBar>
             <Avatar
@@ -59,8 +58,9 @@ const SmallScreen: React.FC<Props> = ({
           </NavBar>
           <Main>{isLoading ? <Loading /> : children}</Main>
         </Container>
+      ) : (
+        <DrawerNav onSignOut={onSignOut} user={user} />
       )}
-      {isNavOpen && <DrawerNav onSignOut={onSignOut} user={user} />}
     </Screen>
   );
 };

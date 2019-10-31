@@ -1,26 +1,7 @@
-import {
-  initialState,
-  toggleDrawer,
-  toggleLayout,
-  toggleNav,
-} from '~/store/layout';
+import { initialState, toggleLayout, toggleNav } from '~/store/layout';
 import { mockStore } from '~/utils/testHelpers';
 
 describe('layout: actions', () => {
-  describe('toggleDrawer', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ layout: initialState });
-
-      store.dispatch(toggleDrawer(true));
-      const open = [{ type: 'OPEN_DRAWER' }];
-      expect(store.getActions()).toEqual(open);
-
-      store.dispatch(toggleDrawer(false));
-      const close = [{ type: 'OPEN_DRAWER' }, { type: 'CLOSE_DRAWER' }];
-      expect(store.getActions()).toEqual(close);
-    });
-  });
-
   describe('toggleNav', () => {
     it('should create valid action', () => {
       const store = mockStore({ layout: initialState });

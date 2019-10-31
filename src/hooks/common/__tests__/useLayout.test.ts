@@ -7,11 +7,10 @@ describe('useLayout', () => {
     const store = mockStore(initialState);
     const hook = withHook(useLayout, store);
 
-    hook.onToggleDrawer();
     hook.onToggleNav();
 
     // TODO: Add more better test cases
-    const expected = [{ type: 'OPEN_DRAWER' }, { type: 'OPEN_NAV' }];
+    const expected = [{ type: 'OPEN_NAV' }];
     expect(store.getActions()).toEqual(expected);
   });
 });

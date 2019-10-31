@@ -16,6 +16,7 @@ const env = {
     FIREBASE_API_KEY: JSON.stringify(process.env.APP_FIREBASE_API_KEY),
     FIREBASE_PROJECT_ID: JSON.stringify(process.env.APP_FIREBASE_PROJECT_ID),
     FIREBASE_AUTH_DOMAIN: JSON.stringify(process.env.APP_FIREBASE_AUTH_DOMAIN),
+    SERVICE_WORKER: JSON.stringify(process.env.APP_SERVICE_WORKER),
   },
 };
 
@@ -165,6 +166,12 @@ const serviceWorkerConfig = new GenerateSW({
     },
   ],
 });
-config.plugins.push(serviceWorkerConfig);
+
+if (
+  process.env.NODE_ENV === 'production' ||
+  process.env.APP_SERVICE_WORKER === 'enable'
+) {
+  config.plugins.push(serviceWorkerConfig);
+}
 
 module.exports = config;

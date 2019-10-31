@@ -7,6 +7,8 @@ import globalStyles from '~/config/globalStyles';
 import Routes from '~/config/Routes';
 import { store } from '~/store';
 
+import '~/serviceWorker';
+
 ReactDOM.render(
   <Provider store={store}>
     <Global styles={globalStyles} />

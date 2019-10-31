@@ -3,20 +3,14 @@ import firebase, {
   timestampFromDate,
 } from '~/utils/firebase';
 
-export interface AppError {
-  message: string;
-  fileName?: string;
-  functionName?: string;
-  stack?: string;
-}
-
 const addErrorToFirestore = async (
-  error: AppError,
+  error: Error,
 ): Promise<DocumentReference> => {
   const collection = firebase.firestore().collection('/errors');
 
   const params = {
-    ...error,
+    message: error.message,
+    stack: error.stack,
     navigator: {
       cookieEnabled: window.navigator.cookieEnabled,
       onLine: window.navigator.onLine,

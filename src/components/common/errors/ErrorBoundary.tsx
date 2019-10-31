@@ -47,15 +47,7 @@ class ErrorBoundary extends React.Component<Props, State> {
   public componentDidCatch(e: Error | null): void {
     const error = e || new Error('Something went wrong');
     this.setState({ error });
-    this.sendError(error);
-  }
-
-  private sendError(error: Error): void {
-    const params = {
-      message: error.message,
-      stack: error.stack,
-    };
-    addErrorToFirestore(params);
+    addErrorToFirestore(error);
   }
 
   public render(): React.ReactNode {

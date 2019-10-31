@@ -34,6 +34,13 @@ html,
 body {
   position: relative;
 }
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
 `);
 
 export default globalStyles;

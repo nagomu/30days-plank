@@ -9,7 +9,7 @@ const Svg = styled.svg`
   vertical-align: top;
 `;
 
-type IconName =
+export type IconName =
   | 'arrow_back'
   | 'arrow_forward'
   | 'done'

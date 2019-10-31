@@ -3,9 +3,9 @@ import * as React from 'react';
 
 import Nav from '~/components/common/layouts/Nav';
 import Loading from '~/components/common/loaders/Loading';
-import { AuthActions, AuthState } from '~/store/auth';
+import { Props } from '~/containers/common/layouts/App';
 
-const Screen = styled.div`
+const Container = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -14,7 +14,7 @@ const Screen = styled.div`
   background-color: #fff;
 `;
 
-const Container = styled.div`
+const Layout = styled.div`
   display: grid;
   position: absolute;
   top: 0;
@@ -47,18 +47,13 @@ const Main = styled.main`
   }
 `;
 
-type OwnProps = {
-  children: React.ReactNode;
-};
-type Props = OwnProps & Pick<AuthActions, 'onSignOut'> & AuthState;
-
-const App: React.FC<Props> = ({ children, onSignOut, isLoading, user }) => (
-  <Screen>
-    <Container>
+const Screen: React.FC<Props> = ({ children, onSignOut, isLoading, user }) => (
+  <Container>
+    <Layout>
       <Nav onSignOut={onSignOut} user={user} />
       <Main>{isLoading ? <Loading /> : children}</Main>
-    </Container>
-  </Screen>
+    </Layout>
+  </Container>
 );
 
-export default App;
+export default Screen;

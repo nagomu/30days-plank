@@ -1,7 +1,7 @@
-import App from '~/components/common/layouts/App';
+import Screen from '~/components/common/layouts/Screen';
 import { withProvider } from '~/utils/testHelpers';
 
-describe('App', () => {
+describe('Screen', () => {
   const mockSignOut = jest.fn();
   const props = {
     children: 'children',
@@ -12,10 +12,10 @@ describe('App', () => {
 
   it('renders correctly', () => {
     const params = {
-      Component: App,
+      Component: Screen,
       props,
     };
-    const app = withProvider(params).find('App');
+    const app = withProvider(params).find('Screen');
 
     expect(app.length).toEqual(1);
     expect(app.find('div div Nav').length).toEqual(1);
@@ -27,7 +27,7 @@ describe('App', () => {
 
   describe('if authenticated', () => {
     const params = {
-      Component: App,
+      Component: Screen,
       props: {
         ...props,
         isLoading: false,
@@ -39,7 +39,7 @@ describe('App', () => {
     };
 
     it('renders correctly', () => {
-      const app = withProvider(params).find('App');
+      const app = withProvider(params).find('Screen');
       expect(app.length).toEqual(1);
       expect(app.find('div div Nav').length).toEqual(1);
       // Should not render Loading

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-import App from '~/components/common/layouts/App';
 import Login from '~/components/specifics/login/Login';
+import App from '~/containers/common/layouts/App';
 import Archives from '~/containers/specifics/archive/Archives';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
 import Workout from '~/containers/specifics/workout/Workout';

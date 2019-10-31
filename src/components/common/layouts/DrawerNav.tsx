@@ -108,7 +108,7 @@ const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
   return (
     <Container>
       <CloseButton type="button" onClick={onToggleNav}>
-        <Avatar asButton={false} photoURL={user ? user.photoURL : undefined} />
+        <Avatar asButton={false} user={user} />
         <ForwardIcon name="arrow_forward" />
       </CloseButton>
       {user && (

@@ -51,10 +51,7 @@ const SmallScreen: React.FC<Props> = ({
       {!isNavOpen ? (
         <Container>
           <NavBar>
-            <Avatar
-              asButton={true}
-              photoURL={user ? user.photoURL : undefined}
-            />
+            <Avatar asButton={true} user={user} />
           </NavBar>
           <Main>{isLoading ? <Loading /> : children}</Main>
         </Container>

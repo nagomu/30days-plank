@@ -8,6 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
 const env = {
   'process.env': {
@@ -97,5 +98,73 @@ const config = {
     ],
   },
 };
+
+const serviceWorkerConfig = new GenerateSW({
+  cacheId: '30days-plank-challenge',
+  swDest: path.resolve(__dirname, 'public', 'sw.js'),
+  clientsClaim: true,
+  skipWaiting: true,
+  exclude: [
+    '',
+    /apple-touch-icon\.png$/,
+    /favicon\.ico$/,
+    /robots\.txt$/,
+    /static\/manifest\.json$/,
+    /static\/sw\.js$/,
+    /static\/images\/favicon-16x16\.png$/,
+    /static\/images\/favicon-32x32\.png$/,
+  ],
+  runtimeCaching: [
+    {
+      urlPattern: /\.(?:js)$/,
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'static-resources',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 5,
+          maxAgeSeconds: 30 * 24 * 60,
+          purgeOnQuotaError: true,
+        },
+      },
+    },
+    {
+      urlPattern: new RegExp('^https://ajax.googleapis.com/.*'),
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'font-loader',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
+          maxAgeSeconds: 30 * 24 * 60,
+          purgeOnQuotaError: true,
+        },
+      },
+    },
+    {
+      urlPattern: new RegExp('^https://fonts.googleapis.com.*'),
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'font-face',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
+        },
+      },
+    },
+    {
+      urlPattern: new RegExp('^https://fonts.gstatic.com/.*'),
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'fonts',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
+        },
+      },
+    },
+  ],
+});
+config.plugins.push(serviceWorkerConfig);
 
 module.exports = config;

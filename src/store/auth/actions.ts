@@ -126,7 +126,7 @@ export const onSignIn = (dispatch: Dispatch): void => {
   try {
     dispatch(signIn());
     setIsAuthenticating();
-    const provider = new firebase.auth.GithubAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
   } catch {
     // FIXME / TODO: Add error handling

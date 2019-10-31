@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import Icon from '~/components/common/icons/Icon';
+import config from '~/config';
 import { AuthActions, AuthState } from '~/store/auth';
 import rgba from '~/utils/rgba';
 
@@ -127,14 +128,12 @@ const Nav: React.FC<Props> = ({ onSignOut, user }) => (
     </Title>
     {user && (
       <Menu>
-        <Button to="/dashboard" exact role="button">
-          <Icon name="home" />
-          <ButtonText>Home</ButtonText>
-        </Button>
-        <Button to="/archives" exact role="button">
-          <Icon name="history" />
-          <ButtonText>Archives</ButtonText>
-        </Button>
+        {config.nav.map(nav => (
+          <Button key={nav.pathname} to={nav.pathname} exact role="button">
+            <Icon name={nav.icon} />
+            <ButtonText>{nav.label}</ButtonText>
+          </Button>
+        ))}
         <SignOutButton onClick={onSignOut} type="button">
           <Icon name="exit_to_app" />
           <ButtonText>Sign out</ButtonText>

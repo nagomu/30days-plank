@@ -48,7 +48,7 @@ const config = {
     new ForkTsCheckerWebpackPlugin({
       useTypescriptIncrementalApi: true,
     }),
-    new CopyWebpackPlugin([{ from: 'src/static', to: 'static/' }]),
+    new CopyWebpackPlugin([{ from: 'src/static', to: './' }]),
     new HtmlWebpackPlugin({
       inject: true,
       minify: {

@@ -61,6 +61,16 @@ const config = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(env),
   ],
+  optimization: {
+    // This is true by default in production mode.
+    // https://webpack.js.org/configuration/optimization/
+    // minimize: true,
+    splitChunks: {
+      chunks: 'all',
+      maxSize: 500000,
+    },
+    runtimeChunk: true,
+  },
   module: {
     rules: [
       {

@@ -100,6 +100,11 @@ type Props = Pick<AuthActions, 'onSignOut'> & Pick<AuthState, 'user'>;
 
 const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
   const { onToggleNav } = useLayout();
+  const onClick = (): void => {
+    onToggleNav();
+    onSignOut();
+    return;
+  };
   return (
     <Container>
       <CloseButton type="button" onClick={onToggleNav}>
@@ -120,7 +125,7 @@ const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
               <ButtonText>{nav.label}</ButtonText>
             </Button>
           ))}
-          <SignOutButton onClick={onSignOut} type="button">
+          <SignOutButton onClick={onClick} type="button">
             <Icon name="exit_to_app" />
             <ButtonText>Sign out</ButtonText>
           </SignOutButton>

@@ -5,7 +5,12 @@ import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
 import fetchAllWorkoutsFromFirestore from '~/services/firebase/fetchAllWorkoutsFromFirestore';
 import fetchWorkoutFromFirestore from '~/services/firebase/fetchWorkoutFromFirestore';
 import updateWorkoutToFirestore from '~/services/firebase/updateWorkoutToFirestore';
-import { Challenge, setChallenge, setPartialWorkout } from '~/store/challenge';
+import {
+  Challenge,
+  onFetchChallenge,
+  setChallenge,
+  setPartialWorkout,
+} from '~/store/challenge';
 import {
   ADD_WORKOUT,
   ADD_WORKOUT_SUCCESS,
@@ -149,7 +154,8 @@ export const onUpdateWorkout = async (
   try {
     await updateWorkoutToFirestore(uid, challenge.id, workout);
     dispatch(updateWorkoutSuccess());
-    onFetchWorkout(dispatch, uid, challenge.id, workout.id);
+    await onFetchWorkout(dispatch, uid, challenge.id, workout.id);
+    onFetchChallenge(dispatch, uid);
   } catch (error) {
     addErrorToFireStore(error);
   }

@@ -32,6 +32,10 @@ jest.mock('~/services/firebase/fetchAllWorkoutsFromFirestore', () =>
 jest.mock('~/services/firebase/updateWorkoutToFirestore', () =>
   jest.fn().mockReturnValue(Promise.resolve()),
 );
+// TODO: Add more better mock
+jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
+  jest.fn().mockReturnValue({ empty: true }),
+);
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
@@ -204,6 +208,13 @@ describe('workout: actions', () => {
         { type: 'UPDATE_WORKOUT_SUCCESS' },
         { type: 'FETCH_WORKOUT' },
         { type: 'FETCH_WORKOUT_SUCCESS' },
+        { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: undefined,
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });

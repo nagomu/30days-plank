@@ -108,11 +108,13 @@ export const onAuthStateChanged = (dispatch: Dispatch): void => {
   try {
     dispatch(observeAuthStateChanged());
     firebase.auth().onAuthStateChanged((user: FirebaseUser | null) => {
-      dispatch(authStateChanged());
       // TODO: Add error handling
       if (user) {
         onFetchUser(dispatch, user);
+      } else {
+        clearRedirectStorage();
       }
+      dispatch(authStateChanged());
     });
   } catch {
     // FIXME / TODO: Add error handling

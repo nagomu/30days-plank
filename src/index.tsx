@@ -1,3 +1,5 @@
+import '~/serviceWorker';
+
 import { Global } from '@emotion/core';
 import React from 'react';
 import * as ReactDOM from 'react-dom';

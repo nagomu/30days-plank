@@ -11,6 +11,7 @@ type Config = {
   FIREBASE_API_KEY?: string;
   FIREBASE_PROJECT_ID?: string;
   FIREBASE_AUTH_DOMAIN?: string;
+  SERVICE_WORKER?: string;
   nav: Nav[];
 };
 
@@ -19,6 +20,7 @@ const config: Config = {
   FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
   FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
   FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+  SERVICE_WORKER: process.env.SERVICE_WORKER,
   nav: [
     {
       icon: 'home',

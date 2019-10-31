@@ -1,6 +1,7 @@
 import { User as FirebaseUser } from 'firebase';
 import { Dispatch } from 'redux';
 
+import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
 import fetchUserFromFirestore from '~/services/firebase/fetchUserFromFirestore';
 import setUserToFirestore from '~/services/firebase/setUserToFirestore';
 import {
@@ -60,9 +61,8 @@ export const onAddUser = async (
   try {
     await setUserToFirestore(user);
     dispatch(addUserSuccess());
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: userRef.set()');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
 
   return;
@@ -97,9 +97,8 @@ export const onFetchUser = async (
       dispatch(setUser(params));
       clearRedirectStorage();
     }
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: userRef.get()');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
   return;
 };
@@ -108,7 +107,6 @@ export const onAuthStateChanged = (dispatch: Dispatch): void => {
   try {
     dispatch(observeAuthStateChanged());
     firebase.auth().onAuthStateChanged((user: FirebaseUser | null) => {
-      // TODO: Add error handling
       if (user) {
         onFetchUser(dispatch, user);
       } else {
@@ -116,9 +114,8 @@ export const onAuthStateChanged = (dispatch: Dispatch): void => {
       }
       dispatch(authStateChanged());
     });
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: firebase.auth().onAuthStateChanged');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
 
   return;
@@ -130,9 +127,8 @@ export const onSignIn = (dispatch: Dispatch): void => {
     setIsAuthenticating();
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: firebase.auth().signInWithRedirect');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
 
   return;
@@ -144,9 +140,8 @@ export const onSignOut = (dispatch: Dispatch): void => {
     dispatch(setUser(undefined));
     firebase.auth().signOut();
     clearRedirectStorage();
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: firebase.auth().signInWithRedirect');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
 
   return;

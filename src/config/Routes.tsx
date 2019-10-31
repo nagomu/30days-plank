@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
+import ErrorBoundary from '~/components/common/errors/ErrorBoundary';
+import NotFound from '~/components/common/errors/NotFound';
 import Login from '~/components/specifics/login/Login';
 import App from '~/containers/common/layouts/App';
 import Archives from '~/containers/specifics/archive/Archives';
@@ -25,28 +27,32 @@ const Routes: React.FC = () => {
         onSignOut={onSignOut}
         user={user}
       >
-        {isAuthenticatedOrWaiting ? (
-          <Switch>
-            <Route exact path="/dashboard">
-              <Dashboard user={user} />
-            </Route>
-            <Route exact path="/archives" component={Archives} />
-            <Route
-              exact
-              path="/challenges/:challengeId/workouts/:id"
-              component={Workout}
-            />
-            <Redirect to={redirectTo} />
-            <Redirect from="/" to="/dashboard" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/">
-              <Login onSignIn={onSignIn} />
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        )}
+        <ErrorBoundary>
+          {isAuthenticatedOrWaiting ? (
+            <Switch>
+              <Route exact path="/dashboard">
+                <Dashboard user={user} />
+              </Route>
+              <Route exact path="/archives" component={Archives} />
+              <Route
+                exact
+                path="/challenges/:challengeId/workouts/:id"
+                component={Workout}
+              />
+              <Redirect to={redirectTo} />
+              <Redirect from="/" to="/dashboard" />
+              <Route component={NotFound} />
+            </Switch>
+          ) : (
+            <Switch>
+              <Route exact path="/">
+                <Login onSignIn={onSignIn} />
+              </Route>
+              <Redirect to="/" />
+              <Route component={NotFound} />
+            </Switch>
+          )}
+        </ErrorBoundary>
       </App>
     </BrowserRouter>
   );

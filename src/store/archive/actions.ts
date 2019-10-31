@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
 import addArchiveToFirestore from '~/services/firebase/addArchiveToFirestore';
+import addErrorToFirestore from '~/services/firebase/addErrorToFirestore';
 import fetchArchivesFromFirestore from '~/services/firebase/fetchArchivesFromFirestore';
 import {
   ADD_ARCHIVE,
@@ -64,9 +65,8 @@ export const onFetchArchives = async (
     });
 
     dispatch(setArchives(archives));
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: fetchArchivesFromFirestore');
+  } catch (error) {
+    addErrorToFirestore(error);
   }
   return;
 };
@@ -89,9 +89,8 @@ export const onAddArchive = async (
 
     await addArchiveToFirestore(uid, params);
     dispatch(addArchiveSuccess());
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: addArchiveToFirestore');
+  } catch (error) {
+    addErrorToFirestore(error);
   }
   return;
 };

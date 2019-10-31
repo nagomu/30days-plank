@@ -52,13 +52,6 @@ export type SetWorkoutAction = {
   type: typeof SET_WORKOUT;
 };
 
-// TODO: Add error handling
-// export const FETCH_WORKOUT_FAILURE = 'FETCH_WORKOUT_FAILURE';
-// export type FetchWorkoutFailureAction = {
-//   type: typeof FETCH_WORKOUT_FAILURE;
-//   error: any;
-// };
-
 export const ADD_WORKOUT = 'ADD_WORKOUT';
 export type AddWorkoutAction = {
   type: typeof ADD_WORKOUT;
@@ -69,13 +62,6 @@ export type AddWorkoutSuccessAction = {
   type: typeof ADD_WORKOUT_SUCCESS;
 };
 
-// TODO: Add error handling
-// export const ADD_WORKOUT_FAILURE = 'ADD_WORKOUT_FAILURE';
-// export type AddWorkoutFailureAction = {
-//   type: typeof ADD_WORKOUT_FAILURE;
-//   error: any;
-// };
-
 export const UPDATE_WORKOUT = 'UPDATE_WORKOUT';
 export type UpdateWorkoutAction = {
   type: typeof UPDATE_WORKOUT;
@@ -85,13 +71,6 @@ export const UPDATE_WORKOUT_SUCCESS = 'UPDATE_WORKOUT_SUCCESS';
 export type UpdateWorkoutSuccessAction = {
   type: typeof UPDATE_WORKOUT_SUCCESS;
 };
-
-// TODO: Add error handling
-// export const UPDATE_WORKOUT_FAILURE = 'UPDATE_WORKOUT_FAILURE';
-// export type UpdateWorkoutFailureAction = {
-//   type: typeof UPDATE_WORKOUT_FAILURE;
-//   error: any;
-// };
 
 export type WorkoutActionTypes =
   | FetchWorkoutAction

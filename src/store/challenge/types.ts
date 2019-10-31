@@ -12,7 +12,6 @@ export type Challenge = {
 export type ChallengeState = {
   challenge?: Challenge;
   isLoading?: boolean;
-  // TODO: error: any
 };
 
 export type AddChallengeParams = {
@@ -44,13 +43,6 @@ export type SetChallengeAction = {
   };
 };
 
-// TODO: Add error handling
-// export const FETCH_CHALLENGE_FAILURE = 'FETCH_CHALLENGE_FAILURE';
-// export type FetchChallengeFailureAction = {
-//   type: typeof FETCH_CHALLENGE_FAILURE;
-//   error: any;
-// };
-
 // Set fetch result of individual workout
 export const SET_PARTIAL_WORKOUT = 'SET_PARTIAL_WORKOUT';
 export type SetPartialWorkoutAction = {
@@ -71,13 +63,6 @@ export type AddChallengeSuccessAction = {
   type: typeof ADD_CHALLENGE_SUCCESS;
 };
 
-// TODO: Add error handling
-// export const ADD_CHALLENGE_FAILURE = 'ADD_CHALLENGE_FAILURE';
-// export type AddChallengeFailureAction = {
-//   type: typeof ADD_CHALLENGE_FAILURE;
-//   error: any;
-// };
-
 // Start db.collection('/users/{uid}/challenges').doc().set()
 export const UPDATE_CHALLENGE = 'UPDATE_CHALLENGE';
 export type UpdateChallengeAction = {
@@ -88,13 +73,6 @@ export const UPDATE_CHALLENGE_SUCCESS = 'UPDATE_CHALLENGE_SUCCESS';
 export type UpdateChallengeSuccessAction = {
   type: typeof UPDATE_CHALLENGE_SUCCESS;
 };
-
-// TODO: Add error handling
-// export const UPDATE_CHALLENGE_FAILURE = 'UPDATE_CHALLENGE_FAILURE';
-// export type UpdateChallengeFailureAction = {
-//   type: typeof UPDATE_CHALLENGE_FAILURE;
-//   error: any;
-// };
 
 export type ChallengeActionTypes =
   | FetchChallengeAction

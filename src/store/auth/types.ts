@@ -7,7 +7,6 @@ export type User = {
 export type AuthState = {
   user?: User;
   isLoading?: boolean;
-  // TODO: error: any
 };
 
 export type AuthActions = {
@@ -56,15 +55,6 @@ export type AddUserSuccessAction = {
   type: typeof ADD_USER_SUCCESS;
 };
 
-// TODO: Add error handling
-// db.collection('/users').doc(uid).set().catch()
-//
-// export const ADD_USER_FAILURE = 'ADD_USER_FAILURE';
-// export type AddUserFailureAction = {
-//   type: typeof ADD_USER_FAILURE;
-//   error: any;
-// };
-
 // signInWithRedirect
 export const SIGN_IN = 'SIGN_IN';
 export type SignInAction = {
@@ -77,13 +67,6 @@ export const SIGN_OUT = 'SIGN_OUT';
 export type SignOutAction = {
   type: typeof SIGN_OUT;
 };
-
-// TODO: Add error handling
-//
-// export const SIGN_OUT_FAILURE = 'SIGN_OUT_FAILURE';
-// export type SignOutFailureAction = {
-//   type: typeof SIGN_OUT_FAILURE;
-// };
 
 export type AuthActionTypes =
   | ObserveAuthStateChangedAction

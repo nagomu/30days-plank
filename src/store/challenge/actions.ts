@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
 import addChallengeToFirestore from '~/services/firebase/addChallengeToFirestore';
+import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
 import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
 import fetchChallengeFromFirestore from '~/services/firebase/fetchChallengeFromFirestore';
 import updateChallengeToFirestore from '~/services/firebase/updateChallengeToFirestore';
@@ -77,9 +78,8 @@ export const onFetchChallenge = async (
       dispatch(setChallenge(challenge as Challenge));
       onFetchAllWorkouts(dispatch, uid, challenge as Challenge);
     });
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: fetchChallengeFromFirestore');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
   return;
 };
@@ -99,9 +99,8 @@ export const onAddChallenge = async (
       addWorkoutsToFirestore(uid, snapshot.id);
     }
     onFetchChallenge(dispatch, uid);
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: addChallengeToFirestore');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
   return;
 };
@@ -117,9 +116,8 @@ export const onUpdateChallenge = async (
     await updateChallengeToFirestore(uid, challenge);
     dispatch(updateChallengeSuccess());
     onFetchChallenge(dispatch, uid);
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: setChallengeToFirestore');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
   return;
 };
@@ -139,9 +137,8 @@ export const onArchiveChallenge = async (
     await onUpdateChallenge(dispatch, uid, updateParams);
     await onAddArchive(dispatch, uid, challenge.id, challenge.workouts);
     onFetchChallenge(dispatch, uid);
-  } catch {
-    // FIXME / TODO: Add error handling
-    console.error('Error: setChallengeToFirestore');
+  } catch (error) {
+    addErrorToFireStore(error);
   }
   return;
 };

@@ -29,7 +29,7 @@ const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
     <>
       {isExpired && (
         <Expired>
-          <p>This challenge seems to be out of date 😢</p>
+          <p>This challenge seems to be out of date</p>
           <p>
             <PrimaryButton onClick={onArchive}>Archive now</PrimaryButton>
           </p>

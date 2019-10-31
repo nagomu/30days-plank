@@ -9,14 +9,161 @@
     "node": ">=10.16.0",
     "yarn": ">=1.17.0"
   },
+  "scripts": {
+    "dev": "yarn sprite && NODE_ENV=development webpack-dev-server",
+    "build": "yarn clean && yarn sprite && NODE_ENV=production webpack --config webpack.config.js --mode=production",
+    "test": "NODE_ENV=test jest --env=jsdom --cache",
+    "lint": "yarn eslint && yarn stylelint",
+    "lint:fix": "yarn eslint --fix --cache && yarn stylelint",
+    "eslint": "eslint src --ext .ts,.tsx --cache --cache-location=.cache/eslint",
+    "stylelint": "stylelint src/**/*.{ts,tsx} --cache --cache-location=.cache/stylelint",
+    "sprite": "svg-sprite -s --symbol-dest=src/assets --symbol-sprite=sprite.svg src/assets/icons/*.svg",
+    "component": "hygen new component",
+    "store": "hygen new store",
+    "clean": "rimraf public"
+  },
+  "browserslist": [
+    "defaults",
+    "not ie <= 10",
+    "not op_mini all"
+  ],
+  "jest": {
+    "preset": "ts-jest",
+    "setupFiles": [
+      "<rootDir>/jest.setup.ts"
+    ],
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "^~/(.+)": "<rootDir>/src/$1"
+    }
+  },
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": [
+          "emotion"
+        ]
+      },
+      "development": {
+        "plugins": [
+          [
+            "emotion",
+            {
+              "sourceMap": true
+            }
+          ]
+        ]
+      }
+    }
+  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
   },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended",
+      "plugin:react/recommended",
+      "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+      "@typescript-eslint",
+      "simple-import-sort"
+    ],
+    "env": {
+      "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "rules": {
+      "react/prop-types": "off",
+      "simple-import-sort/sort": "error"
+    }
+  },
+  "stylelint": {
+    "processors": [
+      "stylelint-processor-styled-components"
+    ],
+    "extends": [
+      "stylelint-config-property-sort-order-smacss",
+      "stylelint-config-prettier",
+      "stylelint-config-standard"
+    ],
+    "rules": {
+      "no-empty-source": null,
+      "declaration-colon-newline-after": null
+    }
+  },
   "dependencies": {
-    "firebase": "^7.1.0"
+    "@emotion/core": "^10.0.21",
+    "@emotion/styled": "^10.0.17",
+    "firebase": "^7.1.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-redux": "^7.1.1",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.4"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "@babel/core": "^7.6.4",
+    "@types/enzyme": "^3.10.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^24.0.19",
+    "@types/react": "^16.9.9",
+    "@types/react-dom": "^16.9.2",
+    "@types/react-redux": "^7.1.4",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/redux-mock-store": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.4.0",
+    "@typescript-eslint/parser": "^2.4.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-emotion": "^10.0.21",
+    "copy-webpack-plugin": "^5.0.4",
+    "dotenv": "^8.2.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "fork-ts-checker-webpack-plugin": "^1.5.1",
+    "html-webpack-plugin": "^3.2.0",
+    "hygen": "^5.0.1",
+    "jest": "^24.9.0",
+    "jest-localstorage-mock": "^2.4.0",
+    "prettier": "^1.18.2",
+    "redux-mock-store": "^1.5.3",
+    "rimraf": "^3.0.0",
+    "stylelint": "^11.1.1",
+    "stylelint-config-prettier": "^6.0.0",
+    "stylelint-config-property-sort-order-smacss": "^5.0.0",
+    "stylelint-config-standard": "^19.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.8.0",
+    "svg-sprite": "^1.5.0",
+    "timekeeper": "^2.2.0",
+    "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.0",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
   }
 }

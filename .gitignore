@@ -1,5 +1,9 @@
 *.log
 .DS_Store
+.cache
+.env
 .node-version
+.vscode
 node_modules
 public
+src/assets/sprite.svg

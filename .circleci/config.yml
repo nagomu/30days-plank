@@ -23,7 +23,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-      - run: echo ${DOT_ENV} > ~/.env
+      - run: echo ${DOT_ENV} | base64 --decode > ~/.env
       - run: yarn install
       - run: yarn build
       - run:

@@ -1,3 +1,5 @@
+import '~/serviceWorker';
+
 import { Global } from '@emotion/core';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -6,8 +8,6 @@ import { Provider } from 'react-redux';
 import globalStyles from '~/config/globalStyles';
 import Routes from '~/config/Routes';
 import { store } from '~/store';
-
-import '~/serviceWorker';
 
 ReactDOM.render(
   <Provider store={store}>

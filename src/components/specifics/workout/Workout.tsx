@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const ButtonGroup = styled.div`
   position: absolute;
-  bottom: 64px;
+  bottom: 80px;
   left: 0;
   width: 100%;
 

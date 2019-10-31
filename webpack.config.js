@@ -25,8 +25,8 @@ const config = {
   entry: path.resolve('src/index.tsx'),
   output: {
     path: path.resolve('public'),
-    filename: 'bundle.js',
-    chunkFilename: '[name].chunk.js',
+    filename: 'bundle.[hash:8].js',
+    chunkFilename: '[name].[hash:8].chunk.js',
     publicPath: '/',
     pathinfo: false,
     devtoolModuleFilenameTemplate: info =>

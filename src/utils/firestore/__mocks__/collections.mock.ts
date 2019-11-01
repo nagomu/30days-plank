@@ -54,6 +54,7 @@ jest.mock('../collections', () => ({
       }),
     }),
   }),
+  // TODO: Add 'user doesn't exist pattern'
   users: jest.fn().mockReturnValue({
     doc: () => ({
       get: jest.fn().mockReturnValue({

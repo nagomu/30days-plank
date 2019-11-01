@@ -61,7 +61,29 @@ jest.mock('../collections', () => ({
         data: jest.fn().mockReturnValue({ uid: 'xxx' }),
         exists: true,
       }),
-      set: jest.fn().mockReturnValue(Promise.resolve()),
+      set: jest.fn().mockReturnValue(Promise.resolve),
+    }),
+  }),
+  workouts: jest.fn().mockReturnValue({
+    add: jest.fn().mockReturnValue(Promise.resolve),
+    orderBy: jest.fn().mockReturnValue({
+      get: jest.fn().mockReturnValue(
+        Promise.resolve({
+          empty: false,
+          forEach: (callback: any) =>
+            callback({
+              id: 'id',
+              data: () => ({ data: 'data' }),
+            }),
+        }),
+      ),
+    }),
+    doc: () => ({
+      get: jest.fn().mockReturnValue({
+        data: jest.fn().mockReturnValue(Promise.resolve()),
+        exists: true,
+      }),
+      update: jest.fn().mockReturnValue(Promise.resolve),
     }),
   }),
 }));

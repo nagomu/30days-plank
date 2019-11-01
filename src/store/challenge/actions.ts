@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
+import { default as templates } from '~/config/workouts';
 import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
-import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
 import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
@@ -17,8 +17,12 @@ import {
   UpdateChallengeParams,
 } from '~/store/challenge';
 import { onFetchAllWorkouts, Workout } from '~/store/workout';
-import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
-import { challenges } from '~/utils/firestore/collections';
+import {
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  timestampFromDate,
+} from '~/utils/firebase';
+import { challenges, workouts } from '~/utils/firestore/collections';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,
@@ -100,7 +104,18 @@ export const onAddChallenge = async (
     dispatch(addChallengeSuccess());
     const snapshot = await ref.get();
     if (snapshot.exists) {
-      addWorkoutsToFirestore(uid, snapshot.id);
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const date = now.getDate();
+
+      const _templates = templates.map((template, i) => ({
+        ...template,
+        scheduledDate: timestampFromDate(new Date(year, month, date + i)),
+      }));
+      _templates.forEach(
+        async params => await workouts(uid, snapshot.id).add(params),
+      );
     }
     onFetchChallenge(dispatch, uid);
   } catch (error) {

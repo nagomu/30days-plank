@@ -146,7 +146,6 @@ describe('challenge: actions', () => {
   });
 
   describe('onFetchChallenge', () => {
-    // TODO: Add more tests
     it('should create valid action', async () => {
       const store = mockStore({ challenge: initialState });
       await onFetchChallenge(store.dispatch, 'uid');
@@ -163,7 +162,6 @@ describe('challenge: actions', () => {
           },
         },
         { type: 'FETCH_ALL_WORKOUTS' },
-        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -236,8 +234,24 @@ describe('challenge: actions', () => {
         },
         { type: 'FETCH_ALL_WORKOUTS' },
         { type: 'ADD_ARCHIVE_SUCCESS' },
-        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'SET_WORKOUT' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              data: 'data',
+              id: 'id',
+              workouts: [
+                {
+                  data: 'data',
+                  id: 'id',
+                },
+              ],
+            },
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });

@@ -121,13 +121,21 @@ describe('workout: actions', () => {
       const expected = [
         { type: 'FETCH_WORKOUT' },
         { type: 'FETCH_WORKOUT_SUCCESS' },
+        {
+          type: 'SET_PARTIAL_WORKOUT',
+          payload: {
+            workout: {
+              id: undefined,
+            },
+          },
+        },
+        { type: 'SET_WORKOUT' },
       ];
       expect(store.getActions()).toEqual(expected);
     });
   });
 
   describe('onFetchAllWorkouts', () => {
-    // TODO: Add more tests
     it('should create valid action', async () => {
       const store = mockStore({ workout: initialState });
       const challenge = {
@@ -142,6 +150,24 @@ describe('workout: actions', () => {
       const expected = [
         { type: 'FETCH_ALL_WORKOUTS' },
         { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'SET_WORKOUT' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              createdAt: timestampFromDate(mockToday),
+              description: 'xxx',
+              id: 'xxx',
+              isActive: true,
+              workouts: [
+                {
+                  id: 'id',
+                  data: 'data',
+                },
+              ],
+            },
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -164,6 +190,24 @@ describe('workout: actions', () => {
         { type: 'ADD_WORKOUT_SUCCESS' },
         { type: 'FETCH_ALL_WORKOUTS' },
         { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'SET_WORKOUT' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              createdAt: timestampFromDate(mockToday),
+              description: 'xxx',
+              id: 'xxx',
+              isActive: true,
+              workouts: [
+                {
+                  id: 'id',
+                  data: 'data',
+                },
+              ],
+            },
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -190,13 +234,16 @@ describe('workout: actions', () => {
         { type: 'UPDATE_WORKOUT_SUCCESS' },
         { type: 'FETCH_WORKOUT' },
         { type: 'FETCH_WORKOUT_SUCCESS' },
-        { type: 'FETCH_CHALLENGE' },
         {
-          type: 'SET_CHALLENGE',
+          type: 'SET_PARTIAL_WORKOUT',
           payload: {
-            challenge: undefined,
+            workout: {
+              id: undefined,
+            },
           },
         },
+        { type: 'SET_WORKOUT' },
+        { type: 'FETCH_CHALLENGE' },
       ];
       expect(store.getActions()).toEqual(expected);
     });

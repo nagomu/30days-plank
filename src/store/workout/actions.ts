@@ -1,10 +1,7 @@
 import { Dispatch } from 'redux';
 
+import { default as templates } from '~/config/workouts';
 import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
-import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
-import fetchAllWorkoutsFromFirestore from '~/services/firebase/fetchAllWorkoutsFromFirestore';
-import fetchWorkoutFromFirestore from '~/services/firebase/fetchWorkoutFromFirestore';
-import updateWorkoutToFirestore from '~/services/firebase/updateWorkoutToFirestore';
 import {
   Challenge,
   onFetchChallenge,
@@ -25,7 +22,12 @@ import {
   Workout,
   WorkoutActionTypes,
 } from '~/store/workout';
-import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
+import {
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  timestampFromDate,
+} from '~/utils/firebase';
+import { workouts } from '~/utils/firestore/collections';
 
 export const fetchWorkout = (): WorkoutActionTypes => ({
   type: FETCH_WORKOUT,
@@ -72,7 +74,9 @@ export const onFetchWorkout = async (
   dispatch(fetchWorkout());
 
   try {
-    const doc = await fetchWorkoutFromFirestore(uid, challengeId, workoutId);
+    const doc = await workouts(uid, challengeId)
+      .doc(workoutId)
+      .get();
     dispatch(fetchWorkoutSuccess());
 
     const data = doc.data();
@@ -98,26 +102,25 @@ export const onFetchAllWorkouts = async (
   dispatch(fetchAllWorkouts());
 
   try {
-    const snapshot: QuerySnapshot = await fetchAllWorkoutsFromFirestore(
-      uid,
-      challenge.id,
-    );
+    const snapshot: QuerySnapshot = await workouts(uid, challenge.id)
+      .orderBy('scheduledDate', 'asc')
+      .get();
     dispatch(fetchAllWorkoutsSuccess());
     if (snapshot.empty) return;
 
     dispatch(setWorkout());
-    const workouts: Workout[] = [];
+    const results: Workout[] = [];
     snapshot.forEach((doc: QueryDocumentSnapshot): void => {
       const workout = {
         id: doc.id,
         ...doc.data(),
       };
-      workouts.push(workout as Workout);
+      results.push(workout as Workout);
     });
 
     const params = {
       ...challenge,
-      workouts: workouts.length < 1 ? challenge.workouts : workouts,
+      workouts: results.length < 1 ? challenge.workouts : results,
     };
     dispatch(setChallenge(params));
   } catch (error) {
@@ -134,7 +137,19 @@ export const onAddWorkouts = async (
   dispatch(addWorkout());
 
   try {
-    await addWorkoutsToFirestore(uid, challenge.id);
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const date = now.getDate();
+
+    const _templates = templates.map((template, i) => ({
+      ...template,
+      scheduledDate: timestampFromDate(new Date(year, month, date + i)),
+    }));
+    _templates.forEach(
+      async params => await workouts(uid, challenge.id).add(params),
+    );
+
     dispatch(addWorkoutSuccess());
     onFetchAllWorkouts(dispatch, uid, challenge);
   } catch (error) {
@@ -152,7 +167,14 @@ export const onUpdateWorkout = async (
   dispatch(updateWorkout());
 
   try {
-    await updateWorkoutToFirestore(uid, challenge.id, workout);
+    const { id, isCompleted } = workout;
+    const params = {
+      isCompleted,
+      updatedAt: timestampFromDate(new Date()),
+    };
+    await workouts(uid, challenge.id)
+      .doc(id)
+      .update(params);
     dispatch(updateWorkoutSuccess());
     await onFetchWorkout(dispatch, uid, challenge.id, workout.id);
     onFetchChallenge(dispatch, uid);

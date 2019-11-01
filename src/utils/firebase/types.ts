@@ -1,3 +1,4 @@
+export type CollectionReference = firebase.firestore.CollectionReference;
 export type DocumentReference = firebase.firestore.DocumentReference;
 export type DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 export type QuerySnapshot = firebase.firestore.QuerySnapshot;

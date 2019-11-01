@@ -1,6 +1,5 @@
 import { Dispatch } from 'redux';
 
-import addErrorToFirestore from '~/services/firebase/addErrorToFirestore';
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
@@ -19,6 +18,7 @@ import {
   timestampFromDate,
 } from '~/utils/firebase';
 import { archives } from '~/utils/firestore/collections';
+import postError from '~/utils/firestore/postError';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
@@ -64,7 +64,7 @@ export const onFetchArchives = async (
     });
     dispatch(setArchives(results));
   } catch (error) {
-    addErrorToFirestore(error);
+    postError(error);
   }
   return;
 };
@@ -88,7 +88,7 @@ export const onAddArchive = async (
     await archives(uid).add(params);
     dispatch(addArchiveSuccess());
   } catch (error) {
-    addErrorToFirestore(error);
+    postError(error);
   }
   return;
 };

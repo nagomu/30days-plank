@@ -1,7 +1,6 @@
 import { Dispatch } from 'redux';
 
 import { default as templates } from '~/config/workouts';
-import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
 import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
@@ -23,6 +22,7 @@ import {
   timestampFromDate,
 } from '~/utils/firebase';
 import { challenges, workouts } from '~/utils/firestore/collections';
+import postError from '~/utils/firestore/postError';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,
@@ -87,7 +87,7 @@ export const onFetchChallenge = async (
       onFetchAllWorkouts(dispatch, uid, challenge as Challenge);
     });
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };
@@ -119,7 +119,7 @@ export const onAddChallenge = async (
     }
     onFetchChallenge(dispatch, uid);
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };
@@ -139,7 +139,7 @@ export const onUpdateChallenge = async (
     dispatch(updateChallengeSuccess());
     onFetchChallenge(dispatch, uid);
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };
@@ -160,7 +160,7 @@ export const onArchiveChallenge = async (
     await onAddArchive(dispatch, uid, challenge.id, challenge.workouts);
     onFetchChallenge(dispatch, uid);
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };

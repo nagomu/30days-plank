@@ -1,7 +1,6 @@
 import { User as FirebaseUser } from 'firebase';
 import { Dispatch } from 'redux';
 
-import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
 import {
   ADD_USER,
   ADD_USER_SUCCESS,
@@ -16,6 +15,7 @@ import {
 } from '~/store/auth';
 import firebase from '~/utils/firebase';
 import { users } from '~/utils/firestore/collections';
+import postError from '~/utils/firestore/postError';
 import { clearRedirectStorage, setIsAuthenticating } from '~/utils/redirect';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
@@ -64,7 +64,7 @@ export const onAddUser = async (
 
     dispatch(addUserSuccess());
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
 
   return;
@@ -100,7 +100,7 @@ export const onFetchUser = async (
       clearRedirectStorage();
     }
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };
@@ -117,7 +117,7 @@ export const onAuthStateChanged = (dispatch: Dispatch): void => {
       dispatch(authStateChanged());
     });
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
 
   return;
@@ -130,7 +130,7 @@ export const onSignIn = (dispatch: Dispatch): void => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
 
   return;
@@ -143,7 +143,7 @@ export const onSignOut = (dispatch: Dispatch): void => {
     firebase.auth().signOut();
     clearRedirectStorage();
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
 
   return;

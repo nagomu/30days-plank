@@ -96,10 +96,21 @@ describe('archive: actions', () => {
 
       await onFetchArchives(store.dispatch, uid);
 
-      // TODO: Fix test
       const expected = [
         { type: 'FETCH_ARCHIVES' },
         { type: 'FETCH_ARCHIVES_SUCCESS' },
+        {
+          type: 'SET_ARCHIVES',
+          payload: {
+            archives: [
+              {
+                data: 'data',
+                id: 'id',
+              },
+            ],
+            size: 1,
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });

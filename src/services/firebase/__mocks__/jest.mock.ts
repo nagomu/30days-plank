@@ -1,17 +1,3 @@
-jest.mock('~/services/firebase/addChallengeToFirestore', () =>
-  jest.fn().mockReturnValue({
-    exists: true,
-    get: () => jest.fn().mockReturnValue({ exists: true }),
-  }),
-);
-
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-
-jest.mock('~/services/firebase/updateChallengeToFirestore');
-
 jest.mock('~/services/firebase/setUserToFirestore');
 
 jest.mock('~/services/firebase/fetchUserFromFirestore', () =>

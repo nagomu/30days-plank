@@ -1,10 +1,7 @@
 import { Dispatch } from 'redux';
 
-import addChallengeToFirestore from '~/services/firebase/addChallengeToFirestore';
 import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
 import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
-import fetchChallengeFromFirestore from '~/services/firebase/fetchChallengeFromFirestore';
-import updateChallengeToFirestore from '~/services/firebase/updateChallengeToFirestore';
 import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
@@ -21,6 +18,7 @@ import {
 } from '~/store/challenge';
 import { onFetchAllWorkouts, Workout } from '~/store/workout';
 import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
+import { challenges } from '~/utils/firestore/collections';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,
@@ -59,7 +57,12 @@ export const onFetchChallenge = async (
   dispatch(fetchChallenge());
 
   try {
-    const snapshot: QuerySnapshot = await fetchChallengeFromFirestore(uid);
+    const snapshot: QuerySnapshot = await challenges(uid)
+      .orderBy('createdAt', 'desc')
+      .where('isActive', '==', true)
+      .limit(1)
+      .get();
+
     if (snapshot.empty) {
       dispatch(setChallenge(undefined));
       return;
@@ -75,6 +78,7 @@ export const onFetchChallenge = async (
         id: doc.id,
         ...doc.data(),
       };
+
       dispatch(setChallenge(challenge as Challenge));
       onFetchAllWorkouts(dispatch, uid, challenge as Challenge);
     });
@@ -92,9 +96,9 @@ export const onAddChallenge = async (
   dispatch(addChallenge());
 
   try {
-    const challengeDoc = await addChallengeToFirestore(uid, challenge);
+    const ref = await challenges(uid).add(challenge);
     dispatch(addChallengeSuccess());
-    const snapshot = await challengeDoc.get();
+    const snapshot = await ref.get();
     if (snapshot.exists) {
       addWorkoutsToFirestore(uid, snapshot.id);
     }
@@ -113,7 +117,10 @@ export const onUpdateChallenge = async (
   dispatch(updateChallenge());
 
   try {
-    await updateChallengeToFirestore(uid, challenge);
+    await challenges(uid)
+      .doc(challenge.id)
+      .update(challenge);
+
     dispatch(updateChallengeSuccess());
     onFetchChallenge(dispatch, uid);
   } catch (error) {

@@ -156,9 +156,14 @@ describe('challenge: actions', () => {
         {
           type: 'SET_CHALLENGE',
           payload: {
-            challenge: undefined,
+            challenge: {
+              data: 'data',
+              id: 'id',
+            },
           },
         },
+        { type: 'FETCH_ALL_WORKOUTS' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -179,12 +184,6 @@ describe('challenge: actions', () => {
         { type: 'ADD_CHALLENGE' },
         { type: 'ADD_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
-        {
-          type: 'SET_CHALLENGE',
-          payload: {
-            challenge: undefined,
-          },
-        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -204,12 +203,6 @@ describe('challenge: actions', () => {
         { type: 'UPDATE_CHALLENGE' },
         { type: 'UPDATE_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
-        {
-          type: 'SET_CHALLENGE',
-          payload: {
-            challenge: undefined,
-          },
-        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -231,21 +224,20 @@ describe('challenge: actions', () => {
         { type: 'UPDATE_CHALLENGE' },
         { type: 'UPDATE_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
-        {
-          type: 'SET_CHALLENGE',
-          payload: {
-            challenge: undefined,
-          },
-        },
         { type: 'ADD_ARCHIVE' },
-        { type: 'ADD_ARCHIVE_SUCCESS' },
-        { type: 'FETCH_CHALLENGE' },
         {
           type: 'SET_CHALLENGE',
           payload: {
-            challenge: undefined,
+            challenge: {
+              data: 'data',
+              id: 'id',
+            },
           },
         },
+        { type: 'FETCH_ALL_WORKOUTS' },
+        { type: 'ADD_ARCHIVE_SUCCESS' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'FETCH_CHALLENGE' },
       ];
       expect(store.getActions()).toEqual(expected);
     });

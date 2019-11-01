@@ -1,9 +1,3 @@
-jest.mock('~/services/firebase/addArchiveToFirestore');
-
-jest.mock('~/services/firebase/fetchArchivesFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-
 jest.mock('~/services/firebase/addChallengeToFirestore', () =>
   jest.fn().mockReturnValue({
     exists: true,

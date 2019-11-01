@@ -21,7 +21,7 @@ const CloseButton = styled.button`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 48px;
+  height: 56px;
   margin: 0;
   padding: 8px 16px;
   border: 0;

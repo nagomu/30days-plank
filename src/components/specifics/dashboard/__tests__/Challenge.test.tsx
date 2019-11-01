@@ -72,4 +72,29 @@ describe('Challenge', () => {
 
     timekeeper.reset();
   });
+
+  it('renders start button if today', () => {
+    const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
+    timekeeper.freeze(mockToday);
+
+    const _props = {
+      ...props,
+      workouts: props.workouts.map(workout => ({
+        ...workout,
+        isCompleted: false,
+      })),
+    };
+
+    const wrapper = withProvider({
+      Component: Challenge,
+      props: _props,
+      store,
+    });
+    const startButton = wrapper.find(
+      'StartButton[pathname="/challenges/xxx/workouts/1"]',
+    );
+    expect(startButton.length).toEqual(1);
+
+    timekeeper.reset();
+  });
 });

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Label from '~/components/specifics/dashboard/Label';
+import { formatDayNumeric, formatShortMonth, isToday } from '~/utils/datetime';
 import { Timestamp } from '~/utils/firebase';
 import rgba from '~/utils/rgba';
 
@@ -60,19 +61,11 @@ type Props = {
 const Workout: React.FC<Props> = props => {
   const { isCompleted, isRest, menu, pathname, scheduledDate, title } = props;
 
-  // TODO: Refactoring
-  const formatDate = (date: number): string =>
-    new Intl.DateTimeFormat('en-US').format(date);
-  const today = scheduledDate.toDate().getTime();
-  const day = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(
-    today,
-  );
-  const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(
-    today,
-  );
-  const isToday: boolean = formatDate(Date.now()) === formatDate(today);
+  const day = formatDayNumeric(scheduledDate);
+  const month = formatShortMonth(scheduledDate);
+  const scheduledDateIsToday = isToday(scheduledDate);
 
-  const color = isToday
+  const color = scheduledDateIsToday
     ? '#1e88e5'
     : isRest
     ? rgba('#d32f2f', 0.6)

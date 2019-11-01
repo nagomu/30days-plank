@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import WrappedComponent from '~/components/specifics/workout/Workout';
 import { Status, UpdateWorkoutParams, Workout } from '~/store/workout';
+import { isToday } from '~/utils/datetime';
 
 export type Props = {
   isLoading: boolean;
@@ -102,11 +103,7 @@ class WorkoutTimer extends React.Component<Props, State> {
       timer: undefined,
     });
 
-    const formatDate = (date: number): string =>
-      new Intl.DateTimeFormat('en-US').format(date);
-    const today = workout.scheduledDate.toDate().getTime();
-
-    if (formatDate(Date.now()) === formatDate(today)) {
+    if (isToday(workout.scheduledDate)) {
       onUpdate({ id: workout.id, isCompleted: true });
     }
 

@@ -75,6 +75,7 @@
     ],
     "plugins": [
       "@typescript-eslint",
+      "react-hooks",
       "simple-import-sort"
     ],
     "env": {
@@ -92,6 +93,7 @@
     },
     "rules": {
       "react/prop-types": "off",
+      "react-hooks/rules-of-hooks": "error",
       "simple-import-sort/sort": "error"
     }
   },

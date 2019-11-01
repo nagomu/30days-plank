@@ -21,13 +21,15 @@ const Container = styled.div`
   top: 0;
   left: 0;
   grid-template-columns: 1fr;
-  grid-template-rows: 48px 1fr;
+  grid-template-rows: 56px 1fr;
   width: 100%;
   height: 100%;
 `;
 
 const NavBar = styled.header`
-  display: block;
+  display: flex;
+  align-items: center;
+  width: 100%;
   padding: 8px 16px;
   border-bottom: 1px solid #e0e0e0;
 `;

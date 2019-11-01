@@ -16,20 +16,6 @@ import {
 } from '~/store/auth';
 import { mockStore } from '~/utils/testHelpers';
 
-jest.mock('~/services/firebase/setUserToFirestore');
-jest.mock('~/services/firebase/fetchUserFromFirestore', () =>
-  jest
-    .fn()
-    .mockReturnValueOnce({
-      exists: true,
-      data: () => ({ uid: 'xxx' }),
-    })
-    .mockReturnValueOnce({
-      exists: false,
-      data: () => undefined,
-    }),
-);
-
 describe('auth: actions', () => {
   describe('observeAuthStateChanged', () => {
     it('should create valid action', () => {

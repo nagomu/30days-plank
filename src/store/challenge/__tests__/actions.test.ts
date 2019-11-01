@@ -21,21 +21,6 @@ import { mockStore } from '~/utils/testHelpers';
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
 
-jest.mock('~/services/firebase/addChallengeToFirestore', () =>
-  jest.fn().mockReturnValue({
-    exists: true,
-    get: () => jest.fn().mockReturnValue({ exists: true }),
-  }),
-);
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-jest.mock('~/services/firebase/updateChallengeToFirestore');
-jest.mock('~/services/firebase/addArchiveToFirestore', () =>
-  jest.fn().mockReturnValue(Promise.resolve()),
-);
-
 describe('challenge: actions', () => {
   describe('fetchChallenge', () => {
     it('should create valid action', () => {

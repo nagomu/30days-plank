@@ -3,11 +3,6 @@ import { timestampFromDate } from '~/utils/firebase';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withProvider } from '~/utils/testHelpers';
 
-jest.mock('~/services/firebase/fetchUserFromFirestore');
-jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-
 describe('DashboardContainer', () => {
   const props = {
     user: { uid: 'xxx' },

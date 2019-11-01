@@ -19,24 +19,6 @@ import {
 import { timestampFromDate } from '~/utils/firebase';
 import { mockStore } from '~/utils/testHelpers';
 
-jest.mock('~/services/firebase/addWorkoutsToFirestore', () =>
-  jest.fn().mockReturnValue(Promise.resolve()),
-);
-jest.mock('~/services/firebase/fetchWorkoutFromFirestore', () =>
-  jest.fn().mockReturnValue({ data: jest.fn() }),
-);
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchAllWorkoutsFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-jest.mock('~/services/firebase/updateWorkoutToFirestore', () =>
-  jest.fn().mockReturnValue(Promise.resolve()),
-);
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
 

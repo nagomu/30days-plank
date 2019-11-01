@@ -44,6 +44,22 @@ describe('Challenge', () => {
     timekeeper.reset();
   });
 
+  it('passes isToday to children correctly', () => {
+    const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
+    timekeeper.freeze(mockToday);
+
+    jest
+      .spyOn(global.Date, 'now')
+      .mockImplementationOnce(() => mockToday.valueOf());
+
+    const wrapper = withProvider({ Component: Challenge, props, store });
+    const workouts = wrapper.find('Workout');
+    expect(workouts.at(0).prop('isToday')).toEqual(true);
+    expect(wrapper.find('Workout[isToday=true]').length).toEqual(1);
+
+    timekeeper.reset();
+  });
+
   it('renders archive button if expired', () => {
     const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);

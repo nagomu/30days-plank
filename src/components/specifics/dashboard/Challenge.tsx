@@ -5,6 +5,7 @@ import PrimaryButton from '~/components/common/buttons/PrimaryButton';
 import Workout from '~/components/specifics/dashboard/Workout';
 import { useOnArchive } from '~/hooks/specifics/dashboard/useOnArchive';
 import { Workout as WorkoutType } from '~/store/workout';
+import { isToday } from '~/utils/datetime';
 
 const Expired = styled.div`
   padding: 0 16px;
@@ -24,6 +25,7 @@ type Props = {
 
 const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
   const { isExpired, onArchive } = useOnArchive();
+  const todaysWorkout = workouts.find(w => isToday(w.scheduledDate));
 
   return (
     <>
@@ -41,6 +43,7 @@ const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
             {...workout}
             key={workout.id}
             pathname={`/challenges/${challengeId}/workouts/${workout.id}`}
+            isToday={!!todaysWorkout && todaysWorkout.id === workout.id}
           />
         ))}
       </Workouts>

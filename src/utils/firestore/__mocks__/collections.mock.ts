@@ -54,5 +54,14 @@ jest.mock('../collections', () => ({
       }),
     }),
   }),
+  users: jest.fn().mockReturnValue({
+    doc: () => ({
+      get: jest.fn().mockReturnValue({
+        data: jest.fn().mockReturnValue({ uid: 'xxx' }),
+        exists: true,
+      }),
+      set: jest.fn().mockReturnValue(Promise.resolve()),
+    }),
+  }),
 }));
 /* eslint-enable */

@@ -2,8 +2,6 @@ import { User as FirebaseUser } from 'firebase';
 import { Dispatch } from 'redux';
 
 import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
-import fetchUserFromFirestore from '~/services/firebase/fetchUserFromFirestore';
-import setUserToFirestore from '~/services/firebase/setUserToFirestore';
 import {
   ADD_USER,
   ADD_USER_SUCCESS,
@@ -17,6 +15,7 @@ import {
   User,
 } from '~/store/auth';
 import firebase from '~/utils/firebase';
+import { users } from '~/utils/firestore/collections';
 import { clearRedirectStorage, setIsAuthenticating } from '~/utils/redirect';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
@@ -59,7 +58,10 @@ export const onAddUser = async (
   dispatch(addUser());
 
   try {
-    await setUserToFirestore(user);
+    await users()
+      .doc()
+      .set(user);
+
     dispatch(addUserSuccess());
   } catch (error) {
     addErrorToFireStore(error);
@@ -75,10 +77,10 @@ export const onFetchUser = async (
   dispatch(fetchUser());
 
   try {
-    const doc = await fetchUserFromFirestore(user.uid);
-    // NOTE: firebase.firestore.DocumentData
-    // [field: string]: any
-    // ref: https://firebase.google.com/docs/reference/js/firebase.firestore.html#document-data
+    const doc = await users()
+      .doc(user.uid)
+      .get();
+
     const data = doc.data();
 
     if (!doc.exists || !data) {

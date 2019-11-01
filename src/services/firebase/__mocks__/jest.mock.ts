@@ -1,18 +1,3 @@
-jest.mock('~/services/firebase/setUserToFirestore');
-
-jest.mock('~/services/firebase/fetchUserFromFirestore', () =>
-  jest
-    .fn()
-    .mockReturnValueOnce({
-      exists: true,
-      data: () => ({ uid: 'xxx' }),
-    })
-    .mockReturnValueOnce({
-      exists: false,
-      data: () => undefined,
-    }),
-);
-
 jest.mock('~/services/firebase/addWorkoutsToFirestore', () =>
   jest.fn().mockReturnValue(Promise.resolve()),
 );

@@ -5,6 +5,7 @@
 .firebase
 .node-version
 .vscode
+coverage
 node_modules
 public
 src/assets/sprite.svg

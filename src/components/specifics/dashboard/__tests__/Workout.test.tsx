@@ -12,6 +12,7 @@ describe('Workout', () => {
     id: '1',
     isCompleted: true,
     isRest: false,
+    isToday: false,
     menu: 20,
     pathname: '/challenges/1/workout/1',
     scheduledDate: timestampFromDate(mockToday),
@@ -45,14 +46,11 @@ describe('Workout', () => {
 
   describe('if today', () => {
     it('renders correctly', () => {
-      jest
-        .spyOn(global.Date, 'now')
-        .mockImplementationOnce(() => mockToday.valueOf());
-
       const params = {
         Component: Workout,
         props: {
           ...props,
+          isToday: true,
           scheduledDate: timestampFromDate(mockToday),
         },
       };

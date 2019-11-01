@@ -34,7 +34,6 @@
       "<rootDir>/jest.setup.ts"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/services/firebase/__mocks__/jest.mock.ts",
       "<rootDir>/src/utils/firestore/__mocks__/collections.mock.ts"
     ],
     "testEnvironment": "node",

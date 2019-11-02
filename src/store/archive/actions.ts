@@ -1,8 +1,5 @@
 import { Dispatch } from 'redux';
 
-import addArchiveToFirestore from '~/services/firebase/addArchiveToFirestore';
-import addErrorToFirestore from '~/services/firebase/addErrorToFirestore';
-import fetchArchivesFromFirestore from '~/services/firebase/fetchArchivesFromFirestore';
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
@@ -20,6 +17,8 @@ import {
   QuerySnapshot,
   timestampFromDate,
 } from '~/utils/firebase';
+import { archives } from '~/utils/firestore/collections';
+import postError from '~/utils/firestore/postError';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
@@ -52,21 +51,20 @@ export const onFetchArchives = async (
   dispatch(fetchArchives());
 
   try {
-    const snapshot: QuerySnapshot = await fetchArchivesFromFirestore(uid);
+    const snapshot: QuerySnapshot = await archives(uid).get();
     dispatch(fetchArchivesSuccess());
     if (snapshot.empty) return;
 
-    const archives: Archive[] = [];
+    const results: Archive[] = [];
     snapshot.forEach((doc: QueryDocumentSnapshot) => {
-      archives.push({
+      results.push({
         id: doc.id,
         ...doc.data(),
       } as Archive);
     });
-
-    dispatch(setArchives(archives));
+    dispatch(setArchives(results));
   } catch (error) {
-    addErrorToFirestore(error);
+    postError(error);
   }
   return;
 };
@@ -87,10 +85,10 @@ export const onAddArchive = async (
       createdAt: timestampFromDate(new Date()),
     };
 
-    await addArchiveToFirestore(uid, params);
+    await archives(uid).add(params);
     dispatch(addArchiveSuccess());
   } catch (error) {
-    addErrorToFirestore(error);
+    postError(error);
   }
   return;
 };

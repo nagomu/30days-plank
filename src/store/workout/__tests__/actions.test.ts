@@ -19,24 +19,6 @@ import {
 import { timestampFromDate } from '~/utils/firebase';
 import { mockStore } from '~/utils/testHelpers';
 
-jest.mock('~/services/firebase/addWorkoutsToFirestore', () =>
-  jest.fn().mockReturnValue(Promise.resolve()),
-);
-jest.mock('~/services/firebase/fetchWorkoutFromFirestore', () =>
-  jest.fn().mockReturnValue({ data: jest.fn() }),
-);
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchAllWorkoutsFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-jest.mock('~/services/firebase/updateWorkoutToFirestore', () =>
-  jest.fn().mockReturnValue(Promise.resolve()),
-);
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
 
@@ -139,13 +121,21 @@ describe('workout: actions', () => {
       const expected = [
         { type: 'FETCH_WORKOUT' },
         { type: 'FETCH_WORKOUT_SUCCESS' },
+        {
+          type: 'SET_PARTIAL_WORKOUT',
+          payload: {
+            workout: {
+              id: undefined,
+            },
+          },
+        },
+        { type: 'SET_WORKOUT' },
       ];
       expect(store.getActions()).toEqual(expected);
     });
   });
 
   describe('onFetchAllWorkouts', () => {
-    // TODO: Add more tests
     it('should create valid action', async () => {
       const store = mockStore({ workout: initialState });
       const challenge = {
@@ -160,6 +150,24 @@ describe('workout: actions', () => {
       const expected = [
         { type: 'FETCH_ALL_WORKOUTS' },
         { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'SET_WORKOUT' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              createdAt: timestampFromDate(mockToday),
+              description: 'xxx',
+              id: 'xxx',
+              isActive: true,
+              workouts: [
+                {
+                  id: 'id',
+                  data: 'data',
+                },
+              ],
+            },
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -182,6 +190,24 @@ describe('workout: actions', () => {
         { type: 'ADD_WORKOUT_SUCCESS' },
         { type: 'FETCH_ALL_WORKOUTS' },
         { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'SET_WORKOUT' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              createdAt: timestampFromDate(mockToday),
+              description: 'xxx',
+              id: 'xxx',
+              isActive: true,
+              workouts: [
+                {
+                  id: 'id',
+                  data: 'data',
+                },
+              ],
+            },
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -208,13 +234,16 @@ describe('workout: actions', () => {
         { type: 'UPDATE_WORKOUT_SUCCESS' },
         { type: 'FETCH_WORKOUT' },
         { type: 'FETCH_WORKOUT_SUCCESS' },
-        { type: 'FETCH_CHALLENGE' },
         {
-          type: 'SET_CHALLENGE',
+          type: 'SET_PARTIAL_WORKOUT',
           payload: {
-            challenge: undefined,
+            workout: {
+              id: undefined,
+            },
           },
         },
+        { type: 'SET_WORKOUT' },
+        { type: 'FETCH_CHALLENGE' },
       ];
       expect(store.getActions()).toEqual(expected);
     });

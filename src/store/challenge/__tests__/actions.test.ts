@@ -21,21 +21,6 @@ import { mockStore } from '~/utils/testHelpers';
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
 
-jest.mock('~/services/firebase/addChallengeToFirestore', () =>
-  jest.fn().mockReturnValue({
-    exists: true,
-    get: () => jest.fn().mockReturnValue({ exists: true }),
-  }),
-);
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-jest.mock('~/services/firebase/updateChallengeToFirestore');
-jest.mock('~/services/firebase/addArchiveToFirestore', () =>
-  jest.fn().mockReturnValue(Promise.resolve()),
-);
-
 describe('challenge: actions', () => {
   describe('fetchChallenge', () => {
     it('should create valid action', () => {
@@ -161,7 +146,6 @@ describe('challenge: actions', () => {
   });
 
   describe('onFetchChallenge', () => {
-    // TODO: Add more tests
     it('should create valid action', async () => {
       const store = mockStore({ challenge: initialState });
       await onFetchChallenge(store.dispatch, 'uid');
@@ -171,9 +155,13 @@ describe('challenge: actions', () => {
         {
           type: 'SET_CHALLENGE',
           payload: {
-            challenge: undefined,
+            challenge: {
+              data: 'data',
+              id: 'id',
+            },
           },
         },
+        { type: 'FETCH_ALL_WORKOUTS' },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -194,12 +182,6 @@ describe('challenge: actions', () => {
         { type: 'ADD_CHALLENGE' },
         { type: 'ADD_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
-        {
-          type: 'SET_CHALLENGE',
-          payload: {
-            challenge: undefined,
-          },
-        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -219,12 +201,6 @@ describe('challenge: actions', () => {
         { type: 'UPDATE_CHALLENGE' },
         { type: 'UPDATE_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
-        {
-          type: 'SET_CHALLENGE',
-          payload: {
-            challenge: undefined,
-          },
-        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -246,19 +222,34 @@ describe('challenge: actions', () => {
         { type: 'UPDATE_CHALLENGE' },
         { type: 'UPDATE_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
+        { type: 'ADD_ARCHIVE' },
         {
           type: 'SET_CHALLENGE',
           payload: {
-            challenge: undefined,
+            challenge: {
+              data: 'data',
+              id: 'id',
+            },
           },
         },
-        { type: 'ADD_ARCHIVE' },
+        { type: 'FETCH_ALL_WORKOUTS' },
         { type: 'ADD_ARCHIVE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'SET_WORKOUT' },
         {
           type: 'SET_CHALLENGE',
           payload: {
-            challenge: undefined,
+            challenge: {
+              data: 'data',
+              id: 'id',
+              workouts: [
+                {
+                  data: 'data',
+                  id: 'id',
+                },
+              ],
+            },
           },
         },
       ];

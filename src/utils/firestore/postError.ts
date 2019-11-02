@@ -3,11 +3,8 @@ import firebase, {
   timestampFromDate,
 } from '~/utils/firebase';
 
-const addErrorToFirestore = async (
-  error: Error,
-): Promise<DocumentReference> => {
+const postError = async (error: Error): Promise<DocumentReference> => {
   const collection = firebase.firestore().collection('/errors');
-
   const params = {
     message: error.message,
     stack: error.stack,
@@ -21,4 +18,4 @@ const addErrorToFirestore = async (
   return await collection.add(params);
 };
 
-export default addErrorToFirestore;
+export default postError;

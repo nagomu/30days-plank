@@ -2,11 +2,6 @@ import Archives from '~/containers/specifics/archive/Archives';
 import { timestampFromDate } from '~/utils/firebase';
 import { mockStore, withProvider } from '~/utils/testHelpers';
 
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchArchivesFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-
 describe('ArchivesContainer', () => {
   const props = {
     user: { uid: 'xxx' },

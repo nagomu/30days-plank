@@ -5,19 +5,6 @@ import { timestampFromDate } from '~/utils/firebase';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withHook } from '~/utils/testHelpers';
 
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchChallengeFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-jest.mock('~/services/firebase/updateChallengeToFirestore');
-jest.mock('~/services/firebase/addArchiveToFirestore', () =>
-  jest.fn().mockReturnValue(Promise.resolve()),
-);
-// TODO: Add more better mock
-jest.mock('~/services/firebase/fetchArchivesFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-
 describe('useOnArchive', () => {
   it('returns correct values if initial state', () => {
     const state = {

@@ -1,14 +1,11 @@
 import timekeeper from 'timekeeper';
 
 import {
-  addWorkout,
-  addWorkoutSuccess,
   fetchAllWorkouts,
   fetchAllWorkoutsSuccess,
   fetchWorkout,
   fetchWorkoutSuccess,
   initialState,
-  onAddWorkouts,
   onFetchAllWorkouts,
   onFetchWorkout,
   onUpdateWorkout,
@@ -73,26 +70,6 @@ describe('workout: actions', () => {
     });
   });
 
-  describe('addWorkout', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(addWorkout());
-
-      const expected = [{ type: 'ADD_WORKOUT' }];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
-  describe('addWorkoutSuccess', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(addWorkoutSuccess());
-
-      const expected = [{ type: 'ADD_WORKOUT_SUCCESS' }];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
   describe('updateWorkout', () => {
     it('should create valid action', () => {
       const store = mockStore({ workout: initialState });
@@ -148,46 +125,6 @@ describe('workout: actions', () => {
       await onFetchAllWorkouts(store.dispatch, 'uid', challenge);
 
       const expected = [
-        { type: 'FETCH_ALL_WORKOUTS' },
-        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
-        { type: 'SET_WORKOUT' },
-        {
-          type: 'SET_CHALLENGE',
-          payload: {
-            challenge: {
-              createdAt: timestampFromDate(mockToday),
-              description: 'xxx',
-              id: 'xxx',
-              isActive: true,
-              workouts: [
-                {
-                  id: 'id',
-                  data: 'data',
-                },
-              ],
-            },
-          },
-        },
-      ];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
-  describe('onAddWorkouts', () => {
-    it('should create valid action', async () => {
-      const store = mockStore({ workout: initialState });
-      const challenge = {
-        id: 'xxx',
-        description: 'xxx',
-        isActive: true,
-        workouts: [],
-        createdAt: timestampFromDate(mockToday),
-      };
-      await onAddWorkouts(store.dispatch, 'uid', challenge);
-
-      const expected = [
-        { type: 'ADD_WORKOUT' },
-        { type: 'ADD_WORKOUT_SUCCESS' },
         { type: 'FETCH_ALL_WORKOUTS' },
         { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
         { type: 'SET_WORKOUT' },

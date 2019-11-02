@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import Icon from '~/components/common/icons/Icon';
 import { useLayout } from '~/hooks/common/useLayout';
+import { User } from '~/store/auth';
 import rgba from '~/utils/rgba';
 
 const Container = styled.div`
@@ -39,11 +40,12 @@ const Logo = styled(Icon)`
 
 type Props = {
   asButton: boolean;
-  photoURL?: string;
+  user?: User;
 };
 
-const Avatar: React.FC<Props> = ({ asButton, photoURL }) => {
+const Avatar: React.FC<Props> = ({ asButton, user }) => {
   const { onToggleNav } = useLayout();
+  const photoURL = user && user.photoURL;
 
   const ImageOrLogo = (): JSX.Element => {
     if (photoURL) return <Image src={photoURL} alt="" role="presentation" />;
@@ -53,7 +55,13 @@ const Avatar: React.FC<Props> = ({ asButton, photoURL }) => {
   return (
     <>
       {asButton ? (
-        <Button aria-label="Toggle Nav" onClick={onToggleNav} type="button">
+        <Button
+          aria-label="Toggle Nav"
+          aria-disabled={!user}
+          disabled={!user}
+          onClick={onToggleNav}
+          type="button"
+        >
           {ImageOrLogo()}
         </Button>
       ) : (

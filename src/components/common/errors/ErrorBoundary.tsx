@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
 
-import addErrorToFirestore from '~/services/firebase/addErrorToFirestore';
+import postError from '~/utils/firestore/postError';
 
 const Container = styled.div`
   display: grid;
@@ -47,7 +47,7 @@ class ErrorBoundary extends React.Component<Props, State> {
   public componentDidCatch(e: Error | null): void {
     const error = e || new Error('Something went wrong');
     this.setState({ error });
-    addErrorToFirestore(error);
+    postError(error);
   }
 
   public render(): React.ReactNode {

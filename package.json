@@ -33,6 +33,9 @@
     "setupFiles": [
       "<rootDir>/jest.setup.ts"
     ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/utils/firestore/__mocks__/collections.mock.ts"
+    ],
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/"
@@ -75,6 +78,7 @@
     ],
     "plugins": [
       "@typescript-eslint",
+      "react-hooks",
       "simple-import-sort"
     ],
     "env": {
@@ -92,6 +96,7 @@
     },
     "rules": {
       "react/prop-types": "off",
+      "react-hooks/rules-of-hooks": "error",
       "simple-import-sort/sort": "error"
     }
   },
@@ -142,6 +147,7 @@
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
     "eslint-plugin-simple-import-sort": "^4.0.0",
     "firebase-tools": "^7.6.2",
     "fork-ts-checker-webpack-plugin": "^1.5.1",

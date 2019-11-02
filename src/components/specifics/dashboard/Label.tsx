@@ -38,7 +38,7 @@ const CalendarDay = styled.span`
 
 const CalendarMonth = styled.span`
   display: block;
-  font-size: 12px;
+  font-size: 16px;
   text-align: center;
 `;
 
@@ -48,7 +48,7 @@ const Text = styled.span`
   justify-content: flex-start;
   width: 100%;
   padding: 12px 16px;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 400;
 
   @media all and (min-width: 680px) {

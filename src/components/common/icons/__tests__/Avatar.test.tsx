@@ -4,7 +4,7 @@ import { withProvider } from '~/utils/testHelpers';
 describe('Avatar', () => {
   const props = {
     asButton: false,
-    photoURL: undefined,
+    user: undefined,
   };
 
   it('renders correctly', () => {
@@ -22,16 +22,19 @@ describe('Avatar', () => {
       asButton: true,
     };
     const wrapper = withProvider({ Component: Avatar, props: _props });
-    expect(wrapper.find('Avatar button').length).toEqual(1);
+    expect(wrapper.find('Avatar button[disabled]').length).toEqual(1);
   });
 
-  it('renders correctly is photoURL exists', () => {
+  it('renders correctly if user exists', () => {
     const _props = {
       ...props,
-      photoURL: 'xxx.png',
+      user: {
+        photoURL: 'xxx.png',
+      },
     };
     const wrapper = withProvider({ Component: Avatar, props: _props });
     expect(wrapper.find('Avatar img').length).toEqual(1);
+    expect(wrapper.find('Avatar button[disabled]').length).toEqual(0);
     expect(wrapper.find('Avatar Icon[name="logo"]').length).toEqual(0);
   });
 });

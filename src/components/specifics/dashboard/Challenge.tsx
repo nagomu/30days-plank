@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 
 import PrimaryButton from '~/components/common/buttons/PrimaryButton';
+import StartButton from '~/components/specifics/dashboard/StartButton';
 import Workout from '~/components/specifics/dashboard/Workout';
 import { useOnArchive } from '~/hooks/specifics/dashboard/useOnArchive';
 import { Workout as WorkoutType } from '~/store/workout';
+import { isToday } from '~/utils/datetime';
 
 const Expired = styled.div`
   padding: 0 16px;
@@ -24,12 +26,15 @@ type Props = {
 
 const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
   const { isExpired, onArchive } = useOnArchive();
+  const todaysWorkout = workouts.find(w => isToday(w.scheduledDate));
+  const pathname = (id: string): string =>
+    `/challenges/${challengeId}/workouts/${id}`;
 
   return (
     <>
       {isExpired && (
         <Expired>
-          <p>This challenge seems to be out of date 😢</p>
+          <p>This challenge seems to be out of date</p>
           <p>
             <PrimaryButton onClick={onArchive}>Archive now</PrimaryButton>
           </p>
@@ -40,10 +45,14 @@ const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
           <Workout
             {...workout}
             key={workout.id}
-            pathname={`/challenges/${challengeId}/workouts/${workout.id}`}
+            pathname={`${pathname(workout.id)}`}
+            isToday={!!todaysWorkout && todaysWorkout.id === workout.id}
           />
         ))}
       </Workouts>
+      {!!todaysWorkout && !todaysWorkout.isCompleted && (
+        <StartButton pathname={`${pathname(todaysWorkout.id)}`} />
+      )}
     </>
   );
 };

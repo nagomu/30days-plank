@@ -21,7 +21,7 @@ const CloseButton = styled.button`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 48px;
+  height: 56px;
   margin: 0;
   padding: 8px 16px;
   border: 0;
@@ -108,7 +108,7 @@ const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
   return (
     <Container>
       <CloseButton type="button" onClick={onToggleNav}>
-        <Avatar asButton={false} photoURL={user ? user.photoURL : undefined} />
+        <Avatar asButton={false} user={user} />
         <ForwardIcon name="arrow_forward" />
       </CloseButton>
       {user && (

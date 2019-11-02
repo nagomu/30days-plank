@@ -1,10 +1,6 @@
 import { Dispatch } from 'redux';
 
-import addChallengeToFirestore from '~/services/firebase/addChallengeToFirestore';
-import addErrorToFireStore from '~/services/firebase/addErrorToFirestore';
-import addWorkoutsToFirestore from '~/services/firebase/addWorkoutsToFirestore';
-import fetchChallengeFromFirestore from '~/services/firebase/fetchChallengeFromFirestore';
-import updateChallengeToFirestore from '~/services/firebase/updateChallengeToFirestore';
+import { default as templates } from '~/config/workouts';
 import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
@@ -20,7 +16,13 @@ import {
   UpdateChallengeParams,
 } from '~/store/challenge';
 import { onFetchAllWorkouts, Workout } from '~/store/workout';
-import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
+import {
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  timestampFromDate,
+} from '~/utils/firebase';
+import { challenges, workouts } from '~/utils/firestore/collections';
+import postError from '~/utils/firestore/postError';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,
@@ -59,7 +61,12 @@ export const onFetchChallenge = async (
   dispatch(fetchChallenge());
 
   try {
-    const snapshot: QuerySnapshot = await fetchChallengeFromFirestore(uid);
+    const snapshot: QuerySnapshot = await challenges(uid)
+      .orderBy('createdAt', 'desc')
+      .where('isActive', '==', true)
+      .limit(1)
+      .get();
+
     if (snapshot.empty) {
       dispatch(setChallenge(undefined));
       return;
@@ -75,11 +82,12 @@ export const onFetchChallenge = async (
         id: doc.id,
         ...doc.data(),
       };
+
       dispatch(setChallenge(challenge as Challenge));
       onFetchAllWorkouts(dispatch, uid, challenge as Challenge);
     });
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };
@@ -92,15 +100,26 @@ export const onAddChallenge = async (
   dispatch(addChallenge());
 
   try {
-    const challengeDoc = await addChallengeToFirestore(uid, challenge);
+    const ref = await challenges(uid).add(challenge);
     dispatch(addChallengeSuccess());
-    const snapshot = await challengeDoc.get();
+    const snapshot = await ref.get();
     if (snapshot.exists) {
-      addWorkoutsToFirestore(uid, snapshot.id);
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const date = now.getDate();
+
+      const _templates = templates.map((template, i) => ({
+        ...template,
+        scheduledDate: timestampFromDate(new Date(year, month, date + i)),
+      }));
+      _templates.forEach(
+        async params => await workouts(uid, snapshot.id).add(params),
+      );
     }
     onFetchChallenge(dispatch, uid);
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };
@@ -113,11 +132,14 @@ export const onUpdateChallenge = async (
   dispatch(updateChallenge());
 
   try {
-    await updateChallengeToFirestore(uid, challenge);
+    await challenges(uid)
+      .doc(challenge.id)
+      .update(challenge);
+
     dispatch(updateChallengeSuccess());
     onFetchChallenge(dispatch, uid);
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };
@@ -138,7 +160,7 @@ export const onArchiveChallenge = async (
     await onAddArchive(dispatch, uid, challenge.id, challenge.workouts);
     onFetchChallenge(dispatch, uid);
   } catch (error) {
-    addErrorToFireStore(error);
+    postError(error);
   }
   return;
 };

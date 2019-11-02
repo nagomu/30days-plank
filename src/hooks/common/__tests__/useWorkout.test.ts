@@ -11,12 +11,6 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: (): useParams => ({ id: '1' }),
 }));
-jest.mock('~/services/firebase/fetchAllWorkoutsFromFirestore', () =>
-  jest.fn().mockReturnValue({ empty: true }),
-);
-jest.mock('~/services/firebase/updateWorkoutToFirestore', () =>
-  jest.fn().mockReturnValue(''),
-);
 
 describe('useWorkout', () => {
   it('returns correct values if initial state', () => {

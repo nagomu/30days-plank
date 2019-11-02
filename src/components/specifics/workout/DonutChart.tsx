@@ -16,7 +16,7 @@ const Container = styled.figure`
   height: 192px;
   margin: 0;
   padding: 0;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -70%);
 
   @media all and (orientation: landscape) and (max-height: 460px) {
     top: 104px;

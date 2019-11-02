@@ -1,5 +1,6 @@
 import {
   archives,
+  batchChallenges,
   challenges,
   users,
   workouts,
@@ -15,6 +16,10 @@ describe('utils: firestore', () => {
 
   it('sets correct challenges collectionPath', () => {
     expect(challenges('uid').path).toEqual('users/uid/challenges');
+  });
+
+  it('sets correct challenges collectionPath (batchChallenges)', () => {
+    expect(batchChallenges('uid').ref.path).toEqual('users/uid/challenges');
   });
 
   it('sets correct users collectionPath', () => {

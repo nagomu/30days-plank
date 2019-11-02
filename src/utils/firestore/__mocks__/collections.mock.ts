@@ -54,6 +54,14 @@ jest.mock('../collections', () => ({
       }),
     }),
   }),
+  batchChallenges: jest.fn().mockReturnValue({
+    batch: {
+      commit: jest.fn().mockReturnValue(Promise.resolve),
+      set: jest.fn(),
+    },
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    ref: { doc: () => ({ id: 'id' }) },
+  }),
   // TODO: Add 'user doesn't exist pattern'
   users: jest.fn().mockReturnValue({
     doc: () => ({
@@ -79,6 +87,7 @@ jest.mock('../collections', () => ({
       ),
     }),
     doc: () => ({
+      id: 'id',
       get: jest.fn().mockReturnValue({
         data: jest.fn().mockReturnValue(Promise.resolve()),
         exists: true,

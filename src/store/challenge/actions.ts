@@ -1,6 +1,5 @@
 import { Dispatch } from 'redux';
 
-import { default as templates } from '~/config/workouts';
 import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
@@ -15,13 +14,14 @@ import {
   UPDATE_CHALLENGE_SUCCESS,
   UpdateChallengeParams,
 } from '~/store/challenge';
+import { generateWorkoutTemplates } from '~/store/challenge/utils/generateWorkoutTemplates';
 import { onFetchAllWorkouts, Workout } from '~/store/workout';
+import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
 import {
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-  timestampFromDate,
-} from '~/utils/firebase';
-import { challenges, workouts } from '~/utils/firestore/collections';
+  batchChallenges,
+  challenges,
+  workouts,
+} from '~/utils/firestore/collections';
 import postError from '~/utils/firestore/postError';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
@@ -100,24 +100,18 @@ export const onAddChallenge = async (
   dispatch(addChallenge());
 
   try {
-    const ref = await challenges(uid).add(challenge);
-    dispatch(addChallengeSuccess());
-    const snapshot = await ref.get();
-    if (snapshot.exists) {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth();
-      const date = now.getDate();
+    const { batch, ref } = batchChallenges(uid);
+    const cid = ref.doc().id;
+    batch.set(ref.doc(cid), challenge);
+    generateWorkoutTemplates().forEach(params => {
+      const wref = workouts(uid, cid);
+      const wid = wref.doc().id;
+      batch.set(wref.doc(wid), params);
+    });
 
-      const _templates = templates.map((template, i) => ({
-        ...template,
-        scheduledDate: timestampFromDate(new Date(year, month, date + i)),
-      }));
-      _templates.forEach(
-        async params => await workouts(uid, snapshot.id).add(params),
-      );
-    }
-    onFetchChallenge(dispatch, uid);
+    await batch.commit();
+    dispatch(addChallengeSuccess());
+    await onFetchChallenge(dispatch, uid);
   } catch (error) {
     postError(error);
   }

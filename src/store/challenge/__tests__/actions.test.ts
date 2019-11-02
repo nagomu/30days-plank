@@ -182,6 +182,33 @@ describe('challenge: actions', () => {
         { type: 'ADD_CHALLENGE' },
         { type: 'ADD_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              data: 'data',
+              id: 'id',
+            },
+          },
+        },
+        { type: 'FETCH_ALL_WORKOUTS' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'SET_WORKOUT' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              data: 'data',
+              id: 'id',
+              workouts: [
+                {
+                  data: 'data',
+                  id: 'id',
+                },
+              ],
+            },
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });

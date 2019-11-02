@@ -1,6 +1,5 @@
 import { Dispatch } from 'redux';
 
-import { default as templates } from '~/config/workouts';
 import {
   Challenge,
   onFetchChallenge,
@@ -8,8 +7,6 @@ import {
   setPartialWorkout,
 } from '~/store/challenge';
 import {
-  ADD_WORKOUT,
-  ADD_WORKOUT_SUCCESS,
   FETCH_ALL_WORKOUTS,
   FETCH_ALL_WORKOUTS_SUCCESS,
   FETCH_WORKOUT,
@@ -47,14 +44,6 @@ export const fetchAllWorkoutsSuccess = (): WorkoutActionTypes => ({
 
 export const setWorkout = (): WorkoutActionTypes => ({
   type: SET_WORKOUT,
-});
-
-export const addWorkout = (): WorkoutActionTypes => ({
-  type: ADD_WORKOUT,
-});
-
-export const addWorkoutSuccess = (): WorkoutActionTypes => ({
-  type: ADD_WORKOUT_SUCCESS,
 });
 
 export const updateWorkout = (): WorkoutActionTypes => ({
@@ -123,35 +112,6 @@ export const onFetchAllWorkouts = async (
       workouts: results.length < 1 ? challenge.workouts : results,
     };
     dispatch(setChallenge(params));
-  } catch (error) {
-    postError(error);
-  }
-  return;
-};
-
-export const onAddWorkouts = async (
-  dispatch: Dispatch,
-  uid: string,
-  challenge: Challenge,
-): Promise<void> => {
-  dispatch(addWorkout());
-
-  try {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const date = now.getDate();
-
-    const _templates = templates.map((template, i) => ({
-      ...template,
-      scheduledDate: timestampFromDate(new Date(year, month, date + i)),
-    }));
-    _templates.forEach(
-      async params => await workouts(uid, challenge.id).add(params),
-    );
-
-    dispatch(addWorkoutSuccess());
-    onFetchAllWorkouts(dispatch, uid, challenge);
   } catch (error) {
     postError(error);
   }

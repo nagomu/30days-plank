@@ -1,3 +1,5 @@
+import { WorkoutTemplate } from '~/store/workout';
+
 const rest = {
   isCompleted: false,
   isRest: true,
@@ -6,7 +8,7 @@ const rest = {
   title: '',
 };
 
-const workouts = [
+export const workoutTemplate: WorkoutTemplate[] = [
   {
     isCompleted: false,
     isRest: false,
@@ -194,5 +196,3 @@ const workouts = [
     title: 'Day 30',
   },
 ];
-
-export default workouts;

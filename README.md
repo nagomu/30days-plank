@@ -1,7 +1,7 @@
 # 30days-plank
 
-This is a personal application for managing my 30 days plank challenge. 
-You can use this application, but it may be discontinued without notice :bow: 
+This is a personal application for managing my 30 days plank challenge.  
+You can use this application, but it may be discontinued without notice :bow:  
 (I hope this project won't end in a short time for my health :sweat_smile:)
 
 ## Development environment
@@ -44,7 +44,7 @@ yarn lint:fix
 
 ### Misc
 
-If you want to add icons, add those into `src/assets/icons`. 
+If you want to add icons, add those into `src/assets/icons`.  
 then, add those name to `src/components/common/icons/Icon.tsx` .
 
 You can use [`Hygen`](https://www.hygen.io/).
@@ -53,5 +53,5 @@ You can use [`Hygen`](https://www.hygen.io/).
 
 ## Contributing
 
-This is a personal project. So, Basically I recommend you fork this repository. 
+This is a personal project. So, Basically I recommend you fork this repository.  
 However, I'm very happy that you contributed through code reviews, new feature ideas and UI improvements.

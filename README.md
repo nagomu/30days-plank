@@ -1,4 +1,4 @@
-# 30days-plank
+# 30days-plank β
 
 This is a personal application for managing my 30 days plank challenge.  
 You can use this application, but it may be discontinued without notice :bow:  

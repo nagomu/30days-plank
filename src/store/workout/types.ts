@@ -18,6 +18,14 @@ export type Workout = {
   updatedAt?: Timestamp;
 };
 
+export type WorkoutTemplate = {
+  isCompleted: boolean;
+  isRest: boolean;
+  menu: number;
+  scheduledDate: Timestamp | undefined;
+  title: string;
+};
+
 export type WorkoutState = {
   isLoading?: boolean;
 };

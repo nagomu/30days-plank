@@ -35,8 +35,6 @@ const config: Config = {
   ],
 };
 
-// FIXME
-// NOTE: `Error: Your API key is invalid...`
 if (config.NODE_ENV === 'test') {
   config.FIREBASE_API_KEY = 'xxx-xxx';
   config.FIREBASE_PROJECT_ID = 'xxx';

@@ -1,5 +1,5 @@
 import { useAuth } from '~/hooks/specifics/routes/useAuth';
-import { mockStore, withHook } from '~/utils/testHelpers';
+import { mockStore, withHook } from '~/utils';
 
 describe('useAuth', () => {
   const state = {

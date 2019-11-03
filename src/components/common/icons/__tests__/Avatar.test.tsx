@@ -1,5 +1,5 @@
 import Avatar from '~/components/common/icons/Avatar';
-import { withProvider } from '~/utils/testHelpers';
+import { withProvider } from '~/utils';
 
 describe('Avatar', () => {
   const props = {

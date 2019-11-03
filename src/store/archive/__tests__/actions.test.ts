@@ -12,7 +12,7 @@ import {
   onFetchArchives,
   setArchives,
 } from '~/store/archive';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore } from '~/utils';
 
 describe('archive: actions', () => {
   describe('fetchArchives', () => {

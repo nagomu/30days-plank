@@ -1,7 +1,7 @@
 import { workoutsFactory } from '~/factories/workoutFactory';
 import { useWorkout } from '~/hooks/common/useWorkout';
 import { timestampFromDate } from '~/services/firestore';
-import { mockStore, withHook } from '~/utils/testHelpers';
+import { mockStore, withHook } from '~/utils';
 
 type useParams = {
   id: string;

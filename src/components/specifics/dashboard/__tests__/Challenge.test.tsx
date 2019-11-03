@@ -3,7 +3,7 @@ import timekeeper from 'timekeeper';
 import Challenge from '~/components/specifics/dashboard/Challenge';
 import { workoutsFactory } from '~/factories/workoutFactory';
 import { timestampFromDate } from '~/services/firestore';
-import { mockStore, withProvider } from '~/utils/testHelpers';
+import { mockStore, withProvider } from '~/utils';
 
 describe('Challenge', () => {
   const props = {

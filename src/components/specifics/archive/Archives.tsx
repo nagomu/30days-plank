@@ -5,7 +5,7 @@ import * as React from 'react';
 import Icon from '~/components/common/icons/Icon';
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
 import { Archive } from '~/store/archive';
-import rgba from '~/utils/rgba';
+import { rgba } from '~/utils';
 
 const List = styled.ul`
   margin: 0;

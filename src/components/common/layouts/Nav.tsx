@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import Icon from '~/components/common/icons/Icon';
 import config from '~/config';
 import { AuthActions, AuthState } from '~/store/auth';
-import rgba from '~/utils/rgba';
+import { rgba } from '~/utils';
 
 const Container = styled.div`
   display: flex;

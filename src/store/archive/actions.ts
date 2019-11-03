@@ -12,7 +12,7 @@ import {
   SET_ARCHIVES,
 } from '~/store/archive';
 import { Workout } from '~/store/workout';
-import { formatUS } from '~/utils/datetime';
+import { formatUS } from '~/utils';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,

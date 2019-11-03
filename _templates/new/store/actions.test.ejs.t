@@ -13,7 +13,7 @@ import {
   initialState,
   set<%= camelized %>,
 } from '~/store/<%= name %>';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore } from '~/utils';
 
 describe('<%= name %>: actions', () => {
   describe('fetch<%= camelized %>', () => {

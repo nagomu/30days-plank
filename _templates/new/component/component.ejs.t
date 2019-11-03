@@ -7,7 +7,7 @@ to: src/components/<%= type %>/<%= sub %>/<%= h.inflection.camelize(name) %>.tsx
 import styled from '@emotion/styled';
 import * as React from 'react';
 
-import rgba from '~/utils/rgba';
+import { rgba } from '~/utils';
 
 const Foo = styled.div``;
 const Bar = styled.div``;

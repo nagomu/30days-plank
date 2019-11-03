@@ -1,5 +1,5 @@
 import Nav from '~/components/common/layouts/Nav';
-import { withProvider } from '~/utils/testHelpers';
+import { withProvider } from '~/utils';
 
 describe('Nav', () => {
   const mockSignOut = jest.fn();

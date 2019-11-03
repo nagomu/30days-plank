@@ -4,7 +4,7 @@ import * as React from 'react';
 import Icon from '~/components/common/icons/Icon';
 import { useLayout } from '~/hooks/common/useLayout';
 import { User } from '~/store/auth';
-import rgba from '~/utils/rgba';
+import { rgba } from '~/utils';
 
 const Container = styled.div`
   display: block;

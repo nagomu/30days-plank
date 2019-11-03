@@ -96,6 +96,15 @@
       }
     },
     "rules": {
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ],
       "react/prop-types": "off",
       "react-hooks/rules-of-hooks": "error",
       "simple-import-sort/sort": "error"

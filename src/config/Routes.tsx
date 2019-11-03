@@ -30,9 +30,7 @@ const Routes: React.FC = () => {
         <ErrorBoundary>
           {currentUser() ? (
             <Switch>
-              <Route exact path="/dashboard">
-                <Dashboard user={user} />
-              </Route>
+              <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/archives" component={Archives} />
               <Route
                 exact

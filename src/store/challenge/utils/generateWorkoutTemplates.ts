@@ -1,4 +1,4 @@
-import { workoutTemplate } from '~/config/workouts';
+import { workoutTemplate } from '~/config';
 import { timestampFromDate } from '~/services/firestore';
 import { WorkoutTemplate } from '~/store/workout';
 

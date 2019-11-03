@@ -1,6 +1,6 @@
 import { css } from '@emotion/core';
 
-const globalStyles = css(`
+export const globalStyles = css(`
 *,
 *::before,
 *::after {
@@ -42,5 +42,3 @@ textarea {
   font: inherit;
 }
 `);
-
-export default globalStyles;

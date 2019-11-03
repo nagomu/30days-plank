@@ -47,4 +47,7 @@ export const firebaseConfig = {
   projectId: config.FIREBASE_PROJECT_ID,
 };
 
+export { globalStyles } from './common/globalStyles';
+export { workoutTemplate } from './specifics/workoutTemplate';
+
 export default config;

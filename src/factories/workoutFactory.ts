@@ -1,7 +1,7 @@
 import { timestampFromDate } from '~/services/firestore';
 import { Workout } from '~/store/workout';
 
-export const mockWorkouts = (): Workout[] => {
+export const workoutsFactory = (): Workout[] => {
   const arr = Array.from(Array(30), (_v, k) => k + 1);
   return arr.map(i => ({
     id: `${i}`,

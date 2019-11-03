@@ -1,4 +1,4 @@
-import rgba from '~/utils/rgba';
+import { rgba } from '~/utils';
 
 describe('utils: rgba', () => {
   it('handles hex code', () => {

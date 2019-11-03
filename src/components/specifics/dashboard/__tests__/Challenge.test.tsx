@@ -1,14 +1,14 @@
 import timekeeper from 'timekeeper';
 
 import Challenge from '~/components/specifics/dashboard/Challenge';
+import { workoutsFactory } from '~/factories/workoutFactory';
 import { timestampFromDate } from '~/services/firestore';
-import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
-import { mockStore, withProvider } from '~/utils/testHelpers';
+import { mockStore, withProvider } from '~/utils';
 
 describe('Challenge', () => {
   const props = {
     challengeId: 'xxx',
-    workouts: mockWorkouts(),
+    workouts: workoutsFactory(),
   };
 
   const state = {
@@ -22,7 +22,7 @@ describe('Challenge', () => {
       challenge: {
         id: 'xxx',
         isActive: true,
-        workouts: mockWorkouts(),
+        workouts: workoutsFactory(),
         createdAt: timestampFromDate(new Date()),
       },
       isLoading: false,

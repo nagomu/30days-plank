@@ -14,7 +14,7 @@ import {
   signIn,
   signOut,
 } from '~/store/auth';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore } from '~/utils';
 
 describe('auth: actions', () => {
   describe('observeAuthStateChanged', () => {

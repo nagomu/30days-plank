@@ -1,5 +1,5 @@
 import Screen from '~/components/common/layouts/Screen';
-import { withProvider } from '~/utils/testHelpers';
+import { withProvider } from '~/utils';
 
 describe('Screen', () => {
   const mockSignOut = jest.fn();

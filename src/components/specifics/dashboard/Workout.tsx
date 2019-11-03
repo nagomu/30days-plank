@@ -4,8 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import Label from '~/components/specifics/dashboard/Label';
 import { Timestamp } from '~/services/firebase';
-import { formatDayNumeric, formatShortMonth } from '~/utils/datetime';
-import rgba from '~/utils/rgba';
+import { formatDayNumeric, formatShortMonth, rgba } from '~/utils';
 
 type ContainerProps = {
   className?: string;

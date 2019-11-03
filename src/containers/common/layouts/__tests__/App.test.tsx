@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
 import App, { Props } from '~/containers/common/layouts/App';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore } from '~/utils';
 
 describe('AppContainer', () => {
   const props = {

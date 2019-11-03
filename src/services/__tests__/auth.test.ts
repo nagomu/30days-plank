@@ -6,9 +6,9 @@ import {
   isAuthenticationWaiting,
   setIsAuthenticating,
   setIsRedirectingIfNeed,
-} from '~/utils/redirect';
+} from '~/services/auth';
 
-describe('utils: redirect', () => {
+describe('services/auth', () => {
   const REDIRECT_TYPE = 'REDIRECT_TYPE';
   const REDIRECT_FROM = 'REDIRECT_FROM';
   const IS_AUTHENTICATING = 'isAuthenticating';

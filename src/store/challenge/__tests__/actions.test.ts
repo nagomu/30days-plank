@@ -1,10 +1,12 @@
 import timekeeper from 'timekeeper';
 
+import { workoutsFactory } from '~/factories/workoutFactory';
 import { timestampFromDate } from '~/services/firestore';
 import {
   addChallenge,
   addChallengeSuccess,
   fetchChallenge,
+  generateWorkoutTemplates,
   initialState,
   onAddChallenge,
   onArchiveChallenge,
@@ -15,8 +17,7 @@ import {
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
-import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore } from '~/utils';
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
@@ -240,7 +241,7 @@ describe('challenge: actions', () => {
         id: 'xxx',
         description: 'xxx',
         isActive: true,
-        workouts: mockWorkouts(),
+        workouts: workoutsFactory(),
         createdAt: timestampFromDate(mockToday),
       };
       await onArchiveChallenge(store.dispatch, challenge);
@@ -282,6 +283,14 @@ describe('challenge: actions', () => {
       ];
       expect(store.getActions()).toEqual(expected);
     });
+  });
+});
+
+describe('generateWorkoutTemplates', () => {
+  it('returns valid WorkoutTemplate', () => {
+    const templates = generateWorkoutTemplates();
+    expect(templates[0].title).toEqual('Day 1');
+    expect(templates[29].title).toEqual('Day 30');
   });
 });
 

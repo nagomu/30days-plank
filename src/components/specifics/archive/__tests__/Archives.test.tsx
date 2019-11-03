@@ -1,6 +1,6 @@
 import Archives from '~/components/specifics/archive/Archives';
 import { timestampFromDate } from '~/services/firestore';
-import { withProvider } from '~/utils/testHelpers';
+import { withProvider } from '~/utils';
 
 describe('Archives', () => {
   const props = {

@@ -1,6 +1,6 @@
 import Archives from '~/containers/specifics/archive/Archives';
 import { timestampFromDate } from '~/services/firestore';
-import { mockStore, withProvider } from '~/utils/testHelpers';
+import { mockStore, withProvider } from '~/utils';
 
 describe('ArchivesContainer', () => {
   const props = {

@@ -2,7 +2,7 @@ import timekeeper from 'timekeeper';
 
 import Workout from '~/components/specifics/dashboard/Workout';
 import { timestampFromDate } from '~/services/firestore';
-import { withProvider } from '~/utils/testHelpers';
+import { withProvider } from '~/utils';
 
 describe('Workout', () => {
   const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));

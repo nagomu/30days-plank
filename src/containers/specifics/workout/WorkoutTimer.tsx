@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import WrappedComponent from '~/components/specifics/workout/Workout';
 import { Status, UpdateWorkoutParams, Workout } from '~/store/workout';
-import { isToday } from '~/utils/datetime';
+import { isToday } from '~/utils';
 
 export type Props = {
   isLoading: boolean;

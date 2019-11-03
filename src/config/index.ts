@@ -35,8 +35,6 @@ const config: Config = {
   ],
 };
 
-// FIXME
-// NOTE: `Error: Your API key is invalid...`
 if (config.NODE_ENV === 'test') {
   config.FIREBASE_API_KEY = 'xxx-xxx';
   config.FIREBASE_PROJECT_ID = 'xxx';
@@ -48,5 +46,8 @@ export const firebaseConfig = {
   authDomain: config.FIREBASE_AUTH_DOMAIN,
   projectId: config.FIREBASE_PROJECT_ID,
 };
+
+export { globalStyles } from './common/globalStyles';
+export { workoutTemplate } from './specifics/workoutTemplate';
 
 export default config;

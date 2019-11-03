@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 
 import Icon from '~/components/common/icons/Icon';
-import rgba from '~/utils/rgba';
+import { rgba } from '~/utils';
 
 const Button = styled.button`
   display: block;

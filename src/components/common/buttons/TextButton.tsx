@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import rgba from '~/utils/rgba';
+import { rgba } from '~/utils';
 
 enum Color {
   primary,

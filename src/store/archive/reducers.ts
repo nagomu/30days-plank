@@ -1,18 +1,35 @@
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
+  Archive,
   ArchiveActionTypes,
   ArchiveState,
   FETCH_ARCHIVES,
   FETCH_ARCHIVES_SUCCESS,
   SET_ARCHIVES,
 } from '~/store/archive';
-import { mergeArchives } from '~/store/archive/utils/mergeArchives';
 
 export const initialState: ArchiveState = {
   archives: [],
   isLoading: undefined,
   size: undefined,
+};
+
+export const mergeArchives = (
+  state: Archive[],
+  payload: Archive[],
+): Archive[] => {
+  const mergedArchives: Archive[] = [];
+
+  const isAlreadyAdded = (id: string): boolean =>
+    !!mergedArchives.find(m => !!m.id && m.id === id);
+
+  [...state, ...payload].forEach(archive => {
+    if (isAlreadyAdded(archive.id)) return;
+    mergedArchives.push(archive);
+  });
+
+  return mergedArchives;
 };
 
 export const archiveReducer = (

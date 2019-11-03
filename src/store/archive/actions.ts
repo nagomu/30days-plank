@@ -11,9 +11,8 @@ import {
   FETCH_ARCHIVES_SUCCESS,
   SET_ARCHIVES,
 } from '~/store/archive';
-import { calculateRate } from '~/store/archive/utils/calculateRate';
-import { generateTitle } from '~/store/archive/utils/generateTitle';
 import { Workout } from '~/store/workout';
+import { formatUS } from '~/utils/datetime';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
@@ -59,6 +58,17 @@ export const onFetchArchives = async (dispatch: Dispatch): Promise<void> => {
     postError(error);
   }
   return;
+};
+
+export const calculateRate = (workouts: Workout[]): number => {
+  const completed = workouts.filter(w => w.isCompleted === true);
+  return Math.round((completed.length / workouts.length) * 100);
+};
+
+export const generateTitle = (workouts: Workout[]): string => {
+  const firstDate = workouts[0].scheduledDate;
+  const lastDate = workouts[workouts.length - 1].scheduledDate;
+  return `${formatUS(firstDate)} - ${formatUS(lastDate)}`;
 };
 
 export const onAddArchive = async (

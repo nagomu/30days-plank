@@ -2,8 +2,10 @@ import { timestampFromDate } from '~/services/firestore';
 import {
   addArchive,
   addArchiveSuccess,
+  calculateRate,
   fetchArchives,
   fetchArchivesSuccess,
+  generateTitle,
   initialState,
   onAddArchive,
   onFetchArchives,
@@ -129,5 +131,22 @@ describe('archive: actions', () => {
       ];
       expect(store.getActions()).toEqual(expected);
     });
+  });
+});
+
+describe('calculateRate', () => {
+  it('returns rate correctly', () => {
+    const workouts = mockWorkouts().map((workout, i) => ({
+      ...workout,
+      isCompleted: i === 5 || i === 10 ? false : true,
+    }));
+    expect(calculateRate(workouts)).toEqual(93);
+  });
+});
+
+describe('generateTitle', () => {
+  it('returns title correctly', () => {
+    const workouts = mockWorkouts();
+    expect(generateTitle(workouts)).toEqual('Oct 1, 2019 - Oct 30, 2019');
   });
 });

@@ -1,6 +1,6 @@
+import { workoutsFactory } from '~/factories/workoutFactory';
 import { useWorkout } from '~/hooks/common/useWorkout';
 import { timestampFromDate } from '~/services/firestore';
-import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withHook } from '~/utils/testHelpers';
 
 type useParams = {
@@ -67,7 +67,7 @@ describe('useWorkout', () => {
         challenge: {
           id: 'xxx',
           isActive: true,
-          workouts: mockWorkouts(),
+          workouts: workoutsFactory(),
           createdAt: timestampFromDate(new Date()),
         },
         isLoading: false,

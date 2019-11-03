@@ -1,5 +1,6 @@
 import timekeeper from 'timekeeper';
 
+import { workoutsFactory } from '~/factories/workoutFactory';
 import { timestampFromDate } from '~/services/firestore';
 import {
   addChallenge,
@@ -16,7 +17,6 @@ import {
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
-import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore } from '~/utils/testHelpers';
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
@@ -241,7 +241,7 @@ describe('challenge: actions', () => {
         id: 'xxx',
         description: 'xxx',
         isActive: true,
-        workouts: mockWorkouts(),
+        workouts: workoutsFactory(),
         createdAt: timestampFromDate(mockToday),
       };
       await onArchiveChallenge(store.dispatch, challenge);

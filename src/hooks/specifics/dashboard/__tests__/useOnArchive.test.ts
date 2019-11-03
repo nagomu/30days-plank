@@ -1,11 +1,11 @@
 import timekeeper from 'timekeeper';
 
+import { workoutsFactory } from '~/factories/workoutFactory';
 import {
   isExpired,
   useOnArchive,
 } from '~/hooks/specifics/dashboard/useOnArchive';
 import { timestampFromDate } from '~/services/firestore';
-import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withHook } from '~/utils/testHelpers';
 
 describe('useOnArchive', () => {
@@ -42,7 +42,7 @@ describe('useOnArchive', () => {
         challenge: {
           id: 'xxx',
           isActive: true,
-          workouts: mockWorkouts(),
+          workouts: workoutsFactory(),
           createdAt: timestampFromDate(new Date()),
         },
         isLoading: false,
@@ -72,7 +72,7 @@ describe('isExpired', () => {
     const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
 
-    const workouts = mockWorkouts();
+    const workouts = workoutsFactory();
     expect(isExpired(workouts)).toEqual(true);
 
     timekeeper.reset();
@@ -82,7 +82,7 @@ describe('isExpired', () => {
     const mockToday = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
 
-    const workouts = mockWorkouts();
+    const workouts = workoutsFactory();
     expect(isExpired(workouts)).toEqual(false);
 
     timekeeper.reset();

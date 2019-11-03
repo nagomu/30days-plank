@@ -1,3 +1,4 @@
+import { workoutsFactory } from '~/factories/workoutFactory';
 import { timestampFromDate } from '~/services/firestore';
 import {
   addArchive,
@@ -11,7 +12,6 @@ import {
   onFetchArchives,
   setArchives,
 } from '~/store/archive';
-import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore } from '~/utils/testHelpers';
 
 describe('archive: actions', () => {
@@ -119,7 +119,7 @@ describe('archive: actions', () => {
 
   describe('onAddArchive', () => {
     it('should create valid action', async () => {
-      const workouts = mockWorkouts();
+      const workouts = workoutsFactory();
       const challengeId = 'xxx';
       const store = mockStore({ archive: initialState });
 
@@ -136,7 +136,7 @@ describe('archive: actions', () => {
 
 describe('calculateRate', () => {
   it('returns rate correctly', () => {
-    const workouts = mockWorkouts().map((workout, i) => ({
+    const workouts = workoutsFactory().map((workout, i) => ({
       ...workout,
       isCompleted: i === 5 || i === 10 ? false : true,
     }));
@@ -146,7 +146,7 @@ describe('calculateRate', () => {
 
 describe('generateTitle', () => {
   it('returns title correctly', () => {
-    const workouts = mockWorkouts();
+    const workouts = workoutsFactory();
     expect(generateTitle(workouts)).toEqual('Oct 1, 2019 - Oct 30, 2019');
   });
 });

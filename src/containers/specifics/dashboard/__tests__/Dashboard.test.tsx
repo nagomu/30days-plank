@@ -1,6 +1,6 @@
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
+import { workoutsFactory } from '~/factories/workoutFactory';
 import { timestampFromDate } from '~/services/firestore';
-import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withProvider } from '~/utils/testHelpers';
 
 describe('DashboardContainer', () => {
@@ -15,7 +15,7 @@ describe('DashboardContainer', () => {
           id: 'xxx',
           isActive: true,
           scheduledDate: timestampFromDate(new Date()),
-          workouts: mockWorkouts(),
+          workouts: workoutsFactory(),
         },
         isLoading: false,
       },

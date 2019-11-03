@@ -14,7 +14,7 @@ describe('DashboardContainer', () => {
         challenge: {
           id: 'xxx',
           isActive: true,
-          sheduledDate: timestampFromDate(new Date()),
+          scheduledDate: timestampFromDate(new Date()),
           workouts: mockWorkouts(),
         },
         isLoading: false,

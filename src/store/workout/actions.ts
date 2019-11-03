@@ -51,14 +51,13 @@ export const updateWorkoutSuccess = (): WorkoutActionTypes => ({
 
 export const onFetchWorkout = async (
   dispatch: Dispatch,
-  uid: string,
   challengeId: string,
   workoutId: string,
 ): Promise<void> => {
   dispatch(fetchWorkout());
 
   try {
-    const doc = await workouts(uid, challengeId)
+    const doc = await workouts(challengeId)
       .doc(workoutId)
       .get();
     dispatch(fetchWorkoutSuccess());
@@ -80,13 +79,12 @@ export const onFetchWorkout = async (
 
 export const onFetchAllWorkouts = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: Challenge,
 ): Promise<void> => {
   dispatch(fetchAllWorkouts());
 
   try {
-    const snapshot: QuerySnapshot = await workouts(uid, challenge.id)
+    const snapshot: QuerySnapshot = await workouts(challenge.id)
       .orderBy('scheduledDate', 'asc')
       .get();
     dispatch(fetchAllWorkoutsSuccess());
@@ -115,7 +113,6 @@ export const onFetchAllWorkouts = async (
 
 export const onUpdateWorkout = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: Challenge,
   workout: UpdateWorkoutParams,
 ): Promise<void> => {
@@ -127,12 +124,12 @@ export const onUpdateWorkout = async (
       isCompleted,
       updatedAt: timestampFromDate(new Date()),
     };
-    await workouts(uid, challenge.id)
+    await workouts(challenge.id)
       .doc(id)
       .update(params);
     dispatch(updateWorkoutSuccess());
-    await onFetchWorkout(dispatch, uid, challenge.id, workout.id);
-    onFetchChallenge(dispatch, uid);
+    await onFetchWorkout(dispatch, challenge.id, workout.id);
+    onFetchChallenge(dispatch);
   } catch (error) {
     postError(error);
   }

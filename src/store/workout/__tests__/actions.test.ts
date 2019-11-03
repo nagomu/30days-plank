@@ -93,7 +93,7 @@ describe('workout: actions', () => {
   describe('onFetchWorkout', () => {
     it('should create valid action', async () => {
       const store = mockStore({ workout: initialState });
-      await onFetchWorkout(store.dispatch, 'uid', 'cid', 'wid');
+      await onFetchWorkout(store.dispatch, 'cid', 'wid');
 
       const expected = [
         { type: 'FETCH_WORKOUT' },
@@ -122,7 +122,7 @@ describe('workout: actions', () => {
         workouts: [],
         createdAt: timestampFromDate(mockToday),
       };
-      await onFetchAllWorkouts(store.dispatch, 'uid', challenge);
+      await onFetchAllWorkouts(store.dispatch, challenge);
 
       const expected = [
         { type: 'FETCH_ALL_WORKOUTS' },
@@ -164,7 +164,7 @@ describe('workout: actions', () => {
         id: 'xxx',
         isCompleted: true,
       };
-      await onUpdateWorkout(store.dispatch, 'uid', challenge, workout);
+      await onUpdateWorkout(store.dispatch, challenge, workout);
 
       const expected = [
         { type: 'UPDATE_WORKOUT' },

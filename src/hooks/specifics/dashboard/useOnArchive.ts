@@ -11,18 +11,11 @@ type useOnArchive = {
 
 export const useOnArchive = (): useOnArchive => {
   const dispatch = useDispatch();
-  const { auth, challenge } = useSelector((state: AppState) => ({
-    auth: state.auth,
-    challenge: state.challenge,
-  }));
-
-  const uid = auth.user ? auth.user.uid : undefined;
-  const workouts = challenge.challenge
-    ? challenge.challenge.workouts
-    : undefined;
+  const { challenge } = useSelector((state: AppState) => state.challenge);
+  const workouts = challenge ? challenge.workouts : undefined;
 
   return {
     isExpired: isExpired(workouts),
-    onArchive: (): void => onArchive(dispatch, uid, challenge.challenge),
+    onArchive: (): void => onArchive(dispatch, challenge),
   };
 };

@@ -54,14 +54,11 @@ export const updateChallengeSuccess = (): ChallengeActionTypes => ({
   type: UPDATE_CHALLENGE_SUCCESS,
 });
 
-export const onFetchChallenge = async (
-  dispatch: Dispatch,
-  uid: string,
-): Promise<void> => {
+export const onFetchChallenge = async (dispatch: Dispatch): Promise<void> => {
   dispatch(fetchChallenge());
 
   try {
-    const snapshot: QuerySnapshot = await challenges(uid)
+    const snapshot: QuerySnapshot = await challenges()
       .orderBy('createdAt', 'desc')
       .where('isActive', '==', true)
       .limit(1)
@@ -84,7 +81,7 @@ export const onFetchChallenge = async (
       };
 
       dispatch(setChallenge(challenge as Challenge));
-      onFetchAllWorkouts(dispatch, uid, challenge as Challenge);
+      onFetchAllWorkouts(dispatch, challenge as Challenge);
     });
   } catch (error) {
     postError(error);
@@ -94,24 +91,23 @@ export const onFetchChallenge = async (
 
 export const onAddChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: AddChallengeParams,
 ): Promise<void> => {
   dispatch(addChallenge());
 
   try {
-    const { batch, ref } = batchChallenges(uid);
+    const { batch, ref } = batchChallenges();
     const cid = ref.doc().id;
     batch.set(ref.doc(cid), challenge);
     generateWorkoutTemplates().forEach(params => {
-      const wref = workouts(uid, cid);
+      const wref = workouts(cid);
       const wid = wref.doc().id;
       batch.set(wref.doc(wid), params);
     });
 
     await batch.commit();
     dispatch(addChallengeSuccess());
-    await onFetchChallenge(dispatch, uid);
+    await onFetchChallenge(dispatch);
   } catch (error) {
     postError(error);
   }
@@ -120,18 +116,17 @@ export const onAddChallenge = async (
 
 export const onUpdateChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: UpdateChallengeParams,
 ): Promise<void> => {
   dispatch(updateChallenge());
 
   try {
-    await challenges(uid)
+    await challenges()
       .doc(challenge.id)
       .update(challenge);
 
     dispatch(updateChallengeSuccess());
-    onFetchChallenge(dispatch, uid);
+    onFetchChallenge(dispatch);
   } catch (error) {
     postError(error);
   }
@@ -140,7 +135,6 @@ export const onUpdateChallenge = async (
 
 export const onArchiveChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: Challenge,
 ): Promise<void> => {
   try {
@@ -150,9 +144,9 @@ export const onArchiveChallenge = async (
       isActive: false,
     };
 
-    await onUpdateChallenge(dispatch, uid, updateParams);
-    await onAddArchive(dispatch, uid, challenge.id, challenge.workouts);
-    onFetchChallenge(dispatch, uid);
+    await onUpdateChallenge(dispatch, updateParams);
+    await onAddArchive(dispatch, challenge.id, challenge.workouts);
+    onFetchChallenge(dispatch);
   } catch (error) {
     postError(error);
   }

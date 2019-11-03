@@ -148,7 +148,7 @@ describe('challenge: actions', () => {
   describe('onFetchChallenge', () => {
     it('should create valid action', async () => {
       const store = mockStore({ challenge: initialState });
-      await onFetchChallenge(store.dispatch, 'uid');
+      await onFetchChallenge(store.dispatch);
 
       const expected = [
         { type: 'FETCH_CHALLENGE' },
@@ -176,7 +176,7 @@ describe('challenge: actions', () => {
         createdAt: timestampFromDate(new Date(mockToday)),
         workouts: [],
       };
-      await onAddChallenge(store.dispatch, 'uid', params);
+      await onAddChallenge(store.dispatch, params);
 
       const expected = [
         { type: 'ADD_CHALLENGE' },
@@ -222,7 +222,7 @@ describe('challenge: actions', () => {
         description: 'xxx',
         isActive: true,
       };
-      await onUpdateChallenge(store.dispatch, 'uid', params);
+      await onUpdateChallenge(store.dispatch, params);
 
       const expected = [
         { type: 'UPDATE_CHALLENGE' },
@@ -243,7 +243,7 @@ describe('challenge: actions', () => {
         workouts: mockWorkouts(),
         createdAt: timestampFromDate(mockToday),
       };
-      await onArchiveChallenge(store.dispatch, 'uid', challenge);
+      await onArchiveChallenge(store.dispatch, challenge);
 
       const expected = [
         { type: 'UPDATE_CHALLENGE' },

@@ -17,7 +17,7 @@ const Workout: React.FC = () => {
   );
 
   React.useEffect(() => {
-    if (user) onFetchArchives(dispatch, user.uid);
+    if (user) onFetchArchives(dispatch);
   }, []);
 
   const isLoading = isAuthenticating !== false || isArchiveLoading !== false;

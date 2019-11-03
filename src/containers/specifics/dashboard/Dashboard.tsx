@@ -18,9 +18,8 @@ const Dashboard: React.FC = () => {
   const uid = currentUser();
 
   React.useEffect(() => {
-    console.log(uid);
     if (uid && !challenge.challenge) {
-      onFetchChallenge(dispatch, uid);
+      onFetchChallenge(dispatch);
     }
   }, []);
 
@@ -32,7 +31,7 @@ const Dashboard: React.FC = () => {
 
   const handleAddChallenge = (): void => {
     if (!uid) return;
-    onAddChallenge(dispatch, uid, params);
+    onAddChallenge(dispatch, params);
   };
 
   const isLoading = !uid || !!challenge.isLoading || !!workout.isLoading;

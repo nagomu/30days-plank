@@ -24,10 +24,6 @@ describe('useAuth', () => {
     expect(hook.isLoading).toEqual(true);
   });
 
-  it('returns isAuthenticatedOrWaiting correctly', () => {
-    expect(hook.isAuthenticatedOrWaiting).toEqual(true);
-  });
-
   it('returns isAuthenticationWaiting correctly', () => {
     expect(hook.isAuthenticationWaiting).toEqual(false);
   });

@@ -4,3 +4,4 @@ export type DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 export type QuerySnapshot = firebase.firestore.QuerySnapshot;
 export type QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
 export type Timestamp = firebase.firestore.Timestamp;
+export type WriteBatch = firebase.firestore.WriteBatch;

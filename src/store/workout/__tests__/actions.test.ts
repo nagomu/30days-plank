@@ -1,14 +1,12 @@
 import timekeeper from 'timekeeper';
 
+import { timestampFromDate } from '~/services/firestore';
 import {
-  addWorkout,
-  addWorkoutSuccess,
   fetchAllWorkouts,
   fetchAllWorkoutsSuccess,
   fetchWorkout,
   fetchWorkoutSuccess,
   initialState,
-  onAddWorkouts,
   onFetchAllWorkouts,
   onFetchWorkout,
   onUpdateWorkout,
@@ -16,7 +14,6 @@ import {
   updateWorkout,
   updateWorkoutSuccess,
 } from '~/store/workout';
-import { timestampFromDate } from '~/utils/firebase';
 import { mockStore } from '~/utils/testHelpers';
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
@@ -73,26 +70,6 @@ describe('workout: actions', () => {
     });
   });
 
-  describe('addWorkout', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(addWorkout());
-
-      const expected = [{ type: 'ADD_WORKOUT' }];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
-  describe('addWorkoutSuccess', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(addWorkoutSuccess());
-
-      const expected = [{ type: 'ADD_WORKOUT_SUCCESS' }];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
   describe('updateWorkout', () => {
     it('should create valid action', () => {
       const store = mockStore({ workout: initialState });
@@ -116,7 +93,7 @@ describe('workout: actions', () => {
   describe('onFetchWorkout', () => {
     it('should create valid action', async () => {
       const store = mockStore({ workout: initialState });
-      await onFetchWorkout(store.dispatch, 'uid', 'cid', 'wid');
+      await onFetchWorkout(store.dispatch, 'cid', 'wid');
 
       const expected = [
         { type: 'FETCH_WORKOUT' },
@@ -145,49 +122,9 @@ describe('workout: actions', () => {
         workouts: [],
         createdAt: timestampFromDate(mockToday),
       };
-      await onFetchAllWorkouts(store.dispatch, 'uid', challenge);
+      await onFetchAllWorkouts(store.dispatch, challenge);
 
       const expected = [
-        { type: 'FETCH_ALL_WORKOUTS' },
-        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
-        { type: 'SET_WORKOUT' },
-        {
-          type: 'SET_CHALLENGE',
-          payload: {
-            challenge: {
-              createdAt: timestampFromDate(mockToday),
-              description: 'xxx',
-              id: 'xxx',
-              isActive: true,
-              workouts: [
-                {
-                  id: 'id',
-                  data: 'data',
-                },
-              ],
-            },
-          },
-        },
-      ];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
-  describe('onAddWorkouts', () => {
-    it('should create valid action', async () => {
-      const store = mockStore({ workout: initialState });
-      const challenge = {
-        id: 'xxx',
-        description: 'xxx',
-        isActive: true,
-        workouts: [],
-        createdAt: timestampFromDate(mockToday),
-      };
-      await onAddWorkouts(store.dispatch, 'uid', challenge);
-
-      const expected = [
-        { type: 'ADD_WORKOUT' },
-        { type: 'ADD_WORKOUT_SUCCESS' },
         { type: 'FETCH_ALL_WORKOUTS' },
         { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
         { type: 'SET_WORKOUT' },
@@ -227,7 +164,7 @@ describe('workout: actions', () => {
         id: 'xxx',
         isCompleted: true,
       };
-      await onUpdateWorkout(store.dispatch, 'uid', challenge, workout);
+      await onUpdateWorkout(store.dispatch, challenge, workout);
 
       const expected = [
         { type: 'UPDATE_WORKOUT' },

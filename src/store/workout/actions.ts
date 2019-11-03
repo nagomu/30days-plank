@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { default as templates } from '~/config/workouts';
+import { QueryDocumentSnapshot, QuerySnapshot } from '~/services/firebase';
+import { postError, timestampFromDate, workouts } from '~/services/firestore';
 import {
   Challenge,
   onFetchChallenge,
@@ -8,8 +9,6 @@ import {
   setPartialWorkout,
 } from '~/store/challenge';
 import {
-  ADD_WORKOUT,
-  ADD_WORKOUT_SUCCESS,
   FETCH_ALL_WORKOUTS,
   FETCH_ALL_WORKOUTS_SUCCESS,
   FETCH_WORKOUT,
@@ -21,13 +20,6 @@ import {
   Workout,
   WorkoutActionTypes,
 } from '~/store/workout';
-import {
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-  timestampFromDate,
-} from '~/utils/firebase';
-import { workouts } from '~/utils/firestore/collections';
-import postError from '~/utils/firestore/postError';
 
 export const fetchWorkout = (): WorkoutActionTypes => ({
   type: FETCH_WORKOUT,
@@ -49,14 +41,6 @@ export const setWorkout = (): WorkoutActionTypes => ({
   type: SET_WORKOUT,
 });
 
-export const addWorkout = (): WorkoutActionTypes => ({
-  type: ADD_WORKOUT,
-});
-
-export const addWorkoutSuccess = (): WorkoutActionTypes => ({
-  type: ADD_WORKOUT_SUCCESS,
-});
-
 export const updateWorkout = (): WorkoutActionTypes => ({
   type: UPDATE_WORKOUT,
 });
@@ -67,14 +51,13 @@ export const updateWorkoutSuccess = (): WorkoutActionTypes => ({
 
 export const onFetchWorkout = async (
   dispatch: Dispatch,
-  uid: string,
   challengeId: string,
   workoutId: string,
 ): Promise<void> => {
   dispatch(fetchWorkout());
 
   try {
-    const doc = await workouts(uid, challengeId)
+    const doc = await workouts(challengeId)
       .doc(workoutId)
       .get();
     dispatch(fetchWorkoutSuccess());
@@ -96,13 +79,12 @@ export const onFetchWorkout = async (
 
 export const onFetchAllWorkouts = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: Challenge,
 ): Promise<void> => {
   dispatch(fetchAllWorkouts());
 
   try {
-    const snapshot: QuerySnapshot = await workouts(uid, challenge.id)
+    const snapshot: QuerySnapshot = await workouts(challenge.id)
       .orderBy('scheduledDate', 'asc')
       .get();
     dispatch(fetchAllWorkoutsSuccess());
@@ -129,38 +111,8 @@ export const onFetchAllWorkouts = async (
   return;
 };
 
-export const onAddWorkouts = async (
-  dispatch: Dispatch,
-  uid: string,
-  challenge: Challenge,
-): Promise<void> => {
-  dispatch(addWorkout());
-
-  try {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const date = now.getDate();
-
-    const _templates = templates.map((template, i) => ({
-      ...template,
-      scheduledDate: timestampFromDate(new Date(year, month, date + i)),
-    }));
-    _templates.forEach(
-      async params => await workouts(uid, challenge.id).add(params),
-    );
-
-    dispatch(addWorkoutSuccess());
-    onFetchAllWorkouts(dispatch, uid, challenge);
-  } catch (error) {
-    postError(error);
-  }
-  return;
-};
-
 export const onUpdateWorkout = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: Challenge,
   workout: UpdateWorkoutParams,
 ): Promise<void> => {
@@ -172,12 +124,12 @@ export const onUpdateWorkout = async (
       isCompleted,
       updatedAt: timestampFromDate(new Date()),
     };
-    await workouts(uid, challenge.id)
+    await workouts(challenge.id)
       .doc(id)
       .update(params);
     dispatch(updateWorkoutSuccess());
-    await onFetchWorkout(dispatch, uid, challenge.id, workout.id);
-    onFetchChallenge(dispatch, uid);
+    await onFetchWorkout(dispatch, challenge.id, workout.id);
+    onFetchChallenge(dispatch);
   } catch (error) {
     postError(error);
   }

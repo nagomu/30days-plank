@@ -3,6 +3,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
+const childProcess = require('child_process');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -59,6 +60,8 @@ const config = {
       },
       template: 'src/index.html',
       svg,
+      APP_VERSION: JSON.stringify(process.env.npm_package_version).toString().replace(/"/g,''),
+      APP_BUILD_VERSION: childProcess.execSync('git rev-parse --short HEAD').toString().trim(),
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(env),

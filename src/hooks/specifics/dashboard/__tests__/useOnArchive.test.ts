@@ -1,7 +1,7 @@
 import timekeeper from 'timekeeper';
 
 import { useOnArchive } from '~/hooks/specifics/dashboard/useOnArchive';
-import { timestampFromDate } from '~/utils/firebase';
+import { timestampFromDate } from '~/services/firestore';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withHook } from '~/utils/testHelpers';
 

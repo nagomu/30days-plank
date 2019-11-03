@@ -1,7 +1,7 @@
 import timekeeper from 'timekeeper';
 
 import Workout from '~/components/specifics/dashboard/Workout';
-import { timestampFromDate } from '~/utils/firebase';
+import { timestampFromDate } from '~/services/firestore';
 import { withProvider } from '~/utils/testHelpers';
 
 describe('Workout', () => {

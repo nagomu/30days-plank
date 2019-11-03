@@ -1,5 +1,7 @@
 import { Dispatch } from 'redux';
 
+import { QueryDocumentSnapshot, QuerySnapshot } from '~/services/firebase';
+import { archives, postError, timestampFromDate } from '~/services/firestore';
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
@@ -12,13 +14,6 @@ import {
 import { calculateRate } from '~/store/archive/utils/calculateRate';
 import { generateTitle } from '~/store/archive/utils/generateTitle';
 import { Workout } from '~/store/workout';
-import {
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-  timestampFromDate,
-} from '~/utils/firebase';
-import { archives } from '~/utils/firestore/collections';
-import postError from '~/utils/firestore/postError';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
@@ -44,14 +39,11 @@ export const addArchiveSuccess = (): ArchiveActionTypes => ({
   type: ADD_ARCHIVE_SUCCESS,
 });
 
-export const onFetchArchives = async (
-  dispatch: Dispatch,
-  uid: string,
-): Promise<void> => {
+export const onFetchArchives = async (dispatch: Dispatch): Promise<void> => {
   dispatch(fetchArchives());
 
   try {
-    const snapshot: QuerySnapshot = await archives(uid).get();
+    const snapshot: QuerySnapshot = await archives().get();
     dispatch(fetchArchivesSuccess());
     if (snapshot.empty) return;
 
@@ -71,7 +63,6 @@ export const onFetchArchives = async (
 
 export const onAddArchive = async (
   dispatch: Dispatch,
-  uid: string,
   challengeId: string,
   workouts: Workout[],
 ): Promise<void> => {
@@ -85,7 +76,7 @@ export const onAddArchive = async (
       createdAt: timestampFromDate(new Date()),
     };
 
-    await archives(uid).add(params);
+    await archives().add(params);
     dispatch(addArchiveSuccess());
   } catch (error) {
     postError(error);

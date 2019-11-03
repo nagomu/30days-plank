@@ -1,4 +1,4 @@
-import { Timestamp } from '~/utils/firebase';
+import { Timestamp } from '~/services/firebase';
 
 export enum Status {
   finish,
@@ -16,6 +16,14 @@ export type Workout = {
   scheduledDate: Timestamp;
   title: string;
   updatedAt?: Timestamp;
+};
+
+export type WorkoutTemplate = {
+  isCompleted: boolean;
+  isRest: boolean;
+  menu: number;
+  scheduledDate: Timestamp | undefined;
+  title: string;
 };
 
 export type WorkoutState = {
@@ -52,16 +60,6 @@ export type SetWorkoutAction = {
   type: typeof SET_WORKOUT;
 };
 
-export const ADD_WORKOUT = 'ADD_WORKOUT';
-export type AddWorkoutAction = {
-  type: typeof ADD_WORKOUT;
-};
-
-export const ADD_WORKOUT_SUCCESS = 'ADD_WORKOUT_SUCCESS';
-export type AddWorkoutSuccessAction = {
-  type: typeof ADD_WORKOUT_SUCCESS;
-};
-
 export const UPDATE_WORKOUT = 'UPDATE_WORKOUT';
 export type UpdateWorkoutAction = {
   type: typeof UPDATE_WORKOUT;
@@ -78,7 +76,5 @@ export type WorkoutActionTypes =
   | FetchAllWorkoutsAction
   | FetchAllWorkoutsSuccessAction
   | SetWorkoutAction
-  | AddWorkoutAction
-  | AddWorkoutSuccessAction
   | UpdateWorkoutAction
   | UpdateWorkoutSuccessAction;

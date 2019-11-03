@@ -11,7 +11,6 @@ import {
 } from '~/store/auth';
 import {
   getRedirectTo,
-  isAuthenticatedOrWaiting,
   isAuthenticationWaiting,
   RedirectState,
   setIsRedirectingIfNeed,
@@ -40,7 +39,6 @@ export const useAuth = (): UseAuth => {
   return {
     user: auth.user,
     isLoading: auth.isLoading,
-    isAuthenticatedOrWaiting: isAuthenticatedOrWaiting(auth.user),
     isAuthenticationWaiting: isAuthenticationWaiting(
       !!auth.isLoading,
       auth.user,

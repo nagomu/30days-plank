@@ -1,3 +1,4 @@
+import { timestampFromDate } from '~/services/firestore';
 import {
   addArchive,
   addArchiveSuccess,
@@ -8,7 +9,6 @@ import {
   onFetchArchives,
   setArchives,
 } from '~/store/archive';
-import { timestampFromDate } from '~/utils/firebase';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore } from '~/utils/testHelpers';
 
@@ -91,10 +91,9 @@ describe('archive: actions', () => {
 
   describe('onFetchArchives', () => {
     it('should create valid action', async () => {
-      const uid = 'xxx';
       const store = mockStore({ archive: initialState });
 
-      await onFetchArchives(store.dispatch, uid);
+      await onFetchArchives(store.dispatch);
 
       const expected = [
         { type: 'FETCH_ARCHIVES' },
@@ -119,11 +118,10 @@ describe('archive: actions', () => {
   describe('onAddArchive', () => {
     it('should create valid action', async () => {
       const workouts = mockWorkouts();
-      const uid = 'xxx';
       const challengeId = 'xxx';
       const store = mockStore({ archive: initialState });
 
-      await onAddArchive(store.dispatch, uid, challengeId, workouts);
+      await onAddArchive(store.dispatch, challengeId, workouts);
 
       const expected = [
         { type: 'ADD_ARCHIVE' },

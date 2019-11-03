@@ -1,13 +1,9 @@
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
-import { timestampFromDate } from '~/utils/firebase';
+import { timestampFromDate } from '~/services/firestore';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withProvider } from '~/utils/testHelpers';
 
 describe('DashboardContainer', () => {
-  const props = {
-    user: { uid: 'xxx' },
-  };
-
   it('renders correctly if challenge is not empty', () => {
     const store = {
       auth: {
@@ -18,7 +14,7 @@ describe('DashboardContainer', () => {
         challenge: {
           id: 'xxx',
           isActive: true,
-          sheduledDate: timestampFromDate(new Date()),
+          scheduledDate: timestampFromDate(new Date()),
           workouts: mockWorkouts(),
         },
         isLoading: false,
@@ -29,7 +25,7 @@ describe('DashboardContainer', () => {
     };
     const wrapper = withProvider({
       Component: Dashboard,
-      props,
+      props: {},
       store: mockStore(store),
     }).find('Dashboard');
 

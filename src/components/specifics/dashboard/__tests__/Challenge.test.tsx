@@ -1,7 +1,7 @@
 import timekeeper from 'timekeeper';
 
 import Challenge from '~/components/specifics/dashboard/Challenge';
-import { timestampFromDate } from '~/utils/firebase';
+import { timestampFromDate } from '~/services/firestore';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withProvider } from '~/utils/testHelpers';
 

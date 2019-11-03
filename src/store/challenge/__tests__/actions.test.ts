@@ -1,5 +1,6 @@
 import timekeeper from 'timekeeper';
 
+import { timestampFromDate } from '~/services/firestore';
 import {
   addChallenge,
   addChallengeSuccess,
@@ -14,7 +15,6 @@ import {
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
-import { timestampFromDate } from '~/utils/firebase';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore } from '~/utils/testHelpers';
 
@@ -148,7 +148,7 @@ describe('challenge: actions', () => {
   describe('onFetchChallenge', () => {
     it('should create valid action', async () => {
       const store = mockStore({ challenge: initialState });
-      await onFetchChallenge(store.dispatch, 'uid');
+      await onFetchChallenge(store.dispatch);
 
       const expected = [
         { type: 'FETCH_CHALLENGE' },
@@ -176,12 +176,39 @@ describe('challenge: actions', () => {
         createdAt: timestampFromDate(new Date(mockToday)),
         workouts: [],
       };
-      await onAddChallenge(store.dispatch, 'uid', params);
+      await onAddChallenge(store.dispatch, params);
 
       const expected = [
         { type: 'ADD_CHALLENGE' },
         { type: 'ADD_CHALLENGE_SUCCESS' },
         { type: 'FETCH_CHALLENGE' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              data: 'data',
+              id: 'id',
+            },
+          },
+        },
+        { type: 'FETCH_ALL_WORKOUTS' },
+        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
+        { type: 'SET_WORKOUT' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              data: 'data',
+              id: 'id',
+              workouts: [
+                {
+                  data: 'data',
+                  id: 'id',
+                },
+              ],
+            },
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
@@ -195,7 +222,7 @@ describe('challenge: actions', () => {
         description: 'xxx',
         isActive: true,
       };
-      await onUpdateChallenge(store.dispatch, 'uid', params);
+      await onUpdateChallenge(store.dispatch, params);
 
       const expected = [
         { type: 'UPDATE_CHALLENGE' },
@@ -216,7 +243,7 @@ describe('challenge: actions', () => {
         workouts: mockWorkouts(),
         createdAt: timestampFromDate(mockToday),
       };
-      await onArchiveChallenge(store.dispatch, 'uid', challenge);
+      await onArchiveChallenge(store.dispatch, challenge);
 
       const expected = [
         { type: 'UPDATE_CHALLENGE' },

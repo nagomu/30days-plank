@@ -1,6 +1,12 @@
 import { Dispatch } from 'redux';
 
-import { default as templates } from '~/config/workouts';
+import { QueryDocumentSnapshot, QuerySnapshot } from '~/services/firebase';
+import {
+  batchChallenges,
+  challenges,
+  postError,
+  workouts,
+} from '~/services/firestore';
 import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
@@ -15,14 +21,8 @@ import {
   UPDATE_CHALLENGE_SUCCESS,
   UpdateChallengeParams,
 } from '~/store/challenge';
+import { generateWorkoutTemplates } from '~/store/challenge/utils/generateWorkoutTemplates';
 import { onFetchAllWorkouts, Workout } from '~/store/workout';
-import {
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-  timestampFromDate,
-} from '~/utils/firebase';
-import { challenges, workouts } from '~/utils/firestore/collections';
-import postError from '~/utils/firestore/postError';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,
@@ -54,14 +54,11 @@ export const updateChallengeSuccess = (): ChallengeActionTypes => ({
   type: UPDATE_CHALLENGE_SUCCESS,
 });
 
-export const onFetchChallenge = async (
-  dispatch: Dispatch,
-  uid: string,
-): Promise<void> => {
+export const onFetchChallenge = async (dispatch: Dispatch): Promise<void> => {
   dispatch(fetchChallenge());
 
   try {
-    const snapshot: QuerySnapshot = await challenges(uid)
+    const snapshot: QuerySnapshot = await challenges()
       .orderBy('createdAt', 'desc')
       .where('isActive', '==', true)
       .limit(1)
@@ -84,7 +81,7 @@ export const onFetchChallenge = async (
       };
 
       dispatch(setChallenge(challenge as Challenge));
-      onFetchAllWorkouts(dispatch, uid, challenge as Challenge);
+      onFetchAllWorkouts(dispatch, challenge as Challenge);
     });
   } catch (error) {
     postError(error);
@@ -94,30 +91,23 @@ export const onFetchChallenge = async (
 
 export const onAddChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: AddChallengeParams,
 ): Promise<void> => {
   dispatch(addChallenge());
 
   try {
-    const ref = await challenges(uid).add(challenge);
-    dispatch(addChallengeSuccess());
-    const snapshot = await ref.get();
-    if (snapshot.exists) {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth();
-      const date = now.getDate();
+    const { batch, ref } = batchChallenges();
+    const cid = ref.doc().id;
+    batch.set(ref.doc(cid), challenge);
+    generateWorkoutTemplates().forEach(params => {
+      const wref = workouts(cid);
+      const wid = wref.doc().id;
+      batch.set(wref.doc(wid), params);
+    });
 
-      const _templates = templates.map((template, i) => ({
-        ...template,
-        scheduledDate: timestampFromDate(new Date(year, month, date + i)),
-      }));
-      _templates.forEach(
-        async params => await workouts(uid, snapshot.id).add(params),
-      );
-    }
-    onFetchChallenge(dispatch, uid);
+    await batch.commit();
+    dispatch(addChallengeSuccess());
+    await onFetchChallenge(dispatch);
   } catch (error) {
     postError(error);
   }
@@ -126,18 +116,17 @@ export const onAddChallenge = async (
 
 export const onUpdateChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: UpdateChallengeParams,
 ): Promise<void> => {
   dispatch(updateChallenge());
 
   try {
-    await challenges(uid)
+    await challenges()
       .doc(challenge.id)
       .update(challenge);
 
     dispatch(updateChallengeSuccess());
-    onFetchChallenge(dispatch, uid);
+    onFetchChallenge(dispatch);
   } catch (error) {
     postError(error);
   }
@@ -146,7 +135,6 @@ export const onUpdateChallenge = async (
 
 export const onArchiveChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: Challenge,
 ): Promise<void> => {
   try {
@@ -156,9 +144,9 @@ export const onArchiveChallenge = async (
       isActive: false,
     };
 
-    await onUpdateChallenge(dispatch, uid, updateParams);
-    await onAddArchive(dispatch, uid, challenge.id, challenge.workouts);
-    onFetchChallenge(dispatch, uid);
+    await onUpdateChallenge(dispatch, updateParams);
+    await onAddArchive(dispatch, challenge.id, challenge.workouts);
+    onFetchChallenge(dispatch);
   } catch (error) {
     postError(error);
   }

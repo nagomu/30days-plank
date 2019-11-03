@@ -1,6 +1,9 @@
 import timekeeper from 'timekeeper';
 
-import { useOnArchive } from '~/hooks/specifics/dashboard/useOnArchive';
+import {
+  isExpired,
+  useOnArchive,
+} from '~/hooks/specifics/dashboard/useOnArchive';
 import { timestampFromDate } from '~/services/firestore';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withHook } from '~/utils/testHelpers';
@@ -50,6 +53,37 @@ describe('useOnArchive', () => {
     const hook = withHook(useOnArchive, store);
     expect(hook.isExpired).toEqual(true);
     expect(hook.onArchive).not.toThrowError();
+
+    timekeeper.reset();
+  });
+});
+
+describe('isExpired', () => {
+  it('returns "false" correctly if `workouts` is undefined', () => {
+    const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
+    timekeeper.freeze(mockToday);
+
+    expect(isExpired(undefined)).toEqual(false);
+
+    timekeeper.reset();
+  });
+
+  it('returns "expired" correctly', () => {
+    const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
+    timekeeper.freeze(mockToday);
+
+    const workouts = mockWorkouts();
+    expect(isExpired(workouts)).toEqual(true);
+
+    timekeeper.reset();
+  });
+
+  it('returns "that today is before the due date" correctly', () => {
+    const mockToday = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
+    timekeeper.freeze(mockToday);
+
+    const workouts = mockWorkouts();
+    expect(isExpired(workouts)).toEqual(false);
 
     timekeeper.reset();
   });

@@ -29,6 +29,16 @@ jobs:
       - run:
           name: deploy to Firebase Hosting
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
+      - run:
+        name: merge master to develop
+        command: |
+          git config --global user.email hello@nagomu.me
+          git config --global user.name Kaoru Wada
+          git fetch origin master
+          git fetch origin develop
+          git checkout develop
+          git merge master
+          git push origin develop
 
 workflows:
   version: 2

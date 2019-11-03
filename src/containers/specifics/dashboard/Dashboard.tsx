@@ -18,7 +18,6 @@ const Dashboard: React.FC = () => {
   const uid = currentUser();
 
   React.useEffect(() => {
-    console.log(uid);
     if (uid && !challenge.challenge) {
       onFetchChallenge(dispatch, uid);
     }

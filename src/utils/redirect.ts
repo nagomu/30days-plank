@@ -6,7 +6,6 @@ const IS_AUTHENTICATING = 'isAuthenticating';
 const IS_REDIRECTING = 'isRedirecting';
 
 type RedirectState = {
-  isAuthenticatedOrWaiting: boolean;
   isAuthenticationWaiting: boolean;
   redirectTo: string;
 };
@@ -36,11 +35,6 @@ const isRedirecting = (): boolean =>
   (LocalStorage.get(REDIRECT_TYPE) === IS_REDIRECTING &&
     LocalStorage.get(REDIRECT_FROM) !== null);
 
-const isAuthenticatedOrWaiting = (user?: User): boolean => {
-  if (user) return true;
-  return isAuthenticating() || isRedirecting();
-};
-
 const isAuthenticationWaiting = (isLoading: boolean, user?: User): boolean =>
   !user && (isLoading || isAuthenticating() || isRedirecting());
 
@@ -66,7 +60,6 @@ const clearRedirectStorage = (): void => LocalStorage.remove();
 export {
   // for hooks/specifics/routes/useAuth
   getRedirectTo,
-  isAuthenticatedOrWaiting,
   isAuthenticationWaiting,
   RedirectState,
   setIsRedirectingIfNeed,

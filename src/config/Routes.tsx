@@ -9,10 +9,10 @@ import Archives from '~/containers/specifics/archive/Archives';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
 import Workout from '~/containers/specifics/workout/Workout';
 import { useAuth } from '~/hooks/specifics/routes/useAuth';
+import { currentUser } from '~/services/firebase';
 
 const Routes: React.FC = () => {
   const {
-    isAuthenticatedOrWaiting,
     isAuthenticationWaiting,
     onSignIn,
     onSignOut,
@@ -28,7 +28,7 @@ const Routes: React.FC = () => {
         user={user}
       >
         <ErrorBoundary>
-          {isAuthenticatedOrWaiting ? (
+          {currentUser() ? (
             <Switch>
               <Route exact path="/dashboard">
                 <Dashboard user={user} />

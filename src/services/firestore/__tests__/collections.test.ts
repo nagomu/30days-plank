@@ -9,17 +9,21 @@ import {
 // NOTE: Avoid using mock (~/services/firestore/__mocks__/collections.mock.ts)
 jest.unmock('~/services/firestore/collections');
 
+jest.mock('../../firebase/currentUser', () => ({
+  currentUser: jest.fn().mockReturnValue('uid'),
+}));
+
 describe('services/firestore/collections', () => {
   it('sets correct archives collectionPath', () => {
-    expect(archives('uid').path).toEqual('users/uid/archives');
+    expect(archives().path).toEqual('users/uid/archives');
   });
 
   it('sets correct challenges collectionPath', () => {
-    expect(challenges('uid').path).toEqual('users/uid/challenges');
+    expect(challenges().path).toEqual('users/uid/challenges');
   });
 
   it('sets correct challenges collectionPath (batchChallenges)', () => {
-    expect(batchChallenges('uid').ref.path).toEqual('users/uid/challenges');
+    expect(batchChallenges().ref.path).toEqual('users/uid/challenges');
   });
 
   it('sets correct users collectionPath', () => {
@@ -27,8 +31,6 @@ describe('services/firestore/collections', () => {
   });
 
   it('sets correct workouts collectionPath', () => {
-    expect(workouts('uid', 'cid').path).toEqual(
-      'users/uid/challenges/cid/workouts',
-    );
+    expect(workouts('cid').path).toEqual('users/uid/challenges/cid/workouts');
   });
 });

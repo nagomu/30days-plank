@@ -1,3 +1,4 @@
+import { timestampFromDate } from '~/services/firestore';
 import {
   addArchive,
   addArchiveSuccess,
@@ -7,7 +8,6 @@ import {
   initialState,
   setArchives,
 } from '~/store/archive';
-import { timestampFromDate } from '~/utils/firebase';
 
 describe('archive: reducers', () => {
   it('handles FETCH_ARCHIVES', () => {

@@ -1,5 +1,5 @@
 import Archives from '~/components/specifics/archive/Archives';
-import { timestampFromDate } from '~/utils/firebase';
+import { timestampFromDate } from '~/services/firestore';
 import { withProvider } from '~/utils/testHelpers';
 
 describe('Archives', () => {

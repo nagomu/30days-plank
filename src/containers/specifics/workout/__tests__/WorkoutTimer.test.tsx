@@ -6,8 +6,8 @@ import timekeeper from 'timekeeper';
 import WorkoutTimer, {
   Props,
 } from '~/containers/specifics/workout/WorkoutTimer';
+import { timestampFromDate } from '~/services/firestore';
 import { Status } from '~/store/workout';
-import { timestampFromDate } from '~/utils/firebase';
 
 describe('WorkoutTimerContainer', () => {
   const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));

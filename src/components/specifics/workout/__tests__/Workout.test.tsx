@@ -1,6 +1,6 @@
 import Workout from '~/components/specifics/workout/Workout';
+import { timestampFromDate } from '~/services/firestore';
 import { Status } from '~/store/workout';
-import { timestampFromDate } from '~/utils/firebase';
 import { withProvider } from '~/utils/testHelpers';
 
 describe('Workout', () => {

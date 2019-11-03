@@ -1,4 +1,4 @@
-import firebase, { CollectionReference, WriteBatch } from '~/utils/firebase';
+import firebase, { CollectionReference, WriteBatch } from '~/services/firebase';
 
 export const archives = (uid: string): CollectionReference =>
   firebase.firestore().collection(`/users/${uid}/archives`);

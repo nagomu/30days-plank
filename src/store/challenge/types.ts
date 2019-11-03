@@ -1,5 +1,5 @@
+import { Timestamp } from '~/services/firebase';
 import { Workout } from '~/store/workout';
-import { Timestamp } from '~/utils/firebase';
 
 export type Challenge = {
   id: string;

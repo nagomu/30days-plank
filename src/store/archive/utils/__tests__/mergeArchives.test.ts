@@ -1,7 +1,7 @@
 import timekeeper from 'timekeeper';
 
+import { timestampFromDate } from '~/services/firestore';
 import { mergeArchives } from '~/store/archive/utils/mergeArchives';
-import { timestampFromDate } from '~/utils/firebase';
 
 const mockToday = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);

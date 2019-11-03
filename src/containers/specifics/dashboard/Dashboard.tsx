@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import WrappedComponent from '~/components/specifics/dashboard/Dashboard';
+import { timestampFromDate } from '~/services/firestore';
 import { AppState } from '~/store';
 import { User } from '~/store/auth';
 import {
@@ -9,7 +10,6 @@ import {
   onAddChallenge,
   onFetchChallenge,
 } from '~/store/challenge';
-import { timestampFromDate } from '~/utils/firebase';
 
 type Props = {
   user?: User;

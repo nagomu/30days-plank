@@ -1,9 +1,7 @@
-import firebase, {
-  DocumentReference,
-  timestampFromDate,
-} from '~/utils/firebase';
+import firebase, { DocumentReference } from '~/services/firebase';
+import { timestampFromDate } from '~/services/firestore';
 
-const postError = async (error: Error): Promise<DocumentReference> => {
+export const postError = async (error: Error): Promise<DocumentReference> => {
   const collection = firebase.firestore().collection('/errors');
   const params = {
     message: error.message,
@@ -17,5 +15,3 @@ const postError = async (error: Error): Promise<DocumentReference> => {
   };
   return await collection.add(params);
 };
-
-export default postError;

@@ -1,5 +1,5 @@
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
-import { timestampFromDate } from '~/utils/firebase';
+import { timestampFromDate } from '~/services/firestore';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore, withProvider } from '~/utils/testHelpers';
 

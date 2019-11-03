@@ -8,6 +8,5 @@ import { firebaseConfig } from '~/config';
 firebase.initializeApp(firebaseConfig);
 
 export * from './types';
-export * from './utils';
 
 export default firebase;

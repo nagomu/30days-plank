@@ -1,5 +1,7 @@
 import { currentUser } from '~/services/firebase/currentUser';
 
+jest.unmock('../currentUser');
+
 jest.mock(
   '~/services/firebase',
   jest.fn().mockReturnValue({

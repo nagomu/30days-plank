@@ -1,6 +1,3 @@
 jest.mock('../currentUser', () => ({
-  currentUser: jest
-    .fn()
-    .mockReturnValue(null)
-    .mockReturnValueOnce({ uid: 'uid' }),
+  currentUser: jest.fn().mockReturnValue({ uid: 'uid' }),
 }));

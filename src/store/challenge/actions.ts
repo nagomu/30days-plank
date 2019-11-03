@@ -1,10 +1,12 @@
 import { Dispatch } from 'redux';
 
+import { workoutTemplate } from '~/config';
 import { QueryDocumentSnapshot, QuerySnapshot } from '~/services/firebase';
 import {
   batchChallenges,
   challenges,
   postError,
+  timestampFromDate,
   workouts,
 } from '~/services/firestore';
 import { onAddArchive } from '~/store/archive';
@@ -21,8 +23,7 @@ import {
   UPDATE_CHALLENGE_SUCCESS,
   UpdateChallengeParams,
 } from '~/store/challenge';
-import { generateWorkoutTemplates } from '~/store/challenge/utils/generateWorkoutTemplates';
-import { onFetchAllWorkouts, Workout } from '~/store/workout';
+import { onFetchAllWorkouts, Workout, WorkoutTemplate } from '~/store/workout';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,
@@ -87,6 +88,18 @@ export const onFetchChallenge = async (dispatch: Dispatch): Promise<void> => {
     postError(error);
   }
   return;
+};
+
+export const generateWorkoutTemplates = (): WorkoutTemplate[] => {
+  const now = new Date(Date.now());
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const date = now.getDate();
+
+  return workoutTemplate.map((template, i) => ({
+    ...template,
+    scheduledDate: timestampFromDate(new Date(year, month, date + i)),
+  }));
 };
 
 export const onAddChallenge = async (

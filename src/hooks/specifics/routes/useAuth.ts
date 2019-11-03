@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import {
+  getRedirectTo,
+  isAuthenticationWaiting,
+  RedirectState,
+  setIsRedirectingIfNeed,
+} from '~/services/auth';
 import { AppState } from '~/store';
 import {
   AuthActions,
@@ -9,12 +15,6 @@ import {
   onSignIn,
   onSignOut,
 } from '~/store/auth';
-import {
-  getRedirectTo,
-  isAuthenticationWaiting,
-  RedirectState,
-  setIsRedirectingIfNeed,
-} from '~/utils/redirect';
 
 export type UseAuth = AuthState & AuthActions & RedirectState;
 

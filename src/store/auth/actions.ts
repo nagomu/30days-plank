@@ -1,6 +1,7 @@
 import { User as FirebaseUser } from 'firebase';
 import { Dispatch } from 'redux';
 
+import { clearRedirectStorage, setIsAuthenticating } from '~/services/auth';
 import firebase from '~/services/firebase';
 import { postError, users } from '~/services/firestore';
 import {
@@ -15,7 +16,6 @@ import {
   SIGN_OUT,
   User,
 } from '~/store/auth';
-import { clearRedirectStorage, setIsAuthenticating } from '~/utils/redirect';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
   type: OBSERVE_AUTH_STATE_CHANGED,

@@ -4,12 +4,12 @@ import {
   challenges,
   users,
   workouts,
-} from '~/utils/firestore/collections';
+} from '~/services/firestore/collections';
 
-// NOTE: Avoid using mock (~/utils/firestore/__mocks__/collections.mock.ts)
-jest.unmock('~/utils/firestore/collections');
+// NOTE: Avoid using mock (~/services/firestore/__mocks__/collections.mock.ts)
+jest.unmock('~/services/firestore/collections');
 
-describe('utils: firestore', () => {
+describe('services/firestore/collections', () => {
   it('sets correct archives collectionPath', () => {
     expect(archives('uid').path).toEqual('users/uid/archives');
   });

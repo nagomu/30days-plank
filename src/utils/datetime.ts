@@ -1,4 +1,4 @@
-import { Timestamp } from '~/utils/firebase';
+import { Timestamp } from '~/services/firebase';
 
 export const isToday = (ts: Timestamp): boolean => {
   const format = (value: Date): string => {

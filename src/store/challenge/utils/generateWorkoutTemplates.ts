@@ -1,6 +1,6 @@
 import { workoutTemplate } from '~/config/workouts';
+import { timestampFromDate } from '~/services/firestore';
 import { WorkoutTemplate } from '~/store/workout';
-import { timestampFromDate } from '~/utils/firebase';
 
 export const generateWorkoutTemplates = (): WorkoutTemplate[] => {
   const now = new Date(Date.now());

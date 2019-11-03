@@ -3,7 +3,6 @@ import 'jest-localstorage-mock';
 import {
   clearRedirectStorage,
   getRedirectTo,
-  isAuthenticatedOrWaiting,
   isAuthenticationWaiting,
   setIsAuthenticating,
   setIsRedirectingIfNeed,
@@ -52,30 +51,6 @@ describe('utils: redirect', () => {
     it('returns "/dashboard" if no value exists', () => {
       const expected = '/dashboard';
       expect(getRedirectTo()).toEqual(expected);
-    });
-  });
-
-  describe('isAuthenticatedOrWaiting', () => {
-    it('returns false by default', () => {
-      expect(isAuthenticatedOrWaiting()).toEqual(false);
-    });
-
-    it("returns true if it's authenticating", () => {
-      localStorage.setItem(REDIRECT_TYPE, IS_AUTHENTICATING);
-      localStorage.removeItem(REDIRECT_FROM);
-      expect(isAuthenticatedOrWaiting()).toEqual(true);
-    });
-
-    it("returns true if it's redirecting", () => {
-      localStorage.setItem(REDIRECT_TYPE, IS_REDIRECTING);
-      localStorage.setItem(REDIRECT_FROM, '/dashboard');
-      expect(isAuthenticatedOrWaiting()).toEqual(true);
-    });
-
-    it("returns true if it's authenticated", () => {
-      localStorage.setItem(REDIRECT_TYPE, IS_REDIRECTING);
-      localStorage.setItem(REDIRECT_FROM, '/dashboard');
-      expect(isAuthenticatedOrWaiting(user)).toEqual(true);
     });
   });
 

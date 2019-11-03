@@ -1,5 +1,12 @@
 import { Dispatch } from 'redux';
 
+import { QueryDocumentSnapshot, QuerySnapshot } from '~/services/firebase';
+import {
+  batchChallenges,
+  challenges,
+  postError,
+  workouts,
+} from '~/services/firestore';
 import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
@@ -16,13 +23,6 @@ import {
 } from '~/store/challenge';
 import { generateWorkoutTemplates } from '~/store/challenge/utils/generateWorkoutTemplates';
 import { onFetchAllWorkouts, Workout } from '~/store/workout';
-import { QueryDocumentSnapshot, QuerySnapshot } from '~/utils/firebase';
-import {
-  batchChallenges,
-  challenges,
-  workouts,
-} from '~/utils/firestore/collections';
-import postError from '~/utils/firestore/postError';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,

@@ -1,3 +1,4 @@
+import { timestampFromDate } from '~/services/firestore';
 import {
   addArchive,
   addArchiveSuccess,
@@ -8,7 +9,6 @@ import {
   onFetchArchives,
   setArchives,
 } from '~/store/archive';
-import { timestampFromDate } from '~/utils/firebase';
 import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
 import { mockStore } from '~/utils/testHelpers';
 

@@ -1,5 +1,6 @@
 import timekeeper from 'timekeeper';
 
+import { timestampFromDate } from '~/services/firestore';
 import {
   addChallenge,
   addChallengeSuccess,
@@ -11,7 +12,6 @@ import {
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
-import { timestampFromDate } from '~/utils/firebase';
 
 describe('challenge: reducers', () => {
   const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));

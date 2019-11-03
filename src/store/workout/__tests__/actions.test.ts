@@ -1,5 +1,6 @@
 import timekeeper from 'timekeeper';
 
+import { timestampFromDate } from '~/services/firestore';
 import {
   fetchAllWorkouts,
   fetchAllWorkoutsSuccess,
@@ -13,7 +14,6 @@ import {
   updateWorkout,
   updateWorkoutSuccess,
 } from '~/store/workout';
-import { timestampFromDate } from '~/utils/firebase';
 import { mockStore } from '~/utils/testHelpers';
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));

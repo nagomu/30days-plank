@@ -3,8 +3,8 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Label from '~/components/specifics/dashboard/Label';
+import { Timestamp } from '~/services/firebase';
 import { formatDayNumeric, formatShortMonth } from '~/utils/datetime';
-import { Timestamp } from '~/utils/firebase';
 import rgba from '~/utils/rgba';
 
 type ContainerProps = {

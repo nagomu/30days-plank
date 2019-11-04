@@ -4,6 +4,7 @@ import Loading from '~/components/common/loaders/Loading';
 import Challenge from '~/components/specifics/dashboard/Challenge';
 import NotStarted from '~/components/specifics/dashboard/NotStarted';
 import { Challenge as ChallengeType } from '~/store/challenge';
+import { isEmptyArray } from '~/utils';
 
 type Props = {
   challenge?: ChallengeType;
@@ -20,7 +21,7 @@ const Dashboard: React.FC<Props> = props => {
 
   return (
     <>
-      {challenge && challenge.workouts && challenge.workouts.length > 0 ? (
+      {!!challenge && !isEmptyArray(challenge.workouts) ? (
         <Challenge challengeId={challenge.id} workouts={challenge.workouts} />
       ) : (
         <NotStarted onClick={onAddChallenge} />

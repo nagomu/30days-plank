@@ -1,8 +1,8 @@
-import { User as FirebaseUser } from 'firebase';
 import { Dispatch } from 'redux';
 
 import { clearRedirectStorage, setIsAuthenticating } from '~/services/auth';
-import firebase from '~/services/firebase';
+import { firebase, FirebaseUser } from '~/services/firebase';
+import { asyncOnAuthStateChanged } from '~/services/firebase/asyncOnAuthStateChanged';
 import { postError, users } from '~/services/firestore';
 import {
   ADD_USER,
@@ -104,17 +104,16 @@ export const onFetchUser = async (
   return;
 };
 
-export const onAuthStateChanged = (dispatch: Dispatch): void => {
+export const onAuthStateChanged = async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(observeAuthStateChanged());
-    firebase.auth().onAuthStateChanged((user: FirebaseUser | null) => {
-      if (user) {
-        onFetchUser(dispatch, user);
-      } else {
-        clearRedirectStorage();
-      }
-      dispatch(authStateChanged());
-    });
+    const user = await asyncOnAuthStateChanged();
+    if (user) {
+      onFetchUser(dispatch, user);
+    } else {
+      clearRedirectStorage();
+    }
+    dispatch(authStateChanged());
   } catch (error) {
     postError(error);
   }

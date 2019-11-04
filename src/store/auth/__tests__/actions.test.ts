@@ -1,5 +1,6 @@
 import { User } from 'firebase';
 
+import { postError } from '~/services/firestore';
 import {
   addUser,
   addUserSuccess,
@@ -16,10 +17,26 @@ import {
 } from '~/store/auth';
 import { mockStore } from '~/utils';
 
+jest.mock(
+  '~/services/firebase/asyncOnAuthStateChanged',
+  jest.fn().mockReturnValue({
+    asyncOnAuthStateChanged: jest
+      .fn()
+      .mockResolvedValueOnce({ uid: 'uid' })
+      .mockResolvedValueOnce(null)
+      .mockRejectedValueOnce({ error: 'error' }),
+  }),
+);
+
 describe('auth: actions', () => {
+  const store = mockStore({ auth: initialState });
+
+  afterEach(() => {
+    store.clearActions();
+  });
+
   describe('observeAuthStateChanged', () => {
     it('should create valid action', () => {
-      const store = mockStore({ auth: initialState });
       store.dispatch(observeAuthStateChanged());
 
       const expected = [{ type: 'OBSERVE_AUTH_STATE_CHANGED' }];
@@ -29,7 +46,6 @@ describe('auth: actions', () => {
 
   describe('authStateChanged', () => {
     it('should create valid action', () => {
-      const store = mockStore({ auth: initialState });
       store.dispatch(authStateChanged());
 
       const expected = [{ type: 'AUTH_STATE_CHANGED' }];
@@ -39,7 +55,6 @@ describe('auth: actions', () => {
 
   describe('fetchUser', () => {
     it('should create valid action', () => {
-      const store = mockStore({ auth: initialState });
       store.dispatch(fetchUser());
 
       const expected = [{ type: 'FETCH_USER' }];
@@ -49,7 +64,6 @@ describe('auth: actions', () => {
 
   describe('setUser', () => {
     it('should create valid action', () => {
-      const store = mockStore({ auth: initialState });
       const user = {
         uid: 'xxx',
         name: undefined,
@@ -79,7 +93,6 @@ describe('auth: actions', () => {
 
   describe('addUser', () => {
     it('should create valid action', () => {
-      const store = mockStore({ auth: initialState });
       store.dispatch(addUser());
 
       const expected = [{ type: 'ADD_USER' }];
@@ -89,7 +102,6 @@ describe('auth: actions', () => {
 
   describe('addUserSuccess', () => {
     it('should create valid action', () => {
-      const store = mockStore({ auth: initialState });
       store.dispatch(addUserSuccess());
 
       const expected = [{ type: 'ADD_USER_SUCCESS' }];
@@ -99,7 +111,6 @@ describe('auth: actions', () => {
 
   describe('signIn', () => {
     it('should create valid action', () => {
-      const store = mockStore({ auth: initialState });
       store.dispatch(signIn());
 
       const expected = [{ type: 'SIGN_IN' }];
@@ -109,7 +120,6 @@ describe('auth: actions', () => {
 
   describe('signOut', () => {
     it('should create valid action', () => {
-      const store = mockStore({ auth: initialState });
       store.dispatch(signOut());
 
       const expected = [{ type: 'SIGN_OUT' }];
@@ -119,7 +129,6 @@ describe('auth: actions', () => {
 
   describe('onAddUser', () => {
     it('should create valid action', async () => {
-      const store = mockStore({ auth: initialState });
       const user = {
         uid: 'xxx',
         name: 'yyy',
@@ -135,7 +144,6 @@ describe('auth: actions', () => {
   describe('onFetchUser', () => {
     describe('user exists', () => {
       it('should create valid action', async () => {
-        const store = mockStore({ auth: initialState });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const user: any = {
           displayName: 'yyy',
@@ -165,7 +173,6 @@ describe('auth: actions', () => {
 
     describe.skip('not found user', () => {
       it('should create valid action', async () => {
-        const store = mockStore({ auth: initialState });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const user: any = {
           displayName: 'yyy',
@@ -185,12 +192,44 @@ describe('auth: actions', () => {
   });
 
   describe('onAuthStateChanged', () => {
-    it('should create valid action', async () => {
-      const store = mockStore({ auth: initialState });
-      onAuthStateChanged(store.dispatch);
+    it('should create valid action if user exists', async () => {
+      await onAuthStateChanged(store.dispatch);
 
-      const expected = [{ type: 'OBSERVE_AUTH_STATE_CHANGED' }];
+      const expected = [
+        { type: 'OBSERVE_AUTH_STATE_CHANGED' },
+        { type: 'FETCH_USER' },
+        { type: 'AUTH_STATE_CHANGED' },
+        {
+          type: 'SET_USER',
+          payload: {
+            user: {
+              name: undefined,
+              photoURL: undefined,
+              uid: 'xxx',
+            },
+          },
+        },
+      ];
       expect(store.getActions()).toEqual(expected);
+    });
+
+    it('should create valid action if user does not exist', async () => {
+      await onAuthStateChanged(store.dispatch);
+
+      const expected = [
+        { type: 'OBSERVE_AUTH_STATE_CHANGED' },
+        { type: 'AUTH_STATE_CHANGED' },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+
+    it('calls postError if Error', async () => {
+      const mock = jest.fn(postError);
+      try {
+        await onAuthStateChanged(store.dispatch);
+      } catch {
+        expect(mock).toBeCalled();
+      }
     });
   });
 });

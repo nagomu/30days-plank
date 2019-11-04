@@ -20,6 +20,7 @@ import {
   Workout,
   WorkoutActionTypes,
 } from '~/store/workout';
+import { isEmptyArray } from '~/utils';
 
 export const fetchWorkout = (): WorkoutActionTypes => ({
   type: FETCH_WORKOUT,
@@ -102,7 +103,7 @@ export const onFetchAllWorkouts = async (
 
     const params = {
       ...challenge,
-      workouts: results.length < 1 ? challenge.workouts : results,
+      workouts: isEmptyArray(results) ? challenge.workouts : results,
     };
     dispatch(setChallenge(params));
   } catch (error) {

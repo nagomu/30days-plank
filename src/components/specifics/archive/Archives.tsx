@@ -5,7 +5,7 @@ import * as React from 'react';
 import Icon from '~/components/common/icons/Icon';
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
 import { Archive } from '~/store/archive';
-import { rgba } from '~/utils';
+import { isEmptyArray, rgba } from '~/utils';
 
 const List = styled.ul`
   margin: 0;
@@ -81,7 +81,7 @@ type Props = {
 
 const Archives: React.FC<Props> = ({ archives, isLoading }) => (
   <DrawerScreen title="Archives" pathname="/dashboard" isLoading={isLoading}>
-    {archives && archives.length > 0 ? (
+    {!!archives && !isEmptyArray(archives) ? (
       <List>
         {archives.map((archive: Archive) => (
           <Menu key={archive.id}>

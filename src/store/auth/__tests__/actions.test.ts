@@ -23,8 +23,8 @@ jest.mock(
     asyncOnAuthStateChanged: jest
       .fn()
       .mockResolvedValueOnce({ uid: 'uid' })
-      .mockResolvedValueOnce(null),
-    // TODO: .mockResolvedValueOnce(new Error('error')),
+      .mockResolvedValueOnce(null)
+      .mockRejectedValueOnce({ error: 'error' }),
   }),
 );
 
@@ -223,11 +223,10 @@ describe('auth: actions', () => {
       expect(store.getActions()).toEqual(expected);
     });
 
-    // TODO
-    it.skip('calls postError if Error', () => {
+    it('calls postError if Error', async () => {
       const mock = jest.fn(postError);
       try {
-        onAuthStateChanged(store.dispatch);
+        await onAuthStateChanged(store.dispatch);
       } catch {
         expect(mock).toBeCalled();
       }

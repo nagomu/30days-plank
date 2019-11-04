@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
 
-import SignInButton from '~/components/specifics/login/SignInButton';
+import SignInButton from '~/components/specifics/signIn/SignInButton';
 import { AuthActions } from '~/store/auth';
 
 const Container = styled.div`
@@ -35,7 +35,7 @@ const Title = styled.h2`
 
 type Props = Pick<AuthActions, 'onSignIn'>;
 
-const Login: React.FC<Props> = ({ onSignIn }) => (
+const SignIn: React.FC<Props> = ({ onSignIn }) => (
   <Container>
     <Section>
       <Title>
@@ -48,4 +48,4 @@ const Login: React.FC<Props> = ({ onSignIn }) => (
   </Container>
 );
 
-export default Login;
+export default SignIn;

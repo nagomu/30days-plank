@@ -33,3 +33,6 @@ export const users = (): CollectionReference =>
 
 export const workouts = (cid: string): CollectionReference =>
   firebase.firestore().collection(`/users/${uid()}/challenges/${cid}/workouts`);
+
+export const errors = (): CollectionReference =>
+  firebase.firestore().collection(`/errors`);

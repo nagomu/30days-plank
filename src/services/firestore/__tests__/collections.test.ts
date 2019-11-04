@@ -2,6 +2,7 @@ import {
   archives,
   batchChallenges,
   challenges,
+  errors,
   users,
   workouts,
 } from '~/services/firestore/collections';
@@ -32,5 +33,9 @@ describe('services/firestore/collections', () => {
 
   it('sets correct workouts collectionPath', () => {
     expect(workouts('cid').path).toEqual('users/uid/challenges/cid/workouts');
+  });
+
+  it('sets correct errors collectionPath', () => {
+    expect(errors().path).toEqual('errors');
   });
 });

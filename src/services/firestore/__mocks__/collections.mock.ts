@@ -95,5 +95,9 @@ jest.mock('../collections', () => ({
       update: jest.fn().mockReturnValue(Promise.resolve),
     }),
   }),
+  // for Errros
+  errors: jest.fn().mockReturnValue({
+    add: jest.fn().mockReturnValue(Promise.resolve),
+  }),
 }));
 /* eslint-enable */

@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
 
-import SignInButton from '~/components/specifics/login/SignInButton';
+import SignInButton from '~/components/specifics/signIn/SignInButton';
 
 describe('SignInButton', () => {
   const mockClick = jest.fn();

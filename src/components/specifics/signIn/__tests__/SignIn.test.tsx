@@ -1,10 +1,10 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
 
-import Login from '~/components/specifics/login/Login';
+import SignIn from '~/components/specifics/signIn/SignIn';
 
-describe('Login', () => {
-  const wrapper = mount(<Login onSignIn={jest.fn()} />);
+describe('SignIn', () => {
+  const wrapper = mount(<SignIn onSignIn={jest.fn()} />);
 
   it('renders correctly', () => {
     expect(wrapper.find('div section').length).toEqual(1);

@@ -3,7 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import ErrorBoundary from '~/components/common/errors/ErrorBoundary';
 import NotFound from '~/components/common/errors/NotFound';
-import Login from '~/components/specifics/login/Login';
+import SignIn from '~/components/specifics/signIn/SignIn';
 import App from '~/containers/common/layouts/App';
 import Archives from '~/containers/specifics/archive/Archives';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
@@ -44,7 +44,7 @@ const Routes: React.FC = () => {
           ) : (
             <Switch>
               <Route exact path="/">
-                <Login onSignIn={onSignIn} />
+                <SignIn onSignIn={onSignIn} />
               </Route>
               <Redirect to="/" />
               <Route component={NotFound} />

@@ -5,10 +5,12 @@ jest.unmock('../currentUser');
 jest.mock(
   '~/services/firebase',
   jest.fn().mockReturnValue({
-    auth: jest
-      .fn()
-      .mockReturnValue({ currentUser: null })
-      .mockReturnValueOnce({ currentUser: { uid: 'uid' } }),
+    firebase: {
+      auth: jest
+        .fn()
+        .mockReturnValue({ currentUser: null })
+        .mockReturnValueOnce({ currentUser: { uid: 'uid' } }),
+    },
   }),
 );
 

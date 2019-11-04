@@ -9,4 +9,4 @@ firebase.initializeApp(firebaseConfig);
 
 export { currentUser } from './currentUser';
 export * from './types';
-export default firebase;
+export { firebase };

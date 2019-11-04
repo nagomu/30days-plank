@@ -2,7 +2,7 @@ import { User as FirebaseUser } from 'firebase';
 import { Dispatch } from 'redux';
 
 import { clearRedirectStorage, setIsAuthenticating } from '~/services/auth';
-import firebase from '~/services/firebase';
+import { firebase } from '~/services/firebase';
 import { postError, users } from '~/services/firestore';
 import {
   ADD_USER,

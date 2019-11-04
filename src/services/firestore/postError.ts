@@ -1,4 +1,4 @@
-import firebase, { DocumentReference } from '~/services/firebase';
+import { DocumentReference, firebase } from '~/services/firebase';
 import { timestampFromDate } from '~/services/firestore';
 
 export const postError = async (error: Error): Promise<DocumentReference> => {

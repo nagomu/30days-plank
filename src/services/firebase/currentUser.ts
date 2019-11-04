@@ -1,4 +1,4 @@
-import firebase from '~/services/firebase';
+import { firebase } from '~/services/firebase';
 
 export const currentUser = (): string | null => {
   const auth = firebase.auth();

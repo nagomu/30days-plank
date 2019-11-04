@@ -1,6 +1,7 @@
-import firebase, {
+import {
   CollectionReference,
   currentUser,
+  firebase,
   WriteBatch,
 } from '~/services/firebase';
 

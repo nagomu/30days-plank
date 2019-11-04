@@ -3,16 +3,23 @@ import { asyncOnAuthStateChanged } from '~/services/firebase/asyncOnAuthStateCha
 jest.mock('~/services/firebase/asyncOnAuthStateChanged', () => ({
   asyncOnAuthStateChanged: jest
     .fn()
-    .mockResolvedValue({ uid: 'uid' })
-    .mockResolvedValueOnce(null),
+    .mockResolvedValueOnce(null)
+    .mockResolvedValueOnce({ uid: 'uid' })
+    .mockRejectedValueOnce({ error: 'Error' }),
 }));
 
 describe('services/firebase/asyncOnAuthStateChanged', () => {
   it('returns onAuthStateChanged correctly', async () => {
-    const authenticatedUser = await asyncOnAuthStateChanged();
-    expect(authenticatedUser).toEqual(null);
+    try {
+      const unauthenticatedUser = await asyncOnAuthStateChanged();
+      expect(unauthenticatedUser).toEqual(null);
 
-    const unauthenticatedUser = await asyncOnAuthStateChanged();
-    expect(unauthenticatedUser).toEqual({ uid: 'uid' });
+      const authenticatedUser = await asyncOnAuthStateChanged();
+      expect(authenticatedUser).toEqual({ uid: 'uid' });
+
+      await asyncOnAuthStateChanged();
+    } catch (error) {
+      expect(error).toEqual({ error: 'Error' });
+    }
   });
 });

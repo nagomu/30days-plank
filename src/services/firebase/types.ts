@@ -1,3 +1,5 @@
+export type FirebaseUser = firebase.User;
+
 export type CollectionReference = firebase.firestore.CollectionReference;
 export type DocumentReference = firebase.firestore.DocumentReference;
 export type DocumentSnapshot = firebase.firestore.DocumentSnapshot;

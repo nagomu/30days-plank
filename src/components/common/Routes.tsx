@@ -5,6 +5,7 @@ import ErrorBoundary from '~/components/common/errors/ErrorBoundary';
 import NotFound from '~/components/common/errors/NotFound';
 import App from '~/components/common/layouts/App';
 import SignIn from '~/components/specifics/signIn/SignIn';
+import Terms from '~/components/specifics/terms/Terms';
 import Archives from '~/containers/specifics/archive/Archives';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
 import Workout from '~/containers/specifics/workout/Workout';
@@ -46,6 +47,7 @@ const Routes: React.FC = () => {
               <Route exact path="/">
                 <SignIn onSignIn={onSignIn} />
               </Route>
+              <Route exact path="/terms" component={Terms} />
               <Redirect to="/" />
               <Route component={NotFound} />
             </Switch>

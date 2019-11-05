@@ -11,6 +11,8 @@ import {
   onAddUser,
   onAuthStateChanged,
   onFetchUser,
+  onSignIn,
+  onSignOut,
   setUser,
   signIn,
   signOut,
@@ -218,6 +220,7 @@ describe('auth: actions', () => {
 
       const expected = [
         { type: 'OBSERVE_AUTH_STATE_CHANGED' },
+        { type: 'SET_USER', payload: { user: undefined } },
         { type: 'AUTH_STATE_CHANGED' },
       ];
       expect(store.getActions()).toEqual(expected);
@@ -228,6 +231,47 @@ describe('auth: actions', () => {
       try {
         await onAuthStateChanged(store.dispatch);
       } catch {
+        expect(mock).toBeCalled();
+      }
+    });
+  });
+
+  describe('onSignIn', () => {
+    it('should create valid action', async () => {
+      await onSignIn(store.dispatch);
+
+      const expected = [{ type: 'SIGN_IN' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+
+    it('calls postError if Error', async () => {
+      const mock = jest.fn(postError);
+      try {
+        await onSignIn(store.dispatch);
+      } catch (error) {
+        expect(mock).toBeCalled();
+      }
+    });
+  });
+
+  describe('onSignOut', () => {
+    it('should create valid action', async () => {
+      await onSignOut(store.dispatch);
+
+      const expected = [
+        { type: 'SIGN_OUT' },
+        { type: 'OBSERVE_AUTH_STATE_CHANGED' },
+        { type: 'SET_USER', payload: { user: undefined } },
+        { type: 'AUTH_STATE_CHANGED' },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+
+    it('calls postError if Error', async () => {
+      const mock = jest.fn(postError);
+      try {
+        await onSignOut(store.dispatch);
+      } catch (error) {
         expect(mock).toBeCalled();
       }
     });

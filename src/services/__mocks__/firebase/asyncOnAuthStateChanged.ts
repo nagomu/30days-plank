@@ -3,5 +3,5 @@ jest.mock('../../firebase/asyncOnAuthStateChanged', () => ({
     .fn()
     .mockResolvedValueOnce(null)
     .mockResolvedValueOnce({ uid: 'uid' })
-    .mockRejectedValueOnce({ error: 'Error' }),
+    .mockRejectedValueOnce(new Error()),
 }));

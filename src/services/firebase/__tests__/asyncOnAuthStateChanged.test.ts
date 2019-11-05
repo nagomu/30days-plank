@@ -11,7 +11,7 @@ describe('services/firebase/asyncOnAuthStateChanged', () => {
 
       await asyncOnAuthStateChanged();
     } catch (error) {
-      expect(error).toEqual({ error: 'Error' });
+      expect(error).toEqual(new Error());
     }
   });
 });

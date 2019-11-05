@@ -8,7 +8,7 @@ describe('services/firebase/asyncSignOut', () => {
 
       await asyncSignOut();
     } catch (error) {
-      expect(error).toEqual(null);
+      expect(error).toEqual(new Error());
     }
   });
 });

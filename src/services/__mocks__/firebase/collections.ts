@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-jest.mock('../collections', () => ({
+jest.mock('../../firestore/collections', () => ({
   archives: jest.fn().mockReturnValue({
     // TODO: The test will fail if the next line change to `mockResolvedValue`
     // Probably test is wrong 😇

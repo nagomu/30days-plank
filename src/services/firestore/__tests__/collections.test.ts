@@ -7,7 +7,6 @@ import {
   workouts,
 } from '~/services/firestore/collections';
 
-// NOTE: Avoid using mock (~/services/firestore/__mocks__/collections.mock.ts)
 jest.unmock('~/services/firestore/collections');
 
 jest.mock('../../firebase/currentUser', () => ({

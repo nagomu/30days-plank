@@ -52,8 +52,6 @@ class WorkoutTimer extends React.Component<Props, State> {
     if (!!workout && isToday(workout.scheduledDate) && isCompleted) {
       onUpdate({ id: workout.id, isCompleted });
     }
-
-    return;
   }
 
   public handleReset(): void {
@@ -66,14 +64,12 @@ class WorkoutTimer extends React.Component<Props, State> {
       progress: this.props.workout ? this.props.workout.menu : 0,
       status: Status.standby,
     });
-    return;
   }
 
   public handleStart(): void {
     this.setState({ status: Status.start });
     const timer = window.setInterval(() => this.countDown(), 1000);
     this.setState({ timer });
-    return;
   }
 
   public handleTogglePause(): void {
@@ -83,7 +79,6 @@ class WorkoutTimer extends React.Component<Props, State> {
     } else {
       this.setState({ status: Status.pause });
     }
-    return;
   }
 
   private countDown(): void {
@@ -95,8 +90,6 @@ class WorkoutTimer extends React.Component<Props, State> {
     } else {
       this.setState({ progress: progress - 1 });
     }
-
-    return;
   }
 
   private finish = (): void => {
@@ -115,8 +108,6 @@ class WorkoutTimer extends React.Component<Props, State> {
         ? true
         : this.state.isCompleted,
     });
-
-    return;
   };
 
   render(): ReturnType<typeof WrappedComponent> {

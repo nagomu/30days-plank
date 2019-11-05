@@ -48,6 +48,7 @@ export const firebaseConfig = {
 };
 
 export { globalStyles } from './common/globalStyles';
+export { screenEffect } from './common/screenEffect';
 export { workoutTemplate } from './specifics/workoutTemplate';
 
 export default config;

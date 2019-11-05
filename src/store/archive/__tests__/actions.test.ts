@@ -1,16 +1,18 @@
+import { workoutsFactory } from '~/factories/workoutFactory';
 import { timestampFromDate } from '~/services/firestore';
 import {
   addArchive,
   addArchiveSuccess,
+  calculateRate,
   fetchArchives,
   fetchArchivesSuccess,
+  generateTitle,
   initialState,
   onAddArchive,
   onFetchArchives,
   setArchives,
 } from '~/store/archive';
-import { mockWorkouts } from '~/utils/mocks/mockWorkouts';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore } from '~/utils';
 
 describe('archive: actions', () => {
   describe('fetchArchives', () => {
@@ -117,7 +119,7 @@ describe('archive: actions', () => {
 
   describe('onAddArchive', () => {
     it('should create valid action', async () => {
-      const workouts = mockWorkouts();
+      const workouts = workoutsFactory();
       const challengeId = 'xxx';
       const store = mockStore({ archive: initialState });
 
@@ -129,5 +131,22 @@ describe('archive: actions', () => {
       ];
       expect(store.getActions()).toEqual(expected);
     });
+  });
+});
+
+describe('calculateRate', () => {
+  it('returns rate correctly', () => {
+    const workouts = workoutsFactory().map((workout, i) => ({
+      ...workout,
+      isCompleted: i === 5 || i === 10 ? false : true,
+    }));
+    expect(calculateRate(workouts)).toEqual(93);
+  });
+});
+
+describe('generateTitle', () => {
+  it('returns title correctly', () => {
+    const workouts = workoutsFactory();
+    expect(generateTitle(workouts)).toEqual('Oct 1, 2019 - Oct 30, 2019');
   });
 });

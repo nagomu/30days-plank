@@ -1,6 +1,7 @@
-import firebase, {
+import {
   CollectionReference,
   currentUser,
+  firebase,
   WriteBatch,
 } from '~/services/firebase';
 
@@ -27,8 +28,8 @@ export const batchChallenges = (): BatchChallenges => {
   };
 };
 
-export const users = (): CollectionReference =>
-  firebase.firestore().collection('/users');
-
 export const workouts = (cid: string): CollectionReference =>
   firebase.firestore().collection(`/users/${uid()}/challenges/${cid}/workouts`);
+
+export const errors = (): CollectionReference =>
+  firebase.firestore().collection(`/errors`);

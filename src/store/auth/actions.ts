@@ -1,8 +1,12 @@
-import { User as FirebaseUser } from 'firebase';
 import { Dispatch } from 'redux';
 
-import firebase from '~/services/firebase';
-import { postError, users } from '~/services/firestore';
+import { clearRedirectStorage, setIsAuthenticating } from '~/services/auth';
+import { FirebaseUser } from '~/services/firebase';
+import { asyncOnAuthStateChanged } from '~/services/firebase/asyncOnAuthStateChanged';
+import { asyncSignOut } from '~/services/firebase/asyncSignOut';
+import { signInWithRedirect } from '~/services/firebase/signInWithRedirect';
+import { postError } from '~/services/firestore';
+import { users } from '~/services/firestore/collections/users';
 import {
   ADD_USER,
   ADD_USER_SUCCESS,
@@ -14,8 +18,8 @@ import {
   SIGN_IN,
   SIGN_OUT,
   User,
+  UserParams,
 } from '~/store/auth';
-import { clearRedirectStorage, setIsAuthenticating } from '~/utils/redirect';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
   type: OBSERVE_AUTH_STATE_CHANGED,
@@ -50,23 +54,20 @@ export const signOut = (): AuthActionTypes => ({
   type: SIGN_OUT,
 });
 
-export const onAddUser = async (
-  dispatch: Dispatch,
-  user: User,
-): Promise<void> => {
-  dispatch(addUser());
-
-  try {
-    await users()
-      .doc()
-      .set(user);
-
-    dispatch(addUserSuccess());
-  } catch (error) {
-    postError(error);
+export const userParams = (firebaseUser: UserParams, user?: User): User => {
+  if (!user) {
+    return {
+      uid: firebaseUser.uid,
+      name: firebaseUser.displayName || undefined,
+      photoURL: firebaseUser.photoURL || undefined,
+    };
   }
 
-  return;
+  return {
+    uid: user.uid,
+    name: user.name,
+    photoURL: user.photoURL,
+  };
 };
 
 export const onFetchUser = async (
@@ -76,25 +77,16 @@ export const onFetchUser = async (
   dispatch(fetchUser());
 
   try {
-    const doc = await users()
-      .doc(user.uid)
-      .get();
+    const ref = users().doc(user.uid);
+    const snapshot = await ref.get();
+    const data = snapshot.data() as User | undefined;
+    const params = userParams(user, data);
 
-    const data = doc.data();
-
-    if (!doc.exists || !data) {
-      const params: User = {
-        uid: user.uid,
-        name: user.displayName || undefined,
-        photoURL: user.photoURL || undefined,
-      };
-      onAddUser(dispatch, params);
+    if (!data) {
+      dispatch(addUser());
+      await ref.set(user);
+      dispatch(addUserSuccess());
     } else {
-      const params: User = {
-        uid: data.uid,
-        name: data.name,
-        photoURL: data.photoURL,
-      };
       dispatch(setUser(params));
       clearRedirectStorage();
     }
@@ -104,17 +96,17 @@ export const onFetchUser = async (
   return;
 };
 
-export const onAuthStateChanged = (dispatch: Dispatch): void => {
+export const onAuthStateChanged = async (dispatch: Dispatch): Promise<void> => {
   try {
     dispatch(observeAuthStateChanged());
-    firebase.auth().onAuthStateChanged((user: FirebaseUser | null) => {
-      if (user) {
-        onFetchUser(dispatch, user);
-      } else {
-        clearRedirectStorage();
-      }
-      dispatch(authStateChanged());
-    });
+    const user = await asyncOnAuthStateChanged();
+    if (user) {
+      onFetchUser(dispatch, user);
+    } else {
+      dispatch(setUser(undefined));
+      clearRedirectStorage();
+    }
+    dispatch(authStateChanged());
   } catch (error) {
     postError(error);
   }
@@ -122,12 +114,11 @@ export const onAuthStateChanged = (dispatch: Dispatch): void => {
   return;
 };
 
-export const onSignIn = (dispatch: Dispatch): void => {
+export const onSignIn = async (dispatch: Dispatch): Promise<void> => {
   try {
+    await signInWithRedirect();
     dispatch(signIn());
     setIsAuthenticating();
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
   } catch (error) {
     postError(error);
   }
@@ -135,12 +126,12 @@ export const onSignIn = (dispatch: Dispatch): void => {
   return;
 };
 
-export const onSignOut = (dispatch: Dispatch): void => {
+export const onSignOut = async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(signOut());
-    dispatch(setUser(undefined));
-    firebase.auth().signOut();
+    await asyncSignOut();
     clearRedirectStorage();
+    dispatch(signOut());
+    onAuthStateChanged(dispatch);
   } catch (error) {
     postError(error);
   }

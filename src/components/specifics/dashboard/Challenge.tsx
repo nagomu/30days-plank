@@ -6,7 +6,7 @@ import StartButton from '~/components/specifics/dashboard/StartButton';
 import Workout from '~/components/specifics/dashboard/Workout';
 import { useOnArchive } from '~/hooks/specifics/dashboard/useOnArchive';
 import { Workout as WorkoutType } from '~/store/workout';
-import { isToday } from '~/utils/datetime';
+import { isToday } from '~/utils';
 
 const Expired = styled.div`
   padding: 0 16px;

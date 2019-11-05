@@ -1,12 +1,7 @@
 import timekeeper from 'timekeeper';
 
 import { timestampFromDate } from '~/services/firestore';
-import {
-  formatDayNumeric,
-  formatShortMonth,
-  formatUS,
-  isToday,
-} from '~/utils/datetime';
+import { formatDayNumeric, formatShortMonth, formatUS, isToday } from '~/utils';
 
 describe('utils: datetime', () => {
   afterEach(() => {

@@ -1,5 +1,5 @@
 import NotFound from '~/components/common/errors/NotFound';
-import { withProvider } from '~/utils/testHelpers';
+import { withProvider } from '~/utils';
 
 describe('NotFound', () => {
   it('renders correctly', () => {

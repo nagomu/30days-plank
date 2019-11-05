@@ -1,5 +1,5 @@
 import { useAuth } from '~/hooks/specifics/routes/useAuth';
-import { mockStore, withHook } from '~/utils/testHelpers';
+import { mockStore, withHook } from '~/utils';
 
 describe('useAuth', () => {
   const state = {
@@ -35,22 +35,13 @@ describe('useAuth', () => {
     expect(hook.redirectTo).toEqual(expected);
   });
 
-  it('returns onSignIn action correctly', () => {
-    store.clearActions();
-
-    hook.onSignIn();
-    const expected = [{ type: 'SIGN_IN' }];
-    expect(store.getActions()).toEqual(expected);
+  it('returns onSignIn correctly', async () => {
+    const result = await hook.onSignIn();
+    expect(result).toEqual(undefined);
   });
 
-  it('returns onSignOut action correctly', () => {
-    store.clearActions();
-
-    hook.onSignOut();
-    const expected = [
-      { type: 'SIGN_OUT' },
-      { type: 'SET_USER', payload: { user: undefined } },
-    ];
-    expect(store.getActions()).toEqual(expected);
+  it('returns onSignOut correctly', async () => {
+    const result = await hook.onSignOut();
+    expect(result).toEqual(undefined);
   });
 });

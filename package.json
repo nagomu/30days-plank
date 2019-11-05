@@ -1,6 +1,6 @@
 {
   "name": "30days-plank",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "repository": "git@github.com:nagomu/30days-plank.git",
   "author": "@nagomu",
   "license": "MIT",
@@ -34,8 +34,7 @@
       "<rootDir>/jest.setup.ts"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/services/firebase/__mocks__/currentUser.mock.ts",
-      "<rootDir>/src/services/firestore/__mocks__/collections.mock.ts"
+      "<rootDir>/src/services/__mocks__/firebase.ts"
     ],
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
@@ -168,7 +167,7 @@
     "prettier": "^1.18.2",
     "redux-mock-store": "^1.5.3",
     "rimraf": "^3.0.0",
-    "stylelint": "^11.1.1",
+    "stylelint": "^10.0.0",
     "stylelint-config-prettier": "^6.0.0",
     "stylelint-config-property-sort-order-smacss": "^5.0.0",
     "stylelint-config-standard": "^19.0.0",

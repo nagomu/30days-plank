@@ -2,11 +2,10 @@ import {
   archives,
   batchChallenges,
   challenges,
-  users,
+  errors,
   workouts,
 } from '~/services/firestore/collections';
 
-// NOTE: Avoid using mock (~/services/firestore/__mocks__/collections.mock.ts)
 jest.unmock('~/services/firestore/collections');
 
 jest.mock('../../firebase/currentUser', () => ({
@@ -26,11 +25,11 @@ describe('services/firestore/collections', () => {
     expect(batchChallenges().ref.path).toEqual('users/uid/challenges');
   });
 
-  it('sets correct users collectionPath', () => {
-    expect(users().path).toEqual('users');
-  });
-
   it('sets correct workouts collectionPath', () => {
     expect(workouts('cid').path).toEqual('users/uid/challenges/cid/workouts');
+  });
+
+  it('sets correct errors collectionPath', () => {
+    expect(errors().path).toEqual('errors');
   });
 });

@@ -1,5 +1,5 @@
 import SmallScreen from '~/components/common/layouts/SmallScreen';
-import { withProvider } from '~/utils/testHelpers';
+import { withProvider } from '~/utils';
 
 describe('SmallScreen', () => {
   const mockSignOut = jest.fn();

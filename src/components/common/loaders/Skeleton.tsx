@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 
-import rgba from '~/utils/rgba';
+import { rgba } from '~/utils';
 
 const pulse = keyframes`
   0% {

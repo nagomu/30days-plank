@@ -1,4 +1,4 @@
-const rgba = (color: string, alpha: number): string => {
+export const rgba = (color: string, alpha: number): string => {
   const match = color.match(/#(([a-f0-9]{6})|([a-f0-9]{3}))$/i);
   if (!match) {
     throw new Error(`${color} is not a color`);
@@ -18,5 +18,3 @@ const rgba = (color: string, alpha: number): string => {
 
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
-
-export default rgba;

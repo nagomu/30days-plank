@@ -1,8 +1,12 @@
+import { FirebaseUser } from '~/services/firebase';
+
 export type User = {
   uid: string;
   name?: string;
   photoURL?: string;
 };
+
+export type UserParams = Pick<FirebaseUser, 'uid'> & Partial<FirebaseUser>;
 
 export type AuthState = {
   user?: User;
@@ -10,8 +14,8 @@ export type AuthState = {
 };
 
 export type AuthActions = {
-  onSignIn: () => void;
-  onSignOut: () => void;
+  onSignIn: () => Promise<void>;
+  onSignOut: () => Promise<void>;
 };
 
 // Start onAuthStateChanged

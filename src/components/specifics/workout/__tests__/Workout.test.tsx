@@ -1,7 +1,7 @@
 import Workout from '~/components/specifics/workout/Workout';
 import { timestampFromDate } from '~/services/firestore';
 import { Status } from '~/store/workout';
-import { withProvider } from '~/utils/testHelpers';
+import { withProvider } from '~/utils';
 
 describe('Workout', () => {
   const props = {

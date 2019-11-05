@@ -5,7 +5,8 @@ import { FirebaseUser } from '~/services/firebase';
 import { asyncOnAuthStateChanged } from '~/services/firebase/asyncOnAuthStateChanged';
 import { asyncSignOut } from '~/services/firebase/asyncSignOut';
 import { signInWithRedirect } from '~/services/firebase/signInWithRedirect';
-import { postError, users } from '~/services/firestore';
+import { postError } from '~/services/firestore';
+import { users } from '~/services/firestore/collections/users';
 import {
   ADD_USER,
   ADD_USER_SUCCESS,
@@ -53,25 +54,6 @@ export const signOut = (): AuthActionTypes => ({
   type: SIGN_OUT,
 });
 
-export const onAddUser = async (
-  dispatch: Dispatch,
-  user: User,
-): Promise<void> => {
-  dispatch(addUser());
-
-  try {
-    await users()
-      .doc()
-      .set(user);
-
-    dispatch(addUserSuccess());
-  } catch (error) {
-    postError(error);
-  }
-
-  return;
-};
-
 export const userParams = (firebaseUser: UserParams, user?: User): User => {
   if (!user) {
     return {
@@ -95,25 +77,16 @@ export const onFetchUser = async (
   dispatch(fetchUser());
 
   try {
-    const doc = await users()
-      .doc(user.uid)
-      .get();
+    const ref = users().doc(user.uid);
+    const snapshot = await ref.get();
+    const data = snapshot.data() as User | undefined;
+    const params = userParams(user, data);
 
-    const data = doc.data();
-
-    if (!doc.exists || !data) {
-      const params: User = {
-        uid: user.uid,
-        name: user.displayName || undefined,
-        photoURL: user.photoURL || undefined,
-      };
-      onAddUser(dispatch, params);
+    if (!data) {
+      dispatch(addUser());
+      await ref.set(user);
+      dispatch(addUserSuccess());
     } else {
-      const params: User = {
-        uid: data.uid,
-        name: data.name,
-        photoURL: data.photoURL,
-      };
       dispatch(setUser(params));
       clearRedirectStorage();
     }

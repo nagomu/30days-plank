@@ -1,5 +1,4 @@
-import { User } from 'firebase';
-
+import { FirebaseUser } from '~/services/firebase';
 import { postError } from '~/services/firestore';
 import {
   addUser,
@@ -8,7 +7,6 @@ import {
   fetchUser,
   initialState,
   observeAuthStateChanged,
-  onAddUser,
   onAuthStateChanged,
   onFetchUser,
   onSignIn,
@@ -27,9 +25,32 @@ jest.mock(
       .fn()
       .mockResolvedValueOnce({ uid: 'uid' })
       .mockResolvedValueOnce(null)
-      .mockRejectedValueOnce({ error: 'error' }),
+      .mockRejectedValueOnce(new Error()),
   }),
 );
+
+jest.mock('~/services/firestore/collections/users', () => ({
+  users: jest
+    .fn()
+    .mockReturnValueOnce({
+      doc: () => ({
+        get: jest.fn().mockResolvedValue({ data: () => ({ uid: 'uid' }) }),
+        set: jest.fn().mockResolvedValue(null),
+      }),
+    })
+    .mockReturnValueOnce({
+      doc: () => ({
+        get: jest.fn().mockResolvedValue({ data: () => null }),
+        set: jest.fn().mockResolvedValue(null),
+      }),
+    })
+    .mockReturnValueOnce({
+      doc: () => ({
+        get: jest.fn().mockRejectedValue(new Error()),
+        set: jest.fn().mockResolvedValue(null),
+      }),
+    }),
+}));
 
 describe('auth: actions', () => {
   const store = mockStore({ auth: initialState });
@@ -130,67 +151,52 @@ describe('auth: actions', () => {
     });
   });
 
-  describe('onAddUser', () => {
-    it('should create valid action', async () => {
-      const user = {
-        uid: 'xxx',
-        name: 'yyy',
-        photoURL: 'zzz',
-      };
-      await onAddUser(store.dispatch, user);
-
-      const expected = [{ type: 'ADD_USER' }, { type: 'ADD_USER_SUCCESS' }];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
   describe('onFetchUser', () => {
-    describe('user exists', () => {
-      it('should create valid action', async () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const user: any = {
-          displayName: 'yyy',
-          photoURL: 'zzz',
-          uid: 'xxx',
-        };
-        await onFetchUser(store.dispatch, user as User);
+    const user = {
+      displayName: 'Firebase User',
+      photoURL: 'firebase.png',
+      uid: 'firebase',
+    } as FirebaseUser;
 
-        const expected = [
-          {
-            type: 'FETCH_USER',
-          },
-          {
-            type: 'SET_USER',
-            payload: {
-              user: {
-                name: undefined,
-                photoURL: undefined,
-                uid: 'xxx',
-              },
+    it('should create valid action if user exists', async () => {
+      await onFetchUser(store.dispatch, user);
+
+      const expected = [
+        {
+          type: 'FETCH_USER',
+        },
+        {
+          type: 'SET_USER',
+          payload: {
+            user: {
+              name: undefined,
+              photoURL: undefined,
+              uid: 'uid',
             },
           },
-        ];
-        expect(store.getActions()).toEqual(expected);
-      });
+        },
+      ];
+      expect(store.getActions()).toEqual(expected);
     });
 
-    describe.skip('not found user', () => {
-      it('should create valid action', async () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const user: any = {
-          displayName: 'yyy',
-          photoURL: 'zzz',
-          uid: 'xxx',
-        };
-        await onFetchUser(store.dispatch, user as User);
+    it('should create valid action if user does not exist', async () => {
+      await onFetchUser(store.dispatch, user);
 
-        const expected = [
-          { type: 'FETCH_USER' },
-          { type: 'ADD_USER' },
-          { type: 'ADD_USER_SUCCESS' },
-        ];
-        expect(store.getActions()).toEqual(expected);
-      });
+      const expected = [
+        { type: 'FETCH_USER' },
+        { type: 'ADD_USER' },
+        { type: 'ADD_USER_SUCCESS' },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+
+    it('calls postError if Error', async () => {
+      const mock = jest.fn(postError);
+      try {
+        await onFetchUser(store.dispatch, user);
+      } catch {
+        expect(mock).toBeCalled();
+      }
     });
   });
 
@@ -202,16 +208,6 @@ describe('auth: actions', () => {
         { type: 'OBSERVE_AUTH_STATE_CHANGED' },
         { type: 'FETCH_USER' },
         { type: 'AUTH_STATE_CHANGED' },
-        {
-          type: 'SET_USER',
-          payload: {
-            user: {
-              name: undefined,
-              photoURL: undefined,
-              uid: 'xxx',
-            },
-          },
-        },
       ];
       expect(store.getActions()).toEqual(expected);
     });

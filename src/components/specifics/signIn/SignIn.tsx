@@ -6,9 +6,30 @@ import { AuthActions } from '~/store/auth';
 
 const Container = styled.div`
   display: flex;
+  position: relative;
   align-items: flex-start;
   justify-content: center;
+  min-height: 100%;
   padding: 16px;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 208px;
+    left: 50%;
+    width: 80%;
+    height: 100%;
+    transform: translateX(-50%);
+    background-image: url(/static/images/mock.png);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: 100%;
+
+    @media (min-width: 680px) {
+      top: 247px;
+    }
+  }
 `;
 
 const Section = styled.section`

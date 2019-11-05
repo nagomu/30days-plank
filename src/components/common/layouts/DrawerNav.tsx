@@ -10,11 +10,34 @@ import { useLayout } from '~/hooks/common/useLayout';
 import { AuthActions, AuthState } from '~/store/auth';
 import { rgba } from '~/utils';
 
+const Screen = styled.div`
+  display: grid;
+  position: absolute;
+  top: 0;
+  left: 0;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
+  height: 100%;
+
+  @media (min-width: 512px) {
+    top: 50%;
+    left: 50%;
+    width: 480px;
+    max-height: 90vh;
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px ${rgba('#000', 0.1)};
+  }
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border-right: 1px solid #e0e0e0;
+  background-color: #fff;
   ${screenEffect}
 `;
 
@@ -61,7 +84,6 @@ const SignOutButton = styled.button`
     background-color 0.25s ease-in-out;
   border-width: 1px;
   border-style: solid;
-  border-radius: 999em;
   border-color: ${rgba('#1e88e5', 0)};
   background-color: ${rgba('#1e88e5', 0)};
   color: inherit;
@@ -108,32 +130,34 @@ const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
     return;
   };
   return (
-    <Container>
-      <CloseButton type="button" onClick={onToggleNav}>
-        <Avatar asButton={false} user={user} />
-        <ForwardIcon name="arrow_forward" />
-      </CloseButton>
-      {user && (
-        <Menu>
-          {config.nav.map(nav => (
-            <Button
-              exact
-              key={nav.pathname}
-              onClick={onToggleNav}
-              role="button"
-              to={nav.pathname}
-            >
-              <Icon name={nav.icon} />
-              <ButtonText>{nav.label}</ButtonText>
-            </Button>
-          ))}
-          <SignOutButton onClick={onClick} type="button">
-            <Icon name="exit_to_app" />
-            <ButtonText>Sign out</ButtonText>
-          </SignOutButton>
-        </Menu>
-      )}
-    </Container>
+    <Screen>
+      <Container>
+        <CloseButton type="button" onClick={onToggleNav}>
+          <Avatar asButton={false} user={user} />
+          <ForwardIcon name="arrow_forward" />
+        </CloseButton>
+        {user && (
+          <Menu>
+            {config.nav.map(nav => (
+              <Button
+                exact
+                key={nav.pathname}
+                onClick={onToggleNav}
+                role="button"
+                to={nav.pathname}
+              >
+                <Icon name={nav.icon} />
+                <ButtonText>{nav.label}</ButtonText>
+              </Button>
+            ))}
+            <SignOutButton onClick={onClick} type="button">
+              <Icon name="exit_to_app" />
+              <ButtonText>Sign out</ButtonText>
+            </SignOutButton>
+          </Menu>
+        )}
+      </Container>
+    </Screen>
   );
 };
 

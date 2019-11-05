@@ -1,6 +1,4 @@
 import {
-  CHANGE_TO_DRAWER_NAV,
-  CHANGE_TO_VERTICAL_NAV,
   CLOSE_NAV,
   LayoutActionTypes,
   LayoutState,
@@ -9,7 +7,6 @@ import {
 
 export const initialState: LayoutState = {
   isNavOpen: false,
-  isSmallScreen: undefined,
 };
 
 export const layoutReducer = (
@@ -26,17 +23,6 @@ export const layoutReducer = (
       return {
         ...state,
         isNavOpen: false,
-      };
-    case CHANGE_TO_DRAWER_NAV:
-      return {
-        ...state,
-        isSmallScreen: true,
-      };
-    case CHANGE_TO_VERTICAL_NAV:
-      return {
-        ...state,
-        isNavOpen: false,
-        isSmallScreen: false,
       };
     default:
       return state;

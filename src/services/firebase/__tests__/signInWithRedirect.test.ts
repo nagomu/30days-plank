@@ -8,7 +8,7 @@ describe('services/firebase/signInWithRedirect', () => {
 
       await signInWithRedirect();
     } catch (error) {
-      expect(error).toEqual(null);
+      expect(error).toEqual(new Error());
     }
   });
 });

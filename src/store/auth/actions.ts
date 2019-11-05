@@ -5,7 +5,8 @@ import { FirebaseUser } from '~/services/firebase';
 import { asyncOnAuthStateChanged } from '~/services/firebase/asyncOnAuthStateChanged';
 import { asyncSignOut } from '~/services/firebase/asyncSignOut';
 import { signInWithRedirect } from '~/services/firebase/signInWithRedirect';
-import { postError, users } from '~/services/firestore';
+import { postError } from '~/services/firestore';
+import { users } from '~/services/firestore/collections/users';
 import {
   ADD_USER,
   ADD_USER_SUCCESS,
@@ -17,6 +18,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   User,
+  UserParams,
 } from '~/store/auth';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
@@ -52,23 +54,20 @@ export const signOut = (): AuthActionTypes => ({
   type: SIGN_OUT,
 });
 
-export const onAddUser = async (
-  dispatch: Dispatch,
-  user: User,
-): Promise<void> => {
-  dispatch(addUser());
-
-  try {
-    await users()
-      .doc()
-      .set(user);
-
-    dispatch(addUserSuccess());
-  } catch (error) {
-    postError(error);
+export const userParams = (firebaseUser: UserParams, user?: User): User => {
+  if (!user) {
+    return {
+      uid: firebaseUser.uid,
+      name: firebaseUser.displayName || undefined,
+      photoURL: firebaseUser.photoURL || undefined,
+    };
   }
 
-  return;
+  return {
+    uid: user.uid,
+    name: user.name,
+    photoURL: user.photoURL,
+  };
 };
 
 export const onFetchUser = async (
@@ -78,25 +77,16 @@ export const onFetchUser = async (
   dispatch(fetchUser());
 
   try {
-    const doc = await users()
-      .doc(user.uid)
-      .get();
+    const ref = users().doc(user.uid);
+    const snapshot = await ref.get();
+    const data = snapshot.data() as User | undefined;
+    const params = userParams(user, data);
 
-    const data = doc.data();
-
-    if (!doc.exists || !data) {
-      const params: User = {
-        uid: user.uid,
-        name: user.displayName || undefined,
-        photoURL: user.photoURL || undefined,
-      };
-      onAddUser(dispatch, params);
+    if (!data) {
+      dispatch(addUser());
+      await ref.set(user);
+      dispatch(addUserSuccess());
     } else {
-      const params: User = {
-        uid: data.uid,
-        name: data.name,
-        photoURL: data.photoURL,
-      };
       dispatch(setUser(params));
       clearRedirectStorage();
     }

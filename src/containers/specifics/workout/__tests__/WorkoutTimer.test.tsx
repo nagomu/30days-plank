@@ -14,6 +14,8 @@ jest.mock('~/utils/datetime', () => ({
 }));
 
 describe('WorkoutTimerContainer', () => {
+  jest.useFakeTimers();
+
   const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
   timekeeper.freeze(mockToday);
 
@@ -24,7 +26,7 @@ describe('WorkoutTimerContainer', () => {
       id: 'xxx',
       isCompleted: false,
       isRest: false,
-      menu: 20,
+      menu: 2,
       scheduledDate: timestampFromDate(mockToday),
       title: 'Day 1',
     },
@@ -56,6 +58,16 @@ describe('WorkoutTimerContainer', () => {
       const state = wrapper.state();
       expect(state.status).toEqual(Status.start);
       expect(state.timer).not.toEqual(undefined);
+
+      jest.runAllTimers();
+
+      const expected = {
+        progress: 0,
+        status: Status.finish,
+        timer: undefined,
+        isCompleted: true,
+      };
+      expect(wrapper.state()).toEqual(expected);
     });
   });
 

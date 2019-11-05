@@ -17,6 +17,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   User,
+  UserParams,
 } from '~/store/auth';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
@@ -69,6 +70,22 @@ export const onAddUser = async (
   }
 
   return;
+};
+
+export const userParams = (firebaseUser: UserParams, user?: User): User => {
+  if (!user) {
+    return {
+      uid: firebaseUser.uid,
+      name: firebaseUser.displayName || undefined,
+      photoURL: firebaseUser.photoURL || undefined,
+    };
+  }
+
+  return {
+    uid: user.uid,
+    name: user.name,
+    photoURL: user.photoURL,
+  };
 };
 
 export const onFetchUser = async (

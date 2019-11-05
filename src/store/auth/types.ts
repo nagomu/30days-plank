@@ -1,8 +1,12 @@
+import { FirebaseUser } from '~/services/firebase';
+
 export type User = {
   uid: string;
   name?: string;
   photoURL?: string;
 };
+
+export type UserParams = Pick<FirebaseUser, 'uid'> & Partial<FirebaseUser>;
 
 export type AuthState = {
   user?: User;

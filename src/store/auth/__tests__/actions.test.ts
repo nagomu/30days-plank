@@ -16,6 +16,7 @@ import {
   setUser,
   signIn,
   signOut,
+  userParams,
 } from '~/store/auth';
 import { mockStore } from '~/utils';
 
@@ -274,6 +275,33 @@ describe('auth: actions', () => {
       } catch (error) {
         expect(mock).toBeCalled();
       }
+    });
+  });
+
+  describe('userParams', () => {
+    const firebaseUser = {
+      displayName: 'Firebase',
+      photoURL: 'firebase.png',
+      uid: 'firebase',
+    };
+
+    const user = {
+      name: 'user',
+      photoURL: 'user.png',
+      uid: 'uid',
+    };
+
+    it('returns User correctly if user exists', async () => {
+      expect(userParams(firebaseUser, user)).toEqual(user);
+    });
+
+    it('returns User correctly if user does not exist', async () => {
+      const expected = {
+        name: 'Firebase',
+        photoURL: 'firebase.png',
+        uid: 'firebase',
+      };
+      expect(userParams(firebaseUser)).toEqual(expected);
     });
   });
 });

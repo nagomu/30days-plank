@@ -1,13 +1,5 @@
 import { asyncOnAuthStateChanged } from '~/services/firebase/asyncOnAuthStateChanged';
 
-jest.mock('~/services/firebase/asyncOnAuthStateChanged', () => ({
-  asyncOnAuthStateChanged: jest
-    .fn()
-    .mockResolvedValueOnce(null)
-    .mockResolvedValueOnce({ uid: 'uid' })
-    .mockRejectedValueOnce({ error: 'Error' }),
-}));
-
 describe('services/firebase/asyncOnAuthStateChanged', () => {
   it('returns onAuthStateChanged correctly', async () => {
     try {

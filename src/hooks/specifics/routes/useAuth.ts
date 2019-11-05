@@ -44,7 +44,7 @@ export const useAuth = (): UseAuth => {
       auth.user,
     ),
     redirectTo: getRedirectTo(),
-    onSignIn: (): void => onSignIn(dispatch),
-    onSignOut: (): void => onSignOut(dispatch),
+    onSignIn: (): Promise<void> => onSignIn(dispatch),
+    onSignOut: (): Promise<void> => onSignOut(dispatch),
   };
 };

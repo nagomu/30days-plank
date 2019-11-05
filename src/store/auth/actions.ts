@@ -1,8 +1,10 @@
 import { Dispatch } from 'redux';
 
 import { clearRedirectStorage, setIsAuthenticating } from '~/services/auth';
-import { firebase, FirebaseUser } from '~/services/firebase';
+import { FirebaseUser } from '~/services/firebase';
 import { asyncOnAuthStateChanged } from '~/services/firebase/asyncOnAuthStateChanged';
+import { asyncSignOut } from '~/services/firebase/asyncSignOut';
+import { signInWithRedirect } from '~/services/firebase/signInWithRedirect';
 import { postError, users } from '~/services/firestore';
 import {
   ADD_USER,
@@ -111,6 +113,7 @@ export const onAuthStateChanged = async (dispatch: Dispatch): Promise<void> => {
     if (user) {
       onFetchUser(dispatch, user);
     } else {
+      dispatch(setUser(undefined));
       clearRedirectStorage();
     }
     dispatch(authStateChanged());
@@ -121,12 +124,11 @@ export const onAuthStateChanged = async (dispatch: Dispatch): Promise<void> => {
   return;
 };
 
-export const onSignIn = (dispatch: Dispatch): void => {
+export const onSignIn = async (dispatch: Dispatch): Promise<void> => {
   try {
+    await signInWithRedirect();
     dispatch(signIn());
     setIsAuthenticating();
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
   } catch (error) {
     postError(error);
   }
@@ -134,12 +136,12 @@ export const onSignIn = (dispatch: Dispatch): void => {
   return;
 };
 
-export const onSignOut = (dispatch: Dispatch): void => {
+export const onSignOut = async (dispatch: Dispatch): Promise<void> => {
   try {
-    dispatch(signOut());
-    dispatch(setUser(undefined));
-    firebase.auth().signOut();
+    await asyncSignOut();
     clearRedirectStorage();
+    dispatch(signOut());
+    onAuthStateChanged(dispatch);
   } catch (error) {
     postError(error);
   }

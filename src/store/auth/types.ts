@@ -10,8 +10,8 @@ export type AuthState = {
 };
 
 export type AuthActions = {
-  onSignIn: () => void;
-  onSignOut: () => void;
+  onSignIn: () => Promise<void>;
+  onSignOut: () => Promise<void>;
 };
 
 // Start onAuthStateChanged

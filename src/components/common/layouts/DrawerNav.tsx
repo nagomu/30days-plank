@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import Avatar from '~/components/common/icons/Avatar';
 import Icon from '~/components/common/icons/Icon';
 import config from '~/config';
+import { screenEffect } from '~/config';
 import { useLayout } from '~/hooks/common/useLayout';
 import { AuthActions, AuthState } from '~/store/auth';
 import { rgba } from '~/utils';
@@ -14,6 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   border-right: 1px solid #e0e0e0;
+  ${screenEffect}
 `;
 
 const CloseButton = styled.button`

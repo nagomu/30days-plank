@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import * as React from 'react';
 
@@ -5,6 +6,16 @@ import Avatar from '~/components/common/icons/Avatar';
 import DrawerNav from '~/components/common/layouts/DrawerNav';
 import Loading from '~/components/common/loaders/Loading';
 import { Props } from '~/containers/common/layouts/App';
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
 
 const Screen = styled.div`
   position: absolute;
@@ -24,6 +35,7 @@ const Container = styled.div`
   grid-template-rows: 56px 1fr;
   width: 100%;
   height: 100%;
+  animation: ${fadeIn} 0.25s ease-in-out;
 `;
 
 const NavBar = styled.header`

@@ -110,7 +110,31 @@ describe('WorkoutTimerContainer', () => {
     });
   });
 
+  describe('componentDidUpdate', () => {
+    it('clears interval', () => {
+      const prevProps = {
+        ...props,
+        workout: undefined,
+      };
+      const wrapper = createWrapper(props).find('WorkoutTimer');
+      (wrapper.instance() as WorkoutTimer).componentDidUpdate(prevProps);
+      wrapper.update();
+
+      expect(wrapper.state().progress).toEqual(2);
+    });
+  });
+
   describe('componentWillUnmount', () => {
+    it('clears interval', () => {
+      const wrapper = createWrapper(props).find('WorkoutTimer');
+      wrapper.setState({ timer: 1 });
+      wrapper.update();
+      (wrapper.instance() as WorkoutTimer).componentWillUnmount();
+      wrapper.update();
+
+      expect(clearInterval).toHaveBeenCalledTimes(3);
+    });
+
     it('calls onUpdate', () => {
       const wrapper = createWrapper(props).find('WorkoutTimer');
       wrapper.setState({ isCompleted: true });

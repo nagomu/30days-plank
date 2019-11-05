@@ -3,7 +3,6 @@ import {
   batchChallenges,
   challenges,
   errors,
-  users,
   workouts,
 } from '~/services/firestore/collections';
 
@@ -24,10 +23,6 @@ describe('services/firestore/collections', () => {
 
   it('sets correct challenges collectionPath (batchChallenges)', () => {
     expect(batchChallenges().ref.path).toEqual('users/uid/challenges');
-  });
-
-  it('sets correct users collectionPath', () => {
-    expect(users().path).toEqual('users');
   });
 
   it('sets correct workouts collectionPath', () => {

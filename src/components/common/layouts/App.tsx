@@ -8,6 +8,7 @@ import DrawerNav from '~/components/common/layouts/DrawerNav';
 import Loading from '~/components/common/loaders/Loading';
 import { AppState } from '~/store';
 import { User } from '~/store/auth';
+import { rgba } from '~/utils';
 
 const fadeIn = keyframes`
   0% {
@@ -25,7 +26,6 @@ const Screen = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
 `;
 
 const Container = styled.div`
@@ -38,6 +38,19 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   animation: ${fadeIn} 0.25s ease-in-out;
+  background-color: #fff;
+
+  @media (min-width: 512px) {
+    top: 50%;
+    left: 50%;
+    width: 480px;
+    max-height: 90vh;
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px ${rgba('#000', 0.1)};
+  }
 `;
 
 const NavBar = styled.header`

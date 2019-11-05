@@ -2,6 +2,7 @@ import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import Avatar from '~/components/common/icons/Avatar';
 import DrawerNav from '~/components/common/layouts/DrawerNav';
@@ -77,16 +78,22 @@ type Props = {
 
 const App: React.FC<Props> = ({ children, onSignOut, isLoading, user }) => {
   const { isNavOpen } = useSelector((state: AppState) => state.layout);
+  const { pathname } = useLocation();
+
+  const shouldNavBarShowed = pathname === '/dashboard' || pathname === '/';
+  const style = !shouldNavBarShowed ? { gridTemplateRows: '1fr' } : undefined;
 
   return (
     <Screen>
       {isNavOpen ? (
         <DrawerNav onSignOut={onSignOut} user={user} />
       ) : (
-        <Container>
-          <NavBar>
-            <Avatar asButton={true} user={user} />
-          </NavBar>
+        <Container style={style}>
+          {shouldNavBarShowed && (
+            <NavBar>
+              <Avatar asButton={true} user={user} />
+            </NavBar>
+          )}
           <Main>{isLoading ? <Loading /> : children}</Main>
         </Container>
       )}

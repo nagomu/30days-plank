@@ -48,16 +48,6 @@ jest.mock('../../firestore/collections', () => ({
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     ref: { doc: () => ({ id: 'id' }) },
   }),
-  // TODO: Add 'user doesn't exist pattern'
-  users: jest.fn().mockReturnValue({
-    doc: () => ({
-      get: jest.fn().mockReturnValue({
-        data: jest.fn().mockReturnValue({ uid: 'xxx' }),
-        exists: true,
-      }),
-      set: jest.fn().mockResolvedValue(undefined),
-    }),
-  }),
   workouts: jest.fn().mockReturnValue({
     add: jest.fn().mockResolvedValue(undefined),
     orderBy: jest.fn().mockReturnValue({

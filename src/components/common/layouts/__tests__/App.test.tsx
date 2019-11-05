@@ -1,7 +1,7 @@
-import SmallScreen from '~/components/common/layouts/SmallScreen';
-import { withProvider } from '~/utils';
+import App from '~/components/common/layouts/App';
+import { mockStore, withProvider } from '~/utils';
 
-describe('SmallScreen', () => {
+describe('App', () => {
   const mockSignOut = jest.fn();
   const props = {
     children: 'children',
@@ -10,12 +10,21 @@ describe('SmallScreen', () => {
     user: null,
   };
 
+  const state = {
+    layout: {
+      isNavOpen: false,
+    },
+  };
+
+  const store = mockStore(state);
+
   it('renders correctly if loading', () => {
     const params = {
-      Component: SmallScreen,
+      Component: App,
       props,
+      store,
     };
-    const app = withProvider(params).find('SmallScreen');
+    const app = withProvider(params).find('App');
 
     expect(app.length).toEqual(1);
     expect(app.find('header button').length).toEqual(1);
@@ -27,7 +36,7 @@ describe('SmallScreen', () => {
 
   it('renders correctly if authenticated', () => {
     const params = {
-      Component: SmallScreen,
+      Component: App,
       props: {
         ...props,
         isLoading: false,
@@ -36,9 +45,10 @@ describe('SmallScreen', () => {
           name: 'User',
         },
       },
+      store,
     };
 
-    const app = withProvider(params).find('SmallScreen');
+    const app = withProvider(params).find('App');
     // Should not render Loading
     expect(app.find('main Loading').length).toEqual(0);
     // Should render children
@@ -46,20 +56,28 @@ describe('SmallScreen', () => {
   });
 
   it('renders correctly if nav is opened', () => {
+    const navOpenState = {
+      layout: {
+        isNavOpen: true,
+      },
+    };
+
+    const navOpen = mockStore(navOpenState);
+
     const params = {
-      Component: SmallScreen,
+      Component: App,
       props: {
         ...props,
         isLoading: false,
-        isNavOpen: true,
         user: {
           uid: 'xxx',
           name: 'User',
         },
       },
+      store: navOpen,
     };
 
-    const app = withProvider(params).find('SmallScreen');
+    const app = withProvider(params).find('App');
     // Should not render main
     expect(app.find('main').length).toEqual(0);
     // Should render DrawerNav

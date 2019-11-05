@@ -3,8 +3,8 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import ErrorBoundary from '~/components/common/errors/ErrorBoundary';
 import NotFound from '~/components/common/errors/NotFound';
+import App from '~/components/common/layouts/App';
 import SignIn from '~/components/specifics/signIn/SignIn';
-import App from '~/containers/common/layouts/App';
 import Archives from '~/containers/specifics/archive/Archives';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
 import Workout from '~/containers/specifics/workout/Workout';

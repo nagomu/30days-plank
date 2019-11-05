@@ -1,11 +1,13 @@
 import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 
 import Avatar from '~/components/common/icons/Avatar';
 import DrawerNav from '~/components/common/layouts/DrawerNav';
 import Loading from '~/components/common/loaders/Loading';
-import { Props } from '~/containers/common/layouts/App';
+import { AppState } from '~/store';
+import { User } from '~/store/auth';
 
 const fadeIn = keyframes`
   0% {
@@ -53,27 +55,30 @@ const Main = styled.main`
   overflow-y: auto;
 `;
 
-const SmallScreen: React.FC<Props> = ({
-  children,
-  onSignOut,
-  isLoading,
-  isNavOpen,
-  user,
-}) => {
+type Props = {
+  children: React.ReactNode;
+  user?: User;
+  isLoading?: boolean;
+  onSignOut: () => Promise<void>;
+};
+
+const App: React.FC<Props> = ({ children, onSignOut, isLoading, user }) => {
+  const { isNavOpen } = useSelector((state: AppState) => state.layout);
+
   return (
     <Screen>
-      {!isNavOpen ? (
+      {isNavOpen ? (
+        <DrawerNav onSignOut={onSignOut} user={user} />
+      ) : (
         <Container>
           <NavBar>
             <Avatar asButton={true} user={user} />
           </NavBar>
           <Main>{isLoading ? <Loading /> : children}</Main>
         </Container>
-      ) : (
-        <DrawerNav onSignOut={onSignOut} user={user} />
       )}
     </Screen>
   );
 };
 
-export default SmallScreen;
+export default App;

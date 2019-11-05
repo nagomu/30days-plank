@@ -25,6 +25,7 @@ body {
   width: 100%;
   min-height: 100vh;
   margin: 0;
+  background: linear-gradient(10deg, #fff 50%, #1e88e5 50%);
   line-height: 1.5;
   text-rendering: optimizeSpeed;
   scroll-behavior: smooth;

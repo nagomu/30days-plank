@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import Icon from '~/components/common/icons/Icon';
 import Loading from '~/components/common/loaders/Loading';
+import { screenEffect } from '~/config';
 
 const Screen = styled.div`
   display: grid;
@@ -15,6 +16,7 @@ const Screen = styled.div`
   width: 100%;
   height: 100%;
   background-color: #fff;
+  ${screenEffect}
 
   @media all and (min-width: 680px) {
     position: absolute;

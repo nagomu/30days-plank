@@ -128,10 +128,10 @@ export const onSignIn = async (dispatch: Dispatch): Promise<void> => {
 
 export const onSignOut = async (dispatch: Dispatch): Promise<void> => {
   try {
-    await asyncSignOut();
+    asyncSignOut();
+    onAuthStateChanged(dispatch);
     clearRedirectStorage();
     dispatch(signOut());
-    onAuthStateChanged(dispatch);
   } catch (error) {
     postError(error);
   }

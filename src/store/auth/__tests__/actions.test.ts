@@ -233,8 +233,8 @@ describe('auth: actions', () => {
       await onSignOut(store.dispatch);
 
       const expected = [
-        { type: 'SIGN_OUT' },
         { type: 'OBSERVE_AUTH_STATE_CHANGED' },
+        { type: 'SIGN_OUT' },
         { type: 'SET_USER', payload: { user: undefined } },
         { type: 'AUTH_STATE_CHANGED' },
       ];

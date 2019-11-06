@@ -23,6 +23,8 @@ const env = {
 
 const svgPath = path.resolve(__dirname, 'src/assets/sprite.svg');
 const svg = fs.readFileSync(svgPath).toString();
+const cssPath = path.resolve(__dirname, 'src/index.css');
+const css = fs.readFileSync(cssPath).toString();
 
 const config = {
   entry: path.resolve('src/index.tsx'),
@@ -60,6 +62,7 @@ const config = {
       },
       template: 'src/index.html',
       svg,
+      css,
       APP_VERSION: JSON.stringify(process.env.npm_package_version).toString().replace(/"/g,''),
       APP_BUILD_VERSION: childProcess.execSync('git rev-parse --short HEAD').toString().trim(),
     }),

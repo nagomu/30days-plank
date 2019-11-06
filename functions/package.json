@@ -13,6 +13,13 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
+  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"

@@ -65,8 +65,13 @@ const config = {
       template: 'src/index.html',
       svg,
       css,
-      APP_VERSION: JSON.stringify(process.env.npm_package_version).toString().replace(/"/g,''),
-      APP_BUILD_VERSION: childProcess.execSync('git rev-parse --short HEAD').toString().trim(),
+      APP_VERSION: JSON.stringify(process.env.npm_package_version)
+        .toString()
+        .replace(/"/g, ''),
+      APP_BUILD_VERSION: childProcess
+        .execSync('git rev-parse --short HEAD')
+        .toString()
+        .trim(),
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(env),

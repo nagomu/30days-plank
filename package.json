@@ -17,7 +17,7 @@
     "lint": "yarn eslint && yarn stylelint",
     "lint:fix": "yarn eslint --fix --cache && yarn stylelint",
     "eslint": "eslint src --ext .ts,.tsx --cache --cache-location=.cache/eslint",
-    "stylelint": "stylelint src/**/*.{ts,tsx} --cache --cache-location=.cache/stylelint",
+    "stylelint": "stylelint src/**/*.{ts,tsx,css} --cache --cache-location=.cache/stylelint",
     "sprite": "svg-sprite -s --symbol-dest=src/assets --symbol-sprite=sprite.svg src/assets/icons/*.svg",
     "component": "hygen new component",
     "store": "hygen new store",

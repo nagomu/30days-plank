@@ -1,5 +1,5 @@
-import AddToHomeScreen from 'a2hs.js';
 import styled from '@emotion/styled';
+import AddToHomeScreen from 'a2hs.js';
 import * as React from 'react';
 
 import SignInButton from '~/components/specifics/signIn/SignInButton';

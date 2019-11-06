@@ -11,7 +11,8 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "lint": "eslint src --ext .ts --fix --cache --cache-location=.cache/eslint"
   },
   "jest": {
     "preset": "ts-jest",

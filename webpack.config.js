@@ -59,6 +59,8 @@ const config = {
       minify: {
         collapseWhitespace: true,
         removeComments: true,
+        minifyCSS: true,
+        minifyJS: true,
       },
       template: 'src/index.html',
       svg,

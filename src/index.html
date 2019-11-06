@@ -29,9 +29,42 @@ window.WebFontConfig = {
   s.parentNode.insertBefore(wf, s);
 })();
 </script>
+<style type="text/css">
+<%= htmlWebpackPlugin.options.css %>
+</style>
 </head>
 <body>
 <div id="root"></div>
+<div class="static-screen">
+  <div class="static-container">
+    <header class="static-header">
+      <svg role="img" title="30days plank challenge" class="static-logo">
+        <use xlink:href="#logo" />
+      </svg>
+    </header>
+    <main class="static-main">
+      <noscript>
+        <p class="static-error">To use 30days plank challenge, please enable JavaScript.</p>
+      </noscript>
+      <p class="static-error static-ie-message js-render-if-ie">
+        This page will not work in your browser. Please upgrade your browser.
+        <br />
+        refs: <a href="https://bestvpn.org/outdatedbrowser">https://bestvpn.org/outdatedbrowser</a>
+      </p>
+    </main>
+  </div>
+</div>
 <div hidden><%= htmlWebpackPlugin.options.svg %></div>
+<script>
+(function() {
+  function showMessageIfIE() {
+    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+    if (!isIE) return;
+    var message = document.querySelector('.js-render-if-ie');
+    if (message) message.style.display = 'block';
+  }
+  document.addEventListener('DOMContentLoaded', showMessageIfIE);
+})();
+</script>
 </body>
 </html>

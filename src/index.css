@@ -1,0 +1,117 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+html {
+  background-color: #fff;
+  color: #212121;
+  font-family: Roboto, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  font-size: 16px;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  position: relative;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.static-screen {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#root:empty + .static-screen {
+  display: block;
+}
+
+.static-container {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+}
+
+.static-header {
+  width: 100%;
+  height: 56px;
+  padding: 11.5px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.static-logo {
+  width: 32px;
+  height: 32px;
+  color: #1e88e5;
+}
+
+.static-main {
+  display: block;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.static-error {
+  padding: 1em;
+  border-radius: 4px;
+  background-color: #ffcdd2;
+  color: #b71c1c;
+  word-break: break-all;
+}
+
+.static-ie-message {
+  display: none;
+}
+
+@media only all and (min-width: 512px) {
+  body {
+    background: linear-gradient(10deg, #fff 50%, #1e88e5 50%);
+  }
+
+  .static-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 480px;
+    max-height: 90vh;
+    overflow: hidden;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .static-main {
+    min-height: 90vh;
+  }
+}

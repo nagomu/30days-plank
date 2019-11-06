@@ -1,6 +1,6 @@
 {
   "name": "30days-plank",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "repository": "git@github.com:nagomu/30days-plank.git",
   "author": "@nagomu",
   "license": "MIT",
@@ -126,6 +126,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.21",
     "@emotion/styled": "^10.0.17",
+    "a2hs.js": "^0.4.5",
     "firebase": "^7.1.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",

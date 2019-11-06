@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 import Avatar from '~/components/common/icons/Avatar';
 import DrawerNav from '~/components/common/layouts/DrawerNav';
+import Footer from '~/components/common/layouts/Footer';
 import Loading from '~/components/common/loaders/Loading';
 import { AppState } from '~/store';
 import { User } from '~/store/auth';
@@ -81,6 +82,7 @@ const App: React.FC<Props> = ({ children, onSignOut, isLoading, user }) => {
   const { pathname } = useLocation();
 
   const shouldNavBarShowed = pathname === '/dashboard' || pathname === '/';
+  const isSignIn = pathname === '/';
   const style = !shouldNavBarShowed ? { gridTemplateRows: '1fr' } : undefined;
 
   return (
@@ -97,6 +99,7 @@ const App: React.FC<Props> = ({ children, onSignOut, isLoading, user }) => {
           <Main>{isLoading ? <Loading /> : children}</Main>
         </Container>
       )}
+      {isSignIn && <Footer />}
     </Screen>
   );
 };

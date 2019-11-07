@@ -46,13 +46,19 @@ const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
             {...workout}
             key={workout.id}
             pathname={`${pathname(workout.id)}`}
-            isToday={!!todaysWorkout && todaysWorkout.id === workout.id}
+            isToday={
+              !!todaysWorkout &&
+              !workout.isRest &&
+              todaysWorkout.id === workout.id
+            }
           />
         ))}
       </Workouts>
-      {!!todaysWorkout && !todaysWorkout.isCompleted && (
-        <StartButton pathname={`${pathname(todaysWorkout.id)}`} />
-      )}
+      {!!todaysWorkout &&
+        !todaysWorkout.isRest &&
+        !todaysWorkout.isCompleted && (
+          <StartButton pathname={`${pathname(todaysWorkout.id)}`} />
+        )}
     </>
   );
 };

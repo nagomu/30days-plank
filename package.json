@@ -21,7 +21,9 @@
     "sprite": "svg-sprite -s --symbol-dest=src/assets --symbol-sprite=sprite.svg src/assets/icons/*.svg",
     "component": "hygen new component",
     "store": "hygen new store",
-    "clean": "rimraf public"
+    "clean": "rimraf public",
+    "func:serve": "firebase serve --only functions",
+    "func:watch": "tsc -w -p ./functions"
   },
   "browserslist": [
     "defaults",

@@ -1,0 +1,83 @@
+{
+  "name": "functions",
+  "private": true,
+  "engines": {
+    "node": "10"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "lint": "eslint src --ext .ts --fix --cache --cache-location=.cache/eslint"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended",
+      "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+      "@typescript-eslint",
+      "simple-import-sort"
+    ],
+    "env": {
+      "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "rules": {
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ],
+      "simple-import-sort/sort": "error",
+      "@typescript-eslint/no-var-requires": "off"
+    }
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.9.7",
+    "express": "^4.17.1",
+    "firebase-admin": "^8.0.0",
+    "firebase-functions": "^3.1.0",
+    "graphql": "^14.5.8"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.22",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "timekeeper": "^2.2.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.2.2"
+  }
+}

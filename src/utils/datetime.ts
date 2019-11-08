@@ -1,4 +1,6 @@
-import { Timestamp } from '~/services/firebase';
+import { firebase } from '~/services/firebase';
+
+type Timestamp = firebase.firestore.Timestamp;
 
 export const isToday = (ts: Timestamp): boolean => {
   const format = (value: Date): string => {
@@ -25,3 +27,6 @@ export const formatUS = (ts: Timestamp): string => {
   const options = { month: 'short', day: 'numeric', year: 'numeric' };
   return new Intl.DateTimeFormat('en-US', options).format(date);
 };
+
+export const timestamp = (date: Date): Timestamp =>
+  firebase.firestore.Timestamp.fromDate(date);

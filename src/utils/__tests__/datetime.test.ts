@@ -1,7 +1,13 @@
 import timekeeper from 'timekeeper';
 
-import { timestampFromDate } from '~/services/firestore';
-import { formatDayNumeric, formatShortMonth, formatUS, isToday } from '~/utils';
+import { firebase } from '~/services/firebase';
+import {
+  formatDayNumeric,
+  formatShortMonth,
+  formatUS,
+  isToday,
+  timestamp,
+} from '~/utils';
 
 describe('utils: datetime', () => {
   afterEach(() => {
@@ -12,7 +18,7 @@ describe('utils: datetime', () => {
     it('returns true correctly if a given timestamp is today', () => {
       const today = new Date(Date.UTC(2019, 0, 1, 0, 0, 0));
       timekeeper.freeze(today);
-      const ts = timestampFromDate(today);
+      const ts = timestamp(today);
       expect(isToday(ts)).toEqual(true);
     });
   });
@@ -21,8 +27,7 @@ describe('utils: datetime', () => {
     it('returns expected string correctly', () => {
       const today = new Date(Date.UTC(2019, 0, 1, 0, 0, 0));
       timekeeper.freeze(today);
-      const ts = timestampFromDate(today);
-
+      const ts = timestamp(today);
       expect(formatShortMonth(ts)).toEqual('Jan');
     });
   });
@@ -31,7 +36,7 @@ describe('utils: datetime', () => {
     it('returns expected string correctly', () => {
       const today = new Date(Date.UTC(2019, 0, 1, 0, 0, 0));
       timekeeper.freeze(today);
-      const ts = timestampFromDate(today);
+      const ts = timestamp(today);
       expect(formatDayNumeric(ts)).toEqual('1');
     });
   });
@@ -40,7 +45,7 @@ describe('utils: datetime', () => {
     it('returns expected string correctly', () => {
       const today = new Date(Date.UTC(2019, 0, 1, 0, 0, 0));
       timekeeper.freeze(today);
-      const ts = timestampFromDate(today);
+      const ts = timestamp(today);
       expect(formatDayNumeric(ts)).toEqual('1');
     });
   });
@@ -49,8 +54,17 @@ describe('utils: datetime', () => {
     it('returns expected string correctly', () => {
       const today = new Date(Date.UTC(2019, 0, 1, 0, 0, 0));
       timekeeper.freeze(today);
-      const ts = timestampFromDate(today);
+      const ts = timestamp(today);
       expect(formatUS(ts)).toEqual('Jan 1, 2019');
+    });
+  });
+
+  describe('timestamp', () => {
+    it('returns Timestamp correctly', () => {
+      const today = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
+      timekeeper.freeze(today);
+      const expected = firebase.firestore.Timestamp.fromDate(today);
+      expect(timestamp(today)).toEqual(expected);
     });
   });
 });

@@ -33,9 +33,6 @@
     "setupFiles": [
       "<rootDir>/jest.setup.ts"
     ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/services/__mocks__/firebase.ts"
-    ],
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/"

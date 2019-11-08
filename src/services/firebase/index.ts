@@ -7,6 +7,4 @@ import { firebaseConfig } from '~/config';
 
 firebase.initializeApp(firebaseConfig);
 
-export { currentUser } from './currentUser';
-export * from './types';
 export { firebase };

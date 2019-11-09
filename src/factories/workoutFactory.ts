@@ -1,5 +1,5 @@
 import { WorkoutTemplate } from '~/types';
-import { timestamp } from '~/utils/datetime';
+import { timestamp } from '~/utils';
 
 const menus = [
   20,

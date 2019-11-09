@@ -1,5 +1,5 @@
 import { firebase } from '~/services/firebase';
-import { timestamp } from '~/utils/datetime';
+import { timestamp } from '~/utils';
 
 export const postError = async (error: Error): Promise<void> => {
   const params = {

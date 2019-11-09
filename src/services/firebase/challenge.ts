@@ -1,7 +1,7 @@
 import { workoutFactory } from '~/factories/workoutFactory';
 import { firebase } from '~/services/firebase';
 import { Challenge } from '~/types';
-import { timestamp } from '~/utils/datetime';
+import { timestamp } from '~/utils';
 
 type Params = {
   id: string;

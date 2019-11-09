@@ -1,6 +1,6 @@
 import { firebase } from '~/services/firebase';
 import { Archive, Archives, Next } from '~/types';
-import { timestamp } from '~/utils/datetime';
+import { timestamp } from '~/utils';
 
 type Params = {
   challenge: string;

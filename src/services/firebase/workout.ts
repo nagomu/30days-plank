@@ -1,6 +1,6 @@
 import { firebase } from '~/services/firebase';
 import { Timestamp, Workout } from '~/types';
-import { timestamp } from '~/utils/datetime';
+import { timestamp } from '~/utils';
 
 type AddParams = {
   title: string;

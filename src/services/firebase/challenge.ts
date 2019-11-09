@@ -50,7 +50,6 @@ export const addChallenge = async (uid: string): ReturnValue => {
 
 export const updateChallenge = async (
   uid: string,
-  id: string,
   challenge: Params,
 ): ReturnValue => {
   const collectionPath = `/users/${uid}/challenges`;
@@ -59,7 +58,7 @@ export const updateChallenge = async (
     isActive: challenge.isActive,
     updatedAt: timestamp(new Date(Date.now())),
   };
-  await ref.doc(id).update(params);
+  await ref.doc(challenge.id).update(params);
 
-  return await fetchChallenge(uid, id);
+  return await fetchChallenge(uid, challenge.id);
 };

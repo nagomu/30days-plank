@@ -127,7 +127,7 @@ describe('challenge', () => {
         isActive: false,
       };
 
-      expect(await updateChallenge('uid', 'cid', params)).toEqual(expected);
+      expect(await updateChallenge('uid', params)).toEqual(expected);
     });
   });
 });

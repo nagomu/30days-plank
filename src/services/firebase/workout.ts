@@ -1,18 +1,6 @@
 import { firebase } from '~/services/firebase';
+import { Timestamp, Workout } from '~/types';
 import { timestamp } from '~/utils/datetime';
-
-type Timestamp = firebase.firestore.Timestamp;
-
-export type Workout = {
-  id: string;
-  title: string;
-  menu: number;
-  date: Timestamp;
-  isCompleted: boolean;
-  isRest: boolean;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
-};
 
 type AddParams = {
   title: string;

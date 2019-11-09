@@ -1,17 +1,20 @@
 import { Dispatch } from 'redux';
 
-import { QueryDocumentSnapshot, QuerySnapshot } from '~/services/firebase';
 import { archives, postError, timestampFromDate } from '~/services/firestore';
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
-  Archive,
   ArchiveActionTypes,
   FETCH_ARCHIVES,
   FETCH_ARCHIVES_SUCCESS,
   SET_ARCHIVES,
 } from '~/store/archive';
-import { Workout } from '~/store/workout';
+import {
+  Archive,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  Workout,
+} from '~/types';
 import { formatUS } from '~/utils';
 
 export const fetchArchives = (): ArchiveActionTypes => ({

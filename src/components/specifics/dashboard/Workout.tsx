@@ -3,7 +3,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Label from '~/components/specifics/dashboard/Label';
-import { Timestamp } from '~/services/firebase';
+import { Timestamp } from '~/types';
 import { formatDayNumeric, formatShortMonth, rgba } from '~/utils';
 
 type ContainerProps = {

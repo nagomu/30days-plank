@@ -3,8 +3,8 @@ import { Dispatch } from 'redux';
 
 import { currentUser } from '~/services/firebase';
 import { AppState } from '~/store';
-import { Challenge, onArchiveChallenge } from '~/store/challenge';
-import { Workout } from '~/store/workout';
+import { onArchiveChallenge } from '~/store/challenge';
+import { Challenge, Workout } from '~/types';
 
 type useOnArchive = {
   isExpired: boolean;

@@ -1,19 +1,7 @@
 import { workoutFactory } from '~/factories/workoutFactory';
 import { firebase } from '~/services/firebase';
+import { Challenge } from '~/types';
 import { timestamp } from '~/utils/datetime';
-
-import { Workout } from './workout';
-
-type Timestamp = firebase.firestore.Timestamp;
-
-export type Challenge = {
-  id: string;
-  description?: string;
-  isActive: boolean;
-  workouts: Workout[];
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
-};
 
 type Params = {
   id: string;

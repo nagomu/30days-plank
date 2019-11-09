@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import Icon from '~/components/common/icons/Icon';
 import { useLayout } from '~/hooks/common/useLayout';
-import { User } from '~/store/auth';
+import { User } from '~/types';
 import { rgba } from '~/utils';
 
 const Container = styled.div`

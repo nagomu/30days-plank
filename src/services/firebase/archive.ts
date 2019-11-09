@@ -1,26 +1,6 @@
 import { firebase } from '~/services/firebase';
+import { Archive, Archives, Next } from '~/types';
 import { timestamp } from '~/utils/datetime';
-
-export type Timestamp = firebase.firestore.Timestamp;
-
-export type Archive = {
-  id: string;
-  challenge: string;
-  title: string;
-  rate: number;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-};
-
-export type Next = {
-  seconds: number;
-  nanoseconds: number;
-};
-
-type Archives = {
-  archives: Archive[];
-  next?: Next;
-};
 
 type Params = {
   challenge: string;

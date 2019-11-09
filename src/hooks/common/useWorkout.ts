@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import { AppState } from '~/store';
 import { onFetchChallenge } from '~/store/challenge';
-import { onUpdateWorkout, UpdateWorkoutParams, Workout } from '~/store/workout';
+import { onUpdateWorkout, UpdateWorkoutParams } from '~/store/workout';
+import { Workout } from '~/types';
 
 type UseWorkout = {
   isLoading: boolean;

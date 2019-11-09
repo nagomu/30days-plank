@@ -1,5 +1,3 @@
-import { Timestamp } from '~/services/firebase';
-
 export enum Status {
   finish,
   pause,
@@ -7,24 +5,6 @@ export enum Status {
   standby,
   start,
 }
-
-export type Workout = {
-  id: string;
-  isCompleted: boolean;
-  isRest: boolean;
-  menu: number;
-  scheduledDate: Timestamp;
-  title: string;
-  updatedAt?: Timestamp;
-};
-
-export type WorkoutTemplate = {
-  isCompleted: boolean;
-  isRest: boolean;
-  menu: number;
-  scheduledDate: Timestamp | undefined;
-  title: string;
-};
 
 export type WorkoutState = {
   isLoading?: boolean;

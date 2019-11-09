@@ -1,7 +1,5 @@
-import { Workout } from '~/services/firebase/workout';
+import { WorkoutTemplate } from '~/types';
 import { timestamp } from '~/utils/datetime';
-
-export type WorkoutTemplate = Omit<Workout, 'id'>;
 
 const menus = [
   20,

@@ -1,13 +1,4 @@
-import { Timestamp } from '~/services/firebase';
-
-export type Archive = {
-  id: string;
-  challengeId: string;
-  title: string;
-  description?: string;
-  achievementRate: number;
-  createdAt: Timestamp;
-};
+import { Archive, Timestamp } from '~/types';
 
 export type AddArchiveParams = {
   challengeId: string;

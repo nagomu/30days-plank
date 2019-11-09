@@ -1,10 +1,4 @@
-import { FirebaseUser } from '~/services/firebase';
-
-export type User = {
-  uid: string;
-  name?: string;
-  photoURL?: string;
-};
+import { FirebaseUser, User } from '~/types';
 
 export type UserParams = Pick<FirebaseUser, 'uid'> & Partial<FirebaseUser>;
 

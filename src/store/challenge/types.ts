@@ -1,13 +1,4 @@
-import { Timestamp } from '~/services/firebase';
-import { Workout } from '~/store/workout';
-
-export type Challenge = {
-  id: string;
-  description?: string;
-  isActive: boolean;
-  workouts: Workout[];
-  createdAt: Timestamp;
-};
+import { Challenge, Timestamp, Workout } from '~/types';
 
 export type ChallengeState = {
   challenge?: Challenge;

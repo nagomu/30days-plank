@@ -1,7 +1,6 @@
 import { Dispatch } from 'redux';
 
 import { clearRedirectStorage, setIsAuthenticating } from '~/services/auth';
-import { FirebaseUser } from '~/services/firebase';
 import { asyncOnAuthStateChanged } from '~/services/firebase/asyncOnAuthStateChanged';
 import { asyncSignOut } from '~/services/firebase/asyncSignOut';
 import { signInWithRedirect } from '~/services/firebase/signInWithRedirect';
@@ -17,9 +16,9 @@ import {
   SET_USER,
   SIGN_IN,
   SIGN_OUT,
-  User,
   UserParams,
 } from '~/store/auth';
+import { FirebaseUser, User } from '~/types';
 
 export const observeAuthStateChanged = (): AuthActionTypes => ({
   type: OBSERVE_AUTH_STATE_CHANGED,

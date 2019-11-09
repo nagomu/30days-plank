@@ -1,13 +1,13 @@
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
-  Archive,
   ArchiveActionTypes,
   ArchiveState,
   FETCH_ARCHIVES,
   FETCH_ARCHIVES_SUCCESS,
   SET_ARCHIVES,
 } from '~/store/archive';
+import { Archive } from '~/types';
 
 export const initialState: ArchiveState = {
   archives: [],

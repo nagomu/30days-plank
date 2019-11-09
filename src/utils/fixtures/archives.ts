@@ -1,4 +1,4 @@
-import { Next } from '~/services/firebase/archive';
+import { Next } from '~/types';
 
 export type ArchiveLike = {
   id: string;

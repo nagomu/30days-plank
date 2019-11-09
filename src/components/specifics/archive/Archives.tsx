@@ -4,7 +4,7 @@ import * as React from 'react';
 // import { NavLink } from 'react-router-dom';
 import Icon from '~/components/common/icons/Icon';
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
-import { Archive } from '~/store/archive';
+import { Archive } from '~/types';
 import { isEmptyArray, rgba } from '~/utils';
 
 const List = styled.ul`

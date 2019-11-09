@@ -2,8 +2,8 @@ import {
   addWorkout,
   fetchWorkout,
   updateWorkout,
-  Workout,
 } from '~/services/firebase/workout';
+import { Timestamp, Workout } from '~/types';
 
 jest.mock('~/utils/datetime');
 
@@ -34,7 +34,7 @@ describe('workout', () => {
   const ts = {
     seconds: 1111,
     nanoseconds: 0,
-  } as firebase.firestore.Timestamp;
+  } as Timestamp;
 
   let fixture: Workout[];
   beforeEach(() => {

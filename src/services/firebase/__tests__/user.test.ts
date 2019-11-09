@@ -1,4 +1,5 @@
-import { addUser, fetchUser, updateUser, User } from '~/services/firebase/user';
+import { addUser, fetchUser, updateUser } from '~/services/firebase/user';
+import { User } from '~/types';
 
 jest.mock('~/utils/datetime');
 

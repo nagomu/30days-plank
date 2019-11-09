@@ -1,14 +1,12 @@
 import timekeeper from 'timekeeper';
 
-import { Workout } from '~/services/firebase/workout';
-import { workouts } from '~/utils/fixtures/workouts';
-
 import {
   addChallenge,
-  Challenge,
   fetchChallenge,
   updateChallenge,
-} from '../challenge';
+} from '~/services/firebase/challenge';
+import { Challenge, Timestamp, Workout } from '~/types';
+import { workouts } from '~/utils/fixtures/workouts';
 
 jest.mock('~/utils/datetime');
 
@@ -45,7 +43,7 @@ describe('challenge', () => {
   const ts = {
     seconds: 1569855600,
     nanoseconds: 0,
-  } as firebase.firestore.Timestamp;
+  } as Timestamp;
 
   let fixture: Challenge[];
   beforeEach(() => {

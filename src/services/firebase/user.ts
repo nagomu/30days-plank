@@ -1,16 +1,6 @@
 import { firebase } from '~/services/firebase';
+import { User } from '~/types';
 import { timestamp } from '~/utils/datetime';
-
-type Timestamp = firebase.firestore.Timestamp;
-
-export type User = {
-  uid: string;
-  challenge?: string;
-  name?: string;
-  photoURL?: string;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
-};
 
 type FirebaseUser = {
   uid: string;

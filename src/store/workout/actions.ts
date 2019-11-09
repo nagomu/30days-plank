@@ -1,9 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { QueryDocumentSnapshot, QuerySnapshot } from '~/services/firebase';
 import { postError, timestampFromDate, workouts } from '~/services/firestore';
 import {
-  Challenge,
   onFetchChallenge,
   setChallenge,
   setPartialWorkout,
@@ -17,9 +15,14 @@ import {
   UPDATE_WORKOUT,
   UPDATE_WORKOUT_SUCCESS,
   UpdateWorkoutParams,
-  Workout,
   WorkoutActionTypes,
 } from '~/store/workout';
+import {
+  Challenge,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  Workout,
+} from '~/types';
 import { isEmptyArray } from '~/utils';
 
 export const fetchWorkout = (): WorkoutActionTypes => ({

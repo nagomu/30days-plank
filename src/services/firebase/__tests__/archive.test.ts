@@ -3,11 +3,10 @@ import timekeeper from 'timekeeper';
 
 import {
   addArchive,
-  Archive,
   fetchArchive,
   fetchArchives,
-  Timestamp,
 } from '~/services/firebase/archive';
+import { Archive, Timestamp } from '~/types';
 import { archives } from '~/utils/fixtures/archives';
 
 jest.mock('~/utils/datetime');

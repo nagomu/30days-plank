@@ -1,15 +1,12 @@
 import timekeeper from 'timekeeper';
 
+import { postError } from '~/services/firebase/error';
 import {
-  fetchAllWorkouts,
-  fetchAllWorkoutsSuccess,
-  fetchWorkout,
-  fetchWorkoutSuccess,
+  fetchWorkouts,
+  fetchWorkoutsSuccess,
   initialState,
-  onFetchAllWorkouts,
-  onFetchWorkout,
+  onFetchWorkouts,
   onUpdateWorkout,
-  setWorkout,
   updateWorkout,
   updateWorkoutSuccess,
 } from '~/store/workout';
@@ -18,62 +15,43 @@ import { mockStore, timestamp } from '~/utils';
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
 
+const mockFetch = jest.fn();
+const mockUpdate = jest.fn();
+
+jest.mock(
+  '~/services/firebase/workout',
+  jest.fn().mockReturnValue({
+    fetchWorkouts: () => mockFetch(),
+    updateWorkout: () => mockUpdate(),
+  }),
+);
+
 describe('workout: actions', () => {
-  describe('fetchWorkout', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(fetchWorkout());
+  const store = mockStore({ workout: initialState });
 
-      const expected = [{ type: 'FETCH_WORKOUT' }];
+  afterEach(() => {
+    store.clearActions();
+  });
+
+  describe('fetchWorkouts', () => {
+    it('should create valid action', () => {
+      store.dispatch(fetchWorkouts());
+      const expected = [{ type: 'FETCH_WORKOUTS' }];
       expect(store.getActions()).toEqual(expected);
     });
   });
 
-  describe('fetchWorkoutSuccess', () => {
+  describe('fetchWorkoutsSuccess', () => {
     it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(fetchWorkoutSuccess());
-
-      const expected = [{ type: 'FETCH_WORKOUT_SUCCESS' }];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
-  describe('fetchAllWorkouts', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(fetchAllWorkouts());
-
-      const expected = [{ type: 'FETCH_ALL_WORKOUTS' }];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
-  describe('fetchAllWorkoutsSuccess', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(fetchAllWorkoutsSuccess());
-
-      const expected = [{ type: 'FETCH_ALL_WORKOUTS_SUCCESS' }];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
-  describe('setWorkout', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
-      store.dispatch(setWorkout());
-
-      const expected = [{ type: 'SET_WORKOUT' }];
+      store.dispatch(fetchWorkoutsSuccess());
+      const expected = [{ type: 'FETCH_WORKOUTS_SUCCESS' }];
       expect(store.getActions()).toEqual(expected);
     });
   });
 
   describe('updateWorkout', () => {
     it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
       store.dispatch(updateWorkout());
-
       const expected = [{ type: 'UPDATE_WORKOUT' }];
       expect(store.getActions()).toEqual(expected);
     });
@@ -81,52 +59,26 @@ describe('workout: actions', () => {
 
   describe('updateWorkoutSuccess', () => {
     it('should create valid action', () => {
-      const store = mockStore({ workout: initialState });
       store.dispatch(updateWorkoutSuccess());
-
       const expected = [{ type: 'UPDATE_WORKOUT_SUCCESS' }];
       expect(store.getActions()).toEqual(expected);
     });
   });
 
-  describe('onFetchWorkout', () => {
+  describe('onFetchWorkouts', () => {
+    const challenge = {
+      id: 'xxx',
+      description: 'xxx',
+      isActive: true,
+      workouts: [],
+      createdAt: timestamp(mockToday),
+    };
+
     it('should create valid action', async () => {
-      const store = mockStore({ workout: initialState });
-      await onFetchWorkout(store.dispatch, 'cid', 'wid');
-
+      mockFetch.mockImplementation(jest.fn().mockResolvedValue([]));
       const expected = [
-        { type: 'FETCH_WORKOUT' },
-        { type: 'FETCH_WORKOUT_SUCCESS' },
-        {
-          type: 'SET_PARTIAL_WORKOUT',
-          payload: {
-            workout: {
-              id: undefined,
-            },
-          },
-        },
-        { type: 'SET_WORKOUT' },
-      ];
-      expect(store.getActions()).toEqual(expected);
-    });
-  });
-
-  describe('onFetchAllWorkouts', () => {
-    it('should create valid action', async () => {
-      const store = mockStore({ workout: initialState });
-      const challenge = {
-        id: 'xxx',
-        description: 'xxx',
-        isActive: true,
-        workouts: [],
-        createdAt: timestamp(mockToday),
-      };
-      await onFetchAllWorkouts(store.dispatch, challenge);
-
-      const expected = [
-        { type: 'FETCH_ALL_WORKOUTS' },
-        { type: 'FETCH_ALL_WORKOUTS_SUCCESS' },
-        { type: 'SET_WORKOUT' },
+        { type: 'FETCH_WORKOUTS' },
+        { type: 'FETCH_WORKOUTS_SUCCESS' },
         {
           type: 'SET_CHALLENGE',
           payload: {
@@ -135,53 +87,58 @@ describe('workout: actions', () => {
               description: 'xxx',
               id: 'xxx',
               isActive: true,
-              workouts: [
-                {
-                  id: 'id',
-                  data: 'data',
-                },
-              ],
+              workouts: [],
             },
           },
         },
       ];
+
+      await onFetchWorkouts(store.dispatch, 'uid', challenge);
       expect(store.getActions()).toEqual(expected);
+    });
+
+    it('calls postError if catch', async () => {
+      mockFetch.mockImplementation(
+        jest.fn().mockRejectedValue(new Error('Error')),
+      );
+      const mock = jest.fn(postError);
+
+      try {
+        await onFetchWorkouts(store.dispatch, 'uid', challenge);
+      } catch (e) {
+        expect(mock).toBeCalledTimes(1);
+      }
     });
   });
 
   describe('onUpdateWorkout', () => {
-    it('should create valid action', async () => {
-      const store = mockStore({ workout: initialState });
-      const challenge = {
-        id: 'xxx',
-        description: 'xxx',
-        isActive: true,
-        workouts: [],
-        createdAt: timestamp(mockToday),
-      };
-      const workout = {
-        id: 'xxx',
-        isCompleted: true,
-      };
-      await onUpdateWorkout(store.dispatch, challenge, workout);
+    const workout = {
+      id: 'xxx',
+      isCompleted: true,
+    };
 
+    it('should create valid action', async () => {
+      mockUpdate.mockImplementation(jest.fn().mockResolvedValue(undefined));
       const expected = [
         { type: 'UPDATE_WORKOUT' },
         { type: 'UPDATE_WORKOUT_SUCCESS' },
-        { type: 'FETCH_WORKOUT' },
-        { type: 'FETCH_WORKOUT_SUCCESS' },
-        {
-          type: 'SET_PARTIAL_WORKOUT',
-          payload: {
-            workout: {
-              id: undefined,
-            },
-          },
-        },
-        { type: 'SET_WORKOUT' },
-        { type: 'FETCH_CHALLENGE' },
       ];
+
+      await onUpdateWorkout(store.dispatch, 'uid', 'cid', workout);
       expect(store.getActions()).toEqual(expected);
+    });
+
+    it('calls postError if catch', async () => {
+      mockUpdate.mockImplementation(
+        jest.fn().mockRejectedValue(new Error('Error')),
+      );
+      const mock = jest.fn(postError);
+
+      try {
+        await onUpdateWorkout(store.dispatch, 'uid', 'cid', workout);
+      } catch (e) {
+        expect(mock).toBeCalledTimes(1);
+      }
     });
   });
 });

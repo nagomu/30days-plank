@@ -5,6 +5,7 @@ type Timestamp = firebase.firestore.Timestamp;
 
 export type User = {
   uid: string;
+  challenge?: string;
   name?: string;
   photoURL?: string;
   createdAt?: Timestamp;
@@ -19,6 +20,7 @@ type FirebaseUser = {
 
 type Params = {
   uid: string;
+  challenge?: string;
   name?: string;
   photoURL?: string;
 };
@@ -62,12 +64,19 @@ export const addUser = async (firebaseUser: FirebaseUser): ReturnValue => {
 
 export const updateUser = async (user: Params): ReturnValue => {
   const ref = firebase.firestore().collection(collectionPath);
-  const params = {
+  let params: User = {
     uid: user.uid,
     name: user.name,
     photoURL: user.photoURL,
     updatedAt: timestamp(new Date(Date.now())),
   };
+
+  if (user.challenge) {
+    params = {
+      ...params,
+      challenge: user.challenge,
+    };
+  }
 
   await ref.doc(params.uid).update(params);
   return await fetchUser(params.uid);

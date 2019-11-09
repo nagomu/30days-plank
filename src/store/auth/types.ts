@@ -1,6 +1,4 @@
-import { FirebaseUser, User } from '~/types';
-
-export type UserParams = Pick<FirebaseUser, 'uid'> & Partial<FirebaseUser>;
+import { User } from '~/types';
 
 export type AuthState = {
   user?: User;

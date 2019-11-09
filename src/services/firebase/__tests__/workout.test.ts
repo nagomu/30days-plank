@@ -1,6 +1,7 @@
 import {
   addWorkout,
   fetchWorkout,
+  fetchWorkouts,
   updateWorkout,
 } from '~/services/firebase/workout';
 import { Timestamp, Workout } from '~/types';
@@ -8,6 +9,7 @@ import { Timestamp, Workout } from '~/types';
 jest.mock('~/utils/datetime');
 
 const mockGet = jest.fn();
+const mockOrderBy = jest.fn();
 const mockAdd = jest.fn();
 const mockUpdate = jest.fn();
 
@@ -22,6 +24,9 @@ jest.mock(
           doc: (id?: string) => ({
             get: mockGet(id || 'new-id'),
             update: mockUpdate,
+          }),
+          orderBy: () => ({
+            get: mockOrderBy(),
           }),
         }),
       }),
@@ -57,6 +62,17 @@ describe('workout', () => {
     return jest.fn().mockResolvedValue({ data: () => result });
   });
 
+  mockOrderBy.mockImplementation(() =>
+    jest.fn().mockResolvedValue({
+      docs: [{ data: (): Workout => fixture[0] }],
+      forEach: (cb: Function) => {
+        fixture.forEach(f => {
+          cb({ data: () => f, id: f.id });
+        });
+      },
+    }),
+  );
+
   mockAdd.mockImplementation(workout => {
     fixture.push({
       id: 'new-id',
@@ -89,6 +105,13 @@ describe('workout', () => {
     it('returns undefined if the workout data does not exist', async () => {
       const expected = undefined;
       expect(await fetchWorkout('uid', 'cid', 'id')).toEqual(expected);
+    });
+  });
+
+  describe('fetchWorkouts', () => {
+    it('returns the workout data correctly', async () => {
+      const expected = fixture;
+      expect(await fetchWorkouts('uid', 'cid')).toEqual(expected);
     });
   });
 

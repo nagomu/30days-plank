@@ -31,6 +31,24 @@ export const fetchWorkout = async (
   if (workout) return workout;
 };
 
+export const fetchWorkouts = async (
+  uid: string,
+  cid: string,
+): Promise<Workout[]> => {
+  const collectionPath = `/users/${uid}/challenges/${cid}/workouts`;
+  const ref = firebase.firestore().collection(collectionPath);
+  const snapshot = await ref.orderBy('date', 'asc').get();
+  const workouts: Workout[] = [];
+  snapshot.forEach((doc): void => {
+    workouts.push({
+      ...doc.data(),
+      id: doc.id,
+    } as Workout);
+  });
+
+  return workouts;
+};
+
 export const addWorkout = async (
   uid: string,
   cid: string,

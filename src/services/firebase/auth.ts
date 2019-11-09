@@ -14,7 +14,7 @@ export const onAuthStateChanged = (): Promise<User> => {
   });
 };
 
-export const signIn = (): Promise<void> =>
+export const signInWithGoogle = (): Promise<void> =>
   firebase.auth().signInWithRedirect(provider);
 
-export const signOut = (): Promise<void> => firebase.auth().signOut();
+export const signOutWithGoogle = (): Promise<void> => firebase.auth().signOut();

@@ -1,8 +1,8 @@
 import {
   currentUser,
   onAuthStateChanged,
-  signIn,
-  signOut,
+  signInWithGoogle,
+  signOutWithGoogle,
 } from '~/services/firebase/auth';
 
 const mockAuth = jest.fn();
@@ -56,26 +56,26 @@ describe('onAuthStateChanged', () => {
   });
 });
 
-describe('signIn', () => {
+describe('signInWithGoogle', () => {
   it('calls signInWithRedirect', async () => {
     const mockSignInWithRedirect = jest.fn();
     mockAuth.mockReturnValue({
       signInWithRedirect: mockSignInWithRedirect,
     });
 
-    await signIn();
+    await signInWithGoogle();
     expect(mockSignInWithRedirect).toBeCalled();
   });
 });
 
-describe('signOut', () => {
+describe('signOutWithGoogle', () => {
   it('calls signOut', async () => {
     const mockSignOut = jest.fn();
     mockAuth.mockReturnValue({
       signOut: mockSignOut,
     });
 
-    await signOut();
+    await signOutWithGoogle();
     expect(mockSignOut).toBeCalled();
   });
 });

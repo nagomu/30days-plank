@@ -1,6 +1,7 @@
 import timekeeper from 'timekeeper';
 
 import { Workout } from '~/services/firebase/workout';
+import { workouts } from '~/utils/fixtures/workouts';
 
 import {
   addChallenge,
@@ -8,7 +9,6 @@ import {
   fetchChallenge,
   updateChallenge,
 } from '../challenge';
-import { workouts } from './fixtures/workouts';
 
 jest.mock('~/utils/datetime');
 

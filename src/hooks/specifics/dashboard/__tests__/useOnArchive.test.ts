@@ -5,8 +5,7 @@ import {
   isExpired,
   useOnArchive,
 } from '~/hooks/specifics/dashboard/useOnArchive';
-import { timestampFromDate } from '~/services/firestore';
-import { mockStore, withHook } from '~/utils';
+import { mockStore, timestamp, withHook } from '~/utils';
 
 describe('useOnArchive', () => {
   it('returns correct values if initial state', () => {
@@ -43,7 +42,7 @@ describe('useOnArchive', () => {
           id: 'xxx',
           isActive: true,
           workouts: workoutsFactory(),
-          createdAt: timestampFromDate(new Date()),
+          createdAt: timestamp(new Date()),
         },
         isLoading: false,
       },

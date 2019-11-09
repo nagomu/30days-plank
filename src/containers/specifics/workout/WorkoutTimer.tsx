@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import WrappedComponent from '~/components/specifics/workout/Workout';
 import { Status, UpdateWorkoutParams } from '~/store/workout';
-import { isToday } from '~/utils';
 import { Workout } from '~/types';
+import { isToday } from '~/utils';
 
 export type Props = {
   isLoading: boolean;

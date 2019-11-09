@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 
-import { archives, postError, timestampFromDate } from '~/services/firestore';
+import { archives, postError } from '~/services/firestore';
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
@@ -15,7 +15,7 @@ import {
   QuerySnapshot,
   Workout,
 } from '~/types';
-import { formatUS } from '~/utils';
+import { formatUS, timestamp } from '~/utils';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
@@ -86,7 +86,7 @@ export const onAddArchive = async (
       challengeId,
       title: generateTitle(workouts),
       achievementRate: calculateRate(workouts),
-      createdAt: timestampFromDate(new Date()),
+      createdAt: timestamp(new Date()),
     };
 
     await archives().add(params);

@@ -5,7 +5,6 @@ import {
   batchChallenges,
   challenges,
   postError,
-  timestampFromDate,
   workouts,
 } from '~/services/firestore';
 import { onAddArchive } from '~/store/archive';
@@ -29,6 +28,7 @@ import {
   Workout,
   WorkoutTemplate,
 } from '~/types';
+import { timestamp } from '~/utils';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,
@@ -103,7 +103,7 @@ export const generateWorkoutTemplates = (): WorkoutTemplate[] => {
 
   return workoutTemplate.map((template, i) => ({
     ...template,
-    scheduledDate: timestampFromDate(new Date(year, month, date + i)),
+    scheduledDate: timestamp(new Date(year, month, date + i)),
   }));
 };
 

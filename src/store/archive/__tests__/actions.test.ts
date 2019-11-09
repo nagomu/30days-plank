@@ -1,5 +1,4 @@
 import { workoutsFactory } from '~/factories/workoutFactory';
-import { timestampFromDate } from '~/services/firestore';
 import {
   addArchive,
   addArchiveSuccess,
@@ -12,7 +11,7 @@ import {
   onFetchArchives,
   setArchives,
 } from '~/store/archive';
-import { mockStore } from '~/utils';
+import { mockStore, timestamp } from '~/utils';
 
 describe('archive: actions', () => {
   describe('fetchArchives', () => {
@@ -44,7 +43,7 @@ describe('archive: actions', () => {
           challengeId: 'xxx',
           title: 'xxx',
           achievementRate: 80,
-          createdAt: timestampFromDate(new Date()),
+          createdAt: timestamp(new Date()),
         },
       ];
 

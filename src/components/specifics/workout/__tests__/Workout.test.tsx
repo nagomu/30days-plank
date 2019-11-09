@@ -1,7 +1,6 @@
 import Workout from '~/components/specifics/workout/Workout';
-import { timestampFromDate } from '~/services/firestore';
 import { Status } from '~/store/workout';
-import { withProvider } from '~/utils';
+import { timestamp, withProvider } from '~/utils';
 
 describe('Workout', () => {
   const props = {
@@ -17,7 +16,7 @@ describe('Workout', () => {
       isCompleted: false,
       isRest: false,
       menu: 20,
-      scheduledDate: timestampFromDate(new Date()),
+      scheduledDate: timestamp(new Date()),
       title: 'Day 1',
     },
   };

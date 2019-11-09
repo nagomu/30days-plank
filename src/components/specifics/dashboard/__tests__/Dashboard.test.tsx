@@ -1,7 +1,6 @@
 import Dashboard from '~/components/specifics/dashboard/Dashboard';
 import { workoutsFactory } from '~/factories/workoutFactory';
-import { timestampFromDate } from '~/services/firestore';
-import { mockStore, withProvider } from '~/utils';
+import { mockStore, timestamp, withProvider } from '~/utils';
 
 describe('Challenge', () => {
   const props = {
@@ -9,7 +8,7 @@ describe('Challenge', () => {
       id: 'xxx',
       isActive: true,
       workouts: workoutsFactory(),
-      createdAt: timestampFromDate(new Date()),
+      createdAt: timestamp(new Date()),
     },
     isLoading: false,
     onAddChallenge: jest.fn(),

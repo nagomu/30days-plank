@@ -1,6 +1,5 @@
 import timekeeper from 'timekeeper';
 
-import { timestampFromDate } from '~/services/firestore';
 import {
   addArchive,
   addArchiveSuccess,
@@ -11,6 +10,7 @@ import {
   mergeArchives,
   setArchives,
 } from '~/store/archive';
+import { timestamp } from '~/utils';
 
 describe('archive: reducers', () => {
   it('handles FETCH_ARCHIVES', () => {
@@ -41,7 +41,7 @@ describe('archive: reducers', () => {
         title: '',
         description: undefined,
         achievementRate: 80,
-        createdAt: timestampFromDate(new Date()),
+        createdAt: timestamp(new Date()),
       },
     ];
     const expected = {
@@ -83,21 +83,21 @@ describe('mergeArchives', () => {
       {
         achievementRate: 80,
         challengeId: '1',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '1',
         title: 'title1',
       },
       {
         achievementRate: 100,
         challengeId: '2',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '2',
         title: 'title2',
       },
       {
         achievementRate: 79,
         challengeId: '3',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '3',
         title: 'title3',
       },
@@ -107,28 +107,28 @@ describe('mergeArchives', () => {
       {
         achievementRate: 79,
         challengeId: '4',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '4',
         title: 'title4',
       },
       {
         achievementRate: 79,
         challengeId: '5',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '5',
         title: 'title5',
       },
       {
         achievementRate: 80,
         challengeId: '1',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '1',
         title: 'title1',
       },
       {
         achievementRate: 100,
         challengeId: '2',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '2',
         title: 'title2',
       },
@@ -138,35 +138,35 @@ describe('mergeArchives', () => {
       {
         achievementRate: 80,
         challengeId: '1',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '1',
         title: 'title1',
       },
       {
         achievementRate: 100,
         challengeId: '2',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '2',
         title: 'title2',
       },
       {
         achievementRate: 79,
         challengeId: '3',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '3',
         title: 'title3',
       },
       {
         achievementRate: 79,
         challengeId: '4',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '4',
         title: 'title4',
       },
       {
         achievementRate: 79,
         challengeId: '5',
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
         id: '5',
         title: 'title5',
       },

@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import WrappedComponent from '~/components/specifics/dashboard/Dashboard';
 import { currentUser } from '~/services/firebase';
-import { timestampFromDate } from '~/services/firestore';
 import { AppState } from '~/store';
 import {
   AddChallengeParams,
   onAddChallenge,
   onFetchChallenge,
 } from '~/store/challenge';
+import { timestamp } from '~/utils';
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
 
   const params: AddChallengeParams = {
     isActive: true,
-    createdAt: timestampFromDate(new Date()),
+    createdAt: timestamp(new Date()),
     workouts: [],
   };
 

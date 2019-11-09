@@ -1,7 +1,6 @@
 import timekeeper from 'timekeeper';
 
 import { workoutsFactory } from '~/factories/workoutFactory';
-import { timestampFromDate } from '~/services/firestore';
 import {
   addChallenge,
   addChallengeSuccess,
@@ -17,7 +16,7 @@ import {
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
-import { mockStore } from '~/utils';
+import { mockStore, timestamp } from '~/utils';
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
@@ -41,7 +40,7 @@ describe('challenge: actions', () => {
         description: 'xxx',
         isActive: true,
         workouts: [],
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
       };
       store.dispatch(setChallenge(challenge));
 
@@ -73,7 +72,7 @@ describe('challenge: actions', () => {
         description: 'xxx',
         isActive: true,
         workouts: [],
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
       };
 
       const store = mockStore({
@@ -88,7 +87,7 @@ describe('challenge: actions', () => {
         isCompleted: false,
         isRest: false,
         menu: 20,
-        scheduledDate: timestampFromDate(mockToday),
+        scheduledDate: timestamp(mockToday),
         title: 'Day 1',
       };
 
@@ -174,7 +173,7 @@ describe('challenge: actions', () => {
       const params = {
         description: 'xxx',
         isActive: true,
-        createdAt: timestampFromDate(new Date(mockToday)),
+        createdAt: timestamp(new Date(mockToday)),
         workouts: [],
       };
       await onAddChallenge(store.dispatch, params);
@@ -242,7 +241,7 @@ describe('challenge: actions', () => {
         description: 'xxx',
         isActive: true,
         workouts: workoutsFactory(),
-        createdAt: timestampFromDate(mockToday),
+        createdAt: timestamp(mockToday),
       };
       await onArchiveChallenge(store.dispatch, challenge);
 

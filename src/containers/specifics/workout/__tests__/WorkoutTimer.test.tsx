@@ -1,4 +1,5 @@
 import { mount, ReactWrapper } from 'enzyme';
+import firebase from 'firebase/app';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import timekeeper from 'timekeeper';
@@ -6,18 +7,21 @@ import timekeeper from 'timekeeper';
 import WorkoutTimer, {
   Props,
 } from '~/containers/specifics/workout/WorkoutTimer';
-import { timestampFromDate } from '~/services/firestore';
 import { Status } from '~/store/workout';
+import { timestamp } from '~/utils';
+
+const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
+timekeeper.freeze(mockToday);
 
 jest.mock('~/utils/datetime', () => ({
   isToday: jest.fn().mockReturnValue(true),
+  timestamp: jest
+    .fn()
+    .mockReturnValue(firebase.firestore.Timestamp.fromDate(mockToday)),
 }));
 
 describe('WorkoutTimerContainer', () => {
   jest.useFakeTimers();
-
-  const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
-  timekeeper.freeze(mockToday);
 
   const mockOnUpdate = jest.fn();
   const props: Props = {
@@ -27,7 +31,7 @@ describe('WorkoutTimerContainer', () => {
       isCompleted: false,
       isRest: false,
       menu: 2,
-      scheduledDate: timestampFromDate(mockToday),
+      scheduledDate: timestamp(mockToday),
       title: 'Day 1',
     },
     onUpdate: mockOnUpdate,
@@ -145,6 +149,6 @@ describe('WorkoutTimerContainer', () => {
       expect(mockOnUpdate).toBeCalled();
     });
   });
-
-  timekeeper.reset();
 });
+
+timekeeper.reset();

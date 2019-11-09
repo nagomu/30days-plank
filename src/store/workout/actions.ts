@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 
-import { postError, timestampFromDate, workouts } from '~/services/firestore';
+import { postError, workouts } from '~/services/firestore';
 import {
   onFetchChallenge,
   setChallenge,
@@ -23,7 +23,7 @@ import {
   QuerySnapshot,
   Workout,
 } from '~/types';
-import { isEmptyArray } from '~/utils';
+import { isEmptyArray, timestamp } from '~/utils';
 
 export const fetchWorkout = (): WorkoutActionTypes => ({
   type: FETCH_WORKOUT,
@@ -126,7 +126,7 @@ export const onUpdateWorkout = async (
     const { id, isCompleted } = workout;
     const params = {
       isCompleted,
-      updatedAt: timestampFromDate(new Date()),
+      updatedAt: timestamp(new Date()),
     };
     await workouts(challenge.id)
       .doc(id)

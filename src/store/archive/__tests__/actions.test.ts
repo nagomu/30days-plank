@@ -102,7 +102,7 @@ describe('archive: actions', () => {
       mockFetch.mockImplementation(
         jest.fn().mockResolvedValue({ archives: [], next: undefined }),
       );
-      await onFetchArchives(store.dispatch, 'uid');
+      await onFetchArchives(store.dispatch);
 
       const expected = [
         { type: 'FETCH_ARCHIVES' },
@@ -124,7 +124,7 @@ describe('archive: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onFetchArchives(store.dispatch, 'uid');
+        await onFetchArchives(store.dispatch);
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }
@@ -134,7 +134,7 @@ describe('archive: actions', () => {
   describe('onAddArchive', () => {
     it('should create valid action', async () => {
       mockAdd.mockImplementation(jest.fn().mockResolvedValue(undefined));
-      await onAddArchive(store.dispatch, 'uid', 'cid', workouts);
+      await onAddArchive(store.dispatch, 'cid', workouts);
 
       const expected = [
         { type: 'ADD_ARCHIVE' },
@@ -150,7 +150,7 @@ describe('archive: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onAddArchive(store.dispatch, 'uid', 'cid', workouts);
+        await onAddArchive(store.dispatch, 'cid', workouts);
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }

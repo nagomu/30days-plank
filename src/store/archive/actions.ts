@@ -16,11 +16,11 @@ export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
 });
 
-export const setArchives = (archives: Archives): ArchiveActionTypes => ({
+export const setArchives = (archives?: Archives): ArchiveActionTypes => ({
   type: SET_ARCHIVES,
   payload: {
-    archives: archives.archives,
-    next: archives.next,
+    archives: archives ? archives.archives : [],
+    next: archives ? archives.next : undefined,
   },
 });
 
@@ -34,14 +34,13 @@ export const addArchiveSuccess = (): ArchiveActionTypes => ({
 
 export const onFetchArchives = async (
   dispatch: Dispatch,
-  uid: string,
   next?: Next,
 ): Promise<void> => {
   dispatch(fetchArchives());
 
   try {
-    const archives = await ArchiveService.fetchArchives(uid, next);
-    dispatch(setArchives(archives));
+    const archives = await ArchiveService.fetchArchives(next);
+    dispatch(setArchives(archives || undefined));
   } catch (error) {
     postError(error);
   }
@@ -60,7 +59,6 @@ export const generateTitle = (workouts: Workout[]): string => {
 
 export const onAddArchive = async (
   dispatch: Dispatch,
-  uid: string,
   cid: string,
   workouts: Workout[],
 ): Promise<void> => {
@@ -73,7 +71,7 @@ export const onAddArchive = async (
   };
 
   try {
-    await ArchiveService.addArchive(uid, params);
+    await ArchiveService.addArchive(params);
     dispatch(addArchiveSuccess());
   } catch (error) {
     postError(error);

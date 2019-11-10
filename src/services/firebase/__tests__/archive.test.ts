@@ -14,6 +14,7 @@ jest.mock('~/utils/datetime');
 const now = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
 timekeeper.freeze(now);
 
+const mockCurrentUser = jest.fn();
 const mockGet = jest.fn();
 const mockAdd = jest.fn();
 const mockStartAt = jest.fn();
@@ -24,6 +25,7 @@ jest.mock(
   '~/services/firebase',
   jest.fn().mockReturnValue({
     firebase: {
+      auth: () => mockCurrentUser(),
       firestore: () => ({
         collection: () => ({
           add: mockAdd,
@@ -53,6 +55,7 @@ describe('archive', () => {
   beforeEach(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fixture = archives().splice(0, 3) as any[];
+    mockCurrentUser.mockImplementation(() => ({ currentUser: { uid: 'uid' } }));
   });
 
   mockGet.mockImplementation((id: string) => {
@@ -104,26 +107,32 @@ describe('archive', () => {
   describe('fetchArchive', () => {
     it('returns correct Archive if it exists', async () => {
       const expected = fixture[0];
-      expect(await fetchArchive('uid', '100')).toEqual(expected);
+      expect(await fetchArchive('100')).toEqual(expected);
     });
 
     it('returns undefined if it does not exist', async () => {
       const expected = undefined;
-      expect(await fetchArchive('uid', 'id')).toEqual(expected);
+      expect(await fetchArchive('id')).toEqual(expected);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await fetchArchive('100')).toEqual(expected);
     });
   });
 
   describe('fetchArchives', () => {
     it('returns Archive[] correctly if length < limit', async () => {
       const expected = fixture;
-      const result = await fetchArchives('uid', undefined, 5);
+      const result = await fetchArchives(undefined, 5);
       expect(result && result.archives).toEqual(expected);
       expect(result && result.next).toEqual(undefined);
     });
 
     it('returns Archive[] correctly if length === limit', async () => {
       const expected = fixture;
-      const result = await fetchArchives('uid', undefined, 3);
+      const result = await fetchArchives(undefined, 3);
       expect(result && result.archives).toEqual(expected);
       expect(result && result.next).toEqual(undefined);
     });
@@ -136,7 +145,7 @@ describe('archive', () => {
         seconds: last.seconds,
         nanoseconds: last.nanoseconds,
       };
-      const result = await fetchArchives('uid', undefined, 2);
+      const result = await fetchArchives(undefined, 2);
       expect(result && result.archives).toEqual(expected);
       expect(result && result.next).toEqual(next);
     });
@@ -144,9 +153,16 @@ describe('archive', () => {
     it('returns Archive[] correctly if has next', async () => {
       const expected = [fixture[2]];
       const next = { seconds: 1523232000, nanoseconds: 0 };
-      const result = await fetchArchives('1', next, 3);
+      const result = await fetchArchives(next, 3);
       expect(result && result.archives).toEqual(expected);
       expect(result && result.next).toEqual(undefined);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      const result = await fetchArchives(undefined, 5);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -168,7 +184,13 @@ describe('archive', () => {
         updatedAt: ts,
       };
 
-      expect(await addArchive('uid', params)).toEqual(expected);
+      expect(await addArchive(params)).toEqual(expected);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await addArchive(params)).toEqual(expected);
     });
   });
 });

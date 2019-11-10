@@ -86,9 +86,7 @@ const Archives: React.FC<Props> = ({ archives, isLoading }) => (
         {archives.map((archive: Archive) => (
           <Menu key={archive.id}>
             <Link>
-              <Completed
-                className={archive.rate >= 80 ? 'isCompleted' : ''}
-              >
+              <Completed className={archive.rate >= 80 ? 'isCompleted' : ''}>
                 <Icon name="done" />
               </Completed>
               <Title>{archive.title}</Title>

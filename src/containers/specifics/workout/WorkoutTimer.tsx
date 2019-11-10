@@ -105,9 +105,7 @@ class WorkoutTimer extends React.Component<Props, State> {
     this.setState({
       status: Status.finish,
       timer: undefined,
-      isCompleted: isToday(workout.date)
-        ? true
-        : this.state.isCompleted,
+      isCompleted: isToday(workout.date) ? true : this.state.isCompleted,
     });
   };
 

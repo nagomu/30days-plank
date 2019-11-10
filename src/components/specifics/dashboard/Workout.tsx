@@ -59,15 +59,7 @@ type Props = {
 };
 
 const Workout: React.FC<Props> = props => {
-  const {
-    isCompleted,
-    isRest,
-    isToday,
-    menu,
-    pathname,
-    date,
-    title,
-  } = props;
+  const { isCompleted, isRest, isToday, menu, pathname, date, title } = props;
 
   const day = formatDayNumeric(date);
   const month = formatShortMonth(date);

@@ -4,7 +4,7 @@ export type AddArchiveParams = {
   challengeId: string;
   title: string;
   description?: string;
-  achievementRate: number;
+  rate: number;
   createdAt: Timestamp;
 };
 

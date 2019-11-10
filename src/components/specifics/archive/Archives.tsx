@@ -87,12 +87,12 @@ const Archives: React.FC<Props> = ({ archives, isLoading }) => (
           <Menu key={archive.id}>
             <Link>
               <Completed
-                className={archive.achievementRate >= 80 ? 'isCompleted' : ''}
+                className={archive.rate >= 80 ? 'isCompleted' : ''}
               >
                 <Icon name="done" />
               </Completed>
               <Title>{archive.title}</Title>
-              {` - ${archive.achievementRate}%`}
+              {` - ${archive.rate}%`}
             </Link>
           </Menu>
         ))}

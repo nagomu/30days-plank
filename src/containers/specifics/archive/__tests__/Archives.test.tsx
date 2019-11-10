@@ -15,21 +15,21 @@ describe('ArchivesContainer', () => {
       archive: {
         archives: [
           {
-            achievementRate: 80,
+            rate: 80,
             challengeId: '1',
             createdAt: timestamp(new Date()),
             id: '1',
             title: 'title1',
           },
           {
-            achievementRate: 100,
+            rate: 100,
             challengeId: '2',
             createdAt: timestamp(new Date()),
             id: '2',
             title: 'title1',
           },
           {
-            achievementRate: 79,
+            rate: 79,
             challengeId: '3',
             createdAt: timestamp(new Date()),
             id: '3',

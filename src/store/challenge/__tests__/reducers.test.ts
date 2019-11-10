@@ -44,19 +44,36 @@ describe('challenge: reducers', () => {
 
   it('handles SET_PARTIAL_WORKOUT', () => {
     const workout = {
-      id: 'xxx',
-      isCompleted: false,
+      id: '2',
+      isCompleted: true,
       isRest: false,
       menu: 20,
       date: timestamp(mockToday),
-      title: 'Day 1',
+      title: 'Day 2',
     };
 
     const challenge = {
       id: 'xxx',
       description: 'xxx',
       isActive: true,
-      workouts: [],
+      workouts: [
+        {
+          id: '2',
+          isCompleted: false,
+          isRest: false,
+          menu: 20,
+          date: timestamp(mockToday),
+          title: 'Day 2',
+        },
+        {
+          id: '1',
+          isCompleted: true,
+          isRest: false,
+          menu: 20,
+          date: timestamp(mockToday),
+          title: 'Day 1',
+        },
+      ],
       createdAt: timestamp(mockToday),
     };
 
@@ -69,7 +86,24 @@ describe('challenge: reducers', () => {
       isLoading: false,
       challenge: {
         ...challenge,
-        workouts: [workout],
+        workouts: [
+          {
+            id: '2',
+            isCompleted: true,
+            isRest: false,
+            menu: 20,
+            date: timestamp(mockToday),
+            title: 'Day 2',
+          },
+          {
+            id: '1',
+            isCompleted: true,
+            isRest: false,
+            menu: 20,
+            date: timestamp(mockToday),
+            title: 'Day 1',
+          },
+        ],
       },
     };
 

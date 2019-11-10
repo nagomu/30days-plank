@@ -9,7 +9,7 @@ import DrawerNav from '~/components/common/layouts/DrawerNav';
 import Footer from '~/components/common/layouts/Footer';
 import Loading from '~/components/common/loaders/Loading';
 import { AppState } from '~/store';
-import { User } from '~/store/auth';
+import { User } from '~/types';
 import { rgba } from '~/utils';
 
 const fadeIn = keyframes`

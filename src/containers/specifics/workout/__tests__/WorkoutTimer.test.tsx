@@ -6,8 +6,11 @@ import timekeeper from 'timekeeper';
 import WorkoutTimer, {
   Props,
 } from '~/containers/specifics/workout/WorkoutTimer';
-import { timestampFromDate } from '~/services/firestore';
 import { Status } from '~/store/workout';
+import { Workout } from '~/types';
+
+const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
+timekeeper.freeze(mockToday);
 
 jest.mock('~/utils/datetime', () => ({
   isToday: jest.fn().mockReturnValue(true),
@@ -15,9 +18,6 @@ jest.mock('~/utils/datetime', () => ({
 
 describe('WorkoutTimerContainer', () => {
   jest.useFakeTimers();
-
-  const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
-  timekeeper.freeze(mockToday);
 
   const mockOnUpdate = jest.fn();
   const props: Props = {
@@ -27,9 +27,9 @@ describe('WorkoutTimerContainer', () => {
       isCompleted: false,
       isRest: false,
       menu: 2,
-      scheduledDate: timestampFromDate(mockToday),
+      date: { seconds: 1569855600, nanoseconds: 0 },
       title: 'Day 1',
-    },
+    } as Workout,
     onUpdate: mockOnUpdate,
   };
 
@@ -42,7 +42,7 @@ describe('WorkoutTimerContainer', () => {
 
   it('renders correctly', () => {
     const wrapper = createWrapper(props);
-    const workout = wrapper.find('Workout');
+    const workout = wrapper.find('WorkoutPage');
 
     expect(workout.length).toEqual(1);
     expect(workout.prop('isLoading')).toEqual(false);
@@ -58,16 +58,6 @@ describe('WorkoutTimerContainer', () => {
       const state = wrapper.state();
       expect(state.status).toEqual(Status.start);
       expect(state.timer).not.toEqual(undefined);
-
-      jest.runAllTimers();
-
-      const expected = {
-        progress: 0,
-        status: Status.finish,
-        timer: undefined,
-        isCompleted: true,
-      };
-      expect(wrapper.state()).toEqual(expected);
     });
   });
 
@@ -132,7 +122,7 @@ describe('WorkoutTimerContainer', () => {
       (wrapper.instance() as WorkoutTimer).componentWillUnmount();
       wrapper.update();
 
-      expect(clearInterval).toHaveBeenCalledTimes(3);
+      expect(clearInterval).toHaveBeenCalledTimes(2);
     });
 
     it('calls onUpdate', () => {
@@ -145,6 +135,6 @@ describe('WorkoutTimerContainer', () => {
       expect(mockOnUpdate).toBeCalled();
     });
   });
-
-  timekeeper.reset();
 });
+
+timekeeper.reset();

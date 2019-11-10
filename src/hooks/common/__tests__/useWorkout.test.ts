@@ -1,7 +1,6 @@
-import { workoutsFactory } from '~/factories/workoutFactory';
+import { workoutFactory } from '~/factories/workoutFactory';
 import { useWorkout } from '~/hooks/common/useWorkout';
-import { timestampFromDate } from '~/services/firestore';
-import { mockStore, withHook } from '~/utils';
+import { mockStore, timestamp, withHook } from '~/utils';
 
 type useParams = {
   id: string;
@@ -60,15 +59,16 @@ describe('useWorkout', () => {
       auth: {
         user: {
           uid: 'xxx',
+          challenge: 'cid',
         },
         isLoading: false,
       },
       challenge: {
         challenge: {
-          id: 'xxx',
+          id: 'cid',
           isActive: true,
-          workouts: workoutsFactory(),
-          createdAt: timestampFromDate(new Date()),
+          workouts: workoutFactory(),
+          createdAt: timestamp(new Date()),
         },
         isLoading: false,
       },

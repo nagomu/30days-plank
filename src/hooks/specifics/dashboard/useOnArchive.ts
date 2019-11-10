@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { currentUser } from '~/services/firebase';
 import { AppState } from '~/store';
-import { Challenge, onArchiveChallenge } from '~/store/challenge';
-import { Workout } from '~/store/workout';
+import { onArchiveChallenge } from '~/store/challenge';
+import { Challenge, Workout } from '~/types';
 
 type useOnArchive = {
   isExpired: boolean;
@@ -15,7 +14,7 @@ export const isExpired = (workouts?: Workout[]): boolean => {
   if (!workouts) return false;
 
   const today = new Date(Date.now());
-  const lastDay = workouts[workouts.length - 1].scheduledDate.toDate();
+  const lastDay = workouts[workouts.length - 1].date.toDate();
 
   const formattedDate = (date: Date): number => {
     const yyyy = date.getFullYear();
@@ -28,14 +27,8 @@ export const isExpired = (workouts?: Workout[]): boolean => {
 };
 
 export const onArchive = (dispatch: Dispatch, challenge?: Challenge): void => {
-  const uid = currentUser();
-  if (!uid || !challenge) {
-    throw new Error('Could not execute onArchive');
-  }
-
+  if (!challenge) return;
   onArchiveChallenge(dispatch, challenge);
-
-  return;
 };
 
 export const useOnArchive = (): useOnArchive => {

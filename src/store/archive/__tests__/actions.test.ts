@@ -1,69 +1,75 @@
-import { workoutsFactory } from '~/factories/workoutFactory';
-import { timestampFromDate } from '~/services/firestore';
+import timekeeper from 'timekeeper';
+
+import { workoutFactory } from '~/factories/workoutFactory';
+import { postError } from '~/services/firebase/error';
 import {
   addArchive,
   addArchiveSuccess,
   calculateRate,
   fetchArchives,
-  fetchArchivesSuccess,
   generateTitle,
   initialState,
   onAddArchive,
   onFetchArchives,
   setArchives,
 } from '~/store/archive';
-import { mockStore } from '~/utils';
+import { mockStore, timestamp } from '~/utils';
+
+const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
+timekeeper.freeze(mockToday);
+
+const mockFetch = jest.fn();
+const mockAdd = jest.fn();
+
+jest.mock(
+  '~/services/firebase/archive',
+  jest.fn().mockReturnValue({
+    fetchArchives: () => mockFetch(),
+    addArchive: () => mockAdd(),
+  }),
+);
 
 describe('archive: actions', () => {
-  describe('fetchArchives', () => {
-    it('should create valid action', () => {
-      const store = mockStore({ archive: initialState });
-      store.dispatch(fetchArchives());
+  const ts = timestamp(new Date());
+  const store = mockStore({ archive: initialState });
+  const workouts = workoutFactory();
 
-      const expected = [{ type: 'FETCH_ARCHIVES' }];
-      expect(store.getActions()).toEqual(expected);
-    });
+  afterEach(() => {
+    store.clearActions();
   });
 
-  describe('fetchArchivesSuccess', () => {
+  describe('fetchArchives', () => {
     it('should create valid action', () => {
-      const store = mockStore({ archive: initialState });
-      store.dispatch(fetchArchivesSuccess());
-
-      const expected = [{ type: 'FETCH_ARCHIVES_SUCCESS' }];
+      store.dispatch(fetchArchives());
+      const expected = [{ type: 'FETCH_ARCHIVES' }];
       expect(store.getActions()).toEqual(expected);
     });
   });
 
   describe('setArchives', () => {
     it('should create valid action', () => {
-      const store = mockStore({ archive: initialState });
-      const archives = [
-        {
-          id: 'xxx',
-          challengeId: 'xxx',
-          title: 'xxx',
-          achievementRate: 80,
-          createdAt: timestampFromDate(new Date()),
-        },
-      ];
+      const archives = {
+        archives: [
+          {
+            id: 'xxx',
+            challenge: 'xxx',
+            title: 'xxx',
+            rate: 80,
+            createdAt: ts,
+            updatedAt: ts,
+          },
+        ],
+        next: undefined,
+      };
 
       store.dispatch(setArchives(archives));
-      store.dispatch(setArchives(undefined));
 
       const expected = [
         {
           type: 'SET_ARCHIVES',
           payload: {
-            archives,
-            size: 1,
-          },
-        },
-        {
-          type: 'SET_ARCHIVES',
-          payload: {
-            archives: [],
-            size: 0,
+            archives: archives.archives,
+            next: undefined,
           },
         },
       ];
@@ -73,9 +79,7 @@ describe('archive: actions', () => {
 
   describe('addArchive', () => {
     it('should create valid action', () => {
-      const store = mockStore({ archive: initialState });
       store.dispatch(addArchive());
-
       const expected = [{ type: 'ADD_ARCHIVE' }];
       expect(store.getActions()).toEqual(expected);
     });
@@ -83,9 +87,7 @@ describe('archive: actions', () => {
 
   describe('addArchiveSuccess', () => {
     it('should create valid action', () => {
-      const store = mockStore({ archive: initialState });
       store.dispatch(addArchiveSuccess());
-
       const expected = [{ type: 'ADD_ARCHIVE_SUCCESS' }];
       expect(store.getActions()).toEqual(expected);
     });
@@ -93,37 +95,48 @@ describe('archive: actions', () => {
 
   describe('onFetchArchives', () => {
     it('should create valid action', async () => {
-      const store = mockStore({ archive: initialState });
-
+      mockFetch.mockImplementation(
+        jest.fn().mockResolvedValue({ archives: [], next: undefined }),
+      );
       await onFetchArchives(store.dispatch);
 
       const expected = [
         { type: 'FETCH_ARCHIVES' },
-        { type: 'FETCH_ARCHIVES_SUCCESS' },
         {
           type: 'SET_ARCHIVES',
           payload: {
-            archives: [
-              {
-                data: 'data',
-                id: 'id',
-              },
-            ],
-            size: 1,
+            archives: [],
+            next: undefined,
           },
         },
       ];
       expect(store.getActions()).toEqual(expected);
     });
+
+    it('calls postError if catch', async () => {
+      mockFetch.mockImplementation(
+        jest.fn().mockRejectedValue(new Error('Error')),
+      );
+      const mock = jest.fn(postError);
+
+      try {
+        await onFetchArchives(store.dispatch);
+      } catch (e) {
+        expect(mock).toBeCalledTimes(1);
+      }
+    });
   });
 
   describe('onAddArchive', () => {
-    it('should create valid action', async () => {
-      const workouts = workoutsFactory();
-      const challengeId = 'xxx';
-      const store = mockStore({ archive: initialState });
+    const challenge = {
+      id: 'id',
+      isActive: true,
+      workouts,
+    };
 
-      await onAddArchive(store.dispatch, challengeId, workouts);
+    it('should create valid action', async () => {
+      mockAdd.mockImplementation(jest.fn().mockResolvedValue(undefined));
+      await onAddArchive(store.dispatch, challenge);
 
       const expected = [
         { type: 'ADD_ARCHIVE' },
@@ -131,12 +144,25 @@ describe('archive: actions', () => {
       ];
       expect(store.getActions()).toEqual(expected);
     });
+
+    it('calls postError if catch', async () => {
+      mockAdd.mockImplementation(
+        jest.fn().mockRejectedValue(new Error('Error')),
+      );
+      const mock = jest.fn(postError);
+
+      try {
+        await onAddArchive(store.dispatch, challenge);
+      } catch (e) {
+        expect(mock).toBeCalledTimes(1);
+      }
+    });
   });
 });
 
 describe('calculateRate', () => {
   it('returns rate correctly', () => {
-    const workouts = workoutsFactory().map((workout, i) => ({
+    const workouts = workoutFactory().map((workout, i) => ({
       ...workout,
       isCompleted: i === 5 || i === 10 ? false : true,
     }));
@@ -146,7 +172,10 @@ describe('calculateRate', () => {
 
 describe('generateTitle', () => {
   it('returns title correctly', () => {
-    const workouts = workoutsFactory();
-    expect(generateTitle(workouts)).toEqual('Oct 1, 2019 - Oct 30, 2019');
+    expect(generateTitle(workoutFactory(mockToday))).toEqual(
+      'Oct 1, 2019 - Oct 30, 2019',
+    );
   });
 });
+
+timekeeper.reset();

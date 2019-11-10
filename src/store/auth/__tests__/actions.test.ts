@@ -1,5 +1,4 @@
-import { FirebaseUser } from '~/services/firebase';
-import { postError } from '~/services/firestore';
+import { postError } from '~/services/firebase/error';
 import {
   addUser,
   addUserSuccess,
@@ -7,25 +6,34 @@ import {
   fetchUser,
   initialState,
   observeAuthStateChanged,
-  onAuthStateChanged,
   onFetchUser,
+  onObserveAuthStateChanged,
   onSignIn,
   onSignOut,
   setUser,
   signIn,
   signOut,
-  userParams,
 } from '~/store/auth';
+import { FirebaseUser } from '~/types';
 import { mockStore } from '~/utils';
 
+const mockAuthStateChanged = jest.fn();
+const mockSignIn = jest.fn();
+const mockFetchUser = jest.fn();
+
 jest.mock(
-  '~/services/firebase/asyncOnAuthStateChanged',
+  '~/services/firebase/auth',
   jest.fn().mockReturnValue({
-    asyncOnAuthStateChanged: jest
-      .fn()
-      .mockResolvedValueOnce({ uid: 'uid' })
-      .mockResolvedValueOnce(null)
-      .mockRejectedValueOnce(new Error()),
+    onAuthStateChanged: () => mockAuthStateChanged(),
+    signInWithGoogle: () => mockSignIn(),
+    signOutWithGoogle: jest.fn(),
+  }),
+);
+jest.mock(
+  '~/services/firebase/user',
+  jest.fn().mockReturnValue({
+    addUser: jest.fn().mockResolvedValue({ uid: 'uid' }),
+    fetchUser: () => mockFetchUser(),
   }),
 );
 
@@ -136,6 +144,9 @@ describe('auth: actions', () => {
     } as FirebaseUser;
 
     it('should create valid action if user exists', async () => {
+      mockFetchUser.mockImplementation(
+        jest.fn().mockResolvedValue({ uid: 'uid' }),
+      );
       await onFetchUser(store.dispatch, user);
 
       const expected = [
@@ -157,29 +168,48 @@ describe('auth: actions', () => {
     });
 
     it('should create valid action if user does not exist', async () => {
+      mockFetchUser.mockImplementation(jest.fn().mockResolvedValue(null));
       await onFetchUser(store.dispatch, user);
 
       const expected = [
         { type: 'FETCH_USER' },
         { type: 'ADD_USER' },
         { type: 'ADD_USER_SUCCESS' },
+        {
+          type: 'SET_USER',
+          payload: {
+            user: {
+              name: undefined,
+              photoURL: undefined,
+              uid: 'uid',
+            },
+          },
+        },
       ];
       expect(store.getActions()).toEqual(expected);
     });
 
-    it('calls postError if Error', async () => {
+    it('calls postError if catch', async () => {
+      mockFetchUser.mockImplementation(
+        jest.fn().mockRejectedValue(new Error('Error')),
+      );
+
       const mock = jest.fn(postError);
+
       try {
         await onFetchUser(store.dispatch, user);
-      } catch {
-        expect(mock).toBeCalled();
+      } catch (e) {
+        expect(mock).toBeCalledTimes(1);
       }
     });
   });
 
-  describe('onAuthStateChanged', () => {
+  describe('onObserveAuthStateChanged', () => {
     it('should create valid action if user exists', async () => {
-      await onAuthStateChanged(store.dispatch);
+      mockAuthStateChanged.mockImplementation(
+        jest.fn().mockResolvedValue({ uid: 'uid' }),
+      );
+      await onObserveAuthStateChanged(store.dispatch);
 
       const expected = [
         { type: 'OBSERVE_AUTH_STATE_CHANGED' },
@@ -190,7 +220,10 @@ describe('auth: actions', () => {
     });
 
     it('should create valid action if user does not exist', async () => {
-      await onAuthStateChanged(store.dispatch);
+      mockAuthStateChanged.mockImplementation(
+        jest.fn().mockResolvedValue(null),
+      );
+      await onObserveAuthStateChanged(store.dispatch);
 
       const expected = [
         { type: 'OBSERVE_AUTH_STATE_CHANGED' },
@@ -200,12 +233,17 @@ describe('auth: actions', () => {
       expect(store.getActions()).toEqual(expected);
     });
 
-    it('calls postError if Error', async () => {
+    it('calls postError if catch', async () => {
+      mockAuthStateChanged.mockImplementation(
+        jest.fn().mockRejectedValue(new Error('Error')),
+      );
+
       const mock = jest.fn(postError);
+
       try {
-        await onAuthStateChanged(store.dispatch);
-      } catch {
-        expect(mock).toBeCalled();
+        await onObserveAuthStateChanged(store.dispatch);
+      } catch (e) {
+        expect(mock).toBeCalledTimes(1);
       }
     });
   });
@@ -218,18 +256,26 @@ describe('auth: actions', () => {
       expect(store.getActions()).toEqual(expected);
     });
 
-    it('calls postError if Error', async () => {
+    it('calls postError if catch', async () => {
+      mockSignIn.mockImplementation(
+        jest.fn().mockRejectedValue(new Error('Error')),
+      );
+
       const mock = jest.fn(postError);
+
       try {
         await onSignIn(store.dispatch);
-      } catch (error) {
-        expect(mock).toBeCalled();
+      } catch (e) {
+        expect(mock).toBeCalledTimes(1);
       }
     });
   });
 
   describe('onSignOut', () => {
     it('should create valid action', async () => {
+      mockAuthStateChanged.mockImplementation(
+        jest.fn().mockResolvedValue(null),
+      );
       await onSignOut(store.dispatch);
 
       const expected = [
@@ -239,42 +285,6 @@ describe('auth: actions', () => {
         { type: 'AUTH_STATE_CHANGED' },
       ];
       expect(store.getActions()).toEqual(expected);
-    });
-
-    it('calls postError if Error', async () => {
-      const mock = jest.fn(postError);
-      try {
-        await onSignOut(store.dispatch);
-      } catch (error) {
-        expect(mock).toBeCalled();
-      }
-    });
-  });
-
-  describe('userParams', () => {
-    const firebaseUser = {
-      displayName: 'Firebase',
-      photoURL: 'firebase.png',
-      uid: 'firebase',
-    };
-
-    const user = {
-      name: 'user',
-      photoURL: 'user.png',
-      uid: 'uid',
-    };
-
-    it('returns User correctly if user exists', async () => {
-      expect(userParams(firebaseUser, user)).toEqual(user);
-    });
-
-    it('returns User correctly if user does not exist', async () => {
-      const expected = {
-        name: 'Firebase',
-        photoURL: 'firebase.png',
-        uid: 'firebase',
-      };
-      expect(userParams(firebaseUser)).toEqual(expected);
     });
   });
 });

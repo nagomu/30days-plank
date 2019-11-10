@@ -1,8 +1,7 @@
 import timekeeper from 'timekeeper';
 
 import Workout from '~/components/specifics/dashboard/Workout';
-import { timestampFromDate } from '~/services/firestore';
-import { withProvider } from '~/utils';
+import { timestamp, withProvider } from '~/utils';
 
 describe('Workout', () => {
   const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
@@ -15,7 +14,7 @@ describe('Workout', () => {
     isToday: false,
     menu: 20,
     pathname: '/challenges/1/workout/1',
-    scheduledDate: timestampFromDate(mockToday),
+    date: timestamp(mockToday),
     title: 'Day 1',
   };
 
@@ -51,7 +50,7 @@ describe('Workout', () => {
         props: {
           ...props,
           isToday: true,
-          scheduledDate: timestampFromDate(mockToday),
+          date: timestamp(mockToday),
         },
       };
       const wrapper = withProvider(params).find('Workout');

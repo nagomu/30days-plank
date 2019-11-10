@@ -1,4 +1,4 @@
-import { User } from '~/store/auth';
+import { User } from '~/types';
 
 const REDIRECT_TYPE = 'REDIRECT_TYPE';
 const REDIRECT_FROM = 'REDIRECT_FROM';

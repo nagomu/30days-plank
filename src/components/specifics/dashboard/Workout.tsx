@@ -3,7 +3,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Label from '~/components/specifics/dashboard/Label';
-import { Timestamp } from '~/services/firebase';
+import { Timestamp } from '~/types';
 import { formatDayNumeric, formatShortMonth, rgba } from '~/utils';
 
 type ContainerProps = {
@@ -54,23 +54,15 @@ type Props = {
   isToday: boolean;
   menu: number;
   pathname: string;
-  scheduledDate: Timestamp;
+  date: Timestamp;
   title: string;
 };
 
 const Workout: React.FC<Props> = props => {
-  const {
-    isCompleted,
-    isRest,
-    isToday,
-    menu,
-    pathname,
-    scheduledDate,
-    title,
-  } = props;
+  const { isCompleted, isRest, isToday, menu, pathname, date, title } = props;
 
-  const day = formatDayNumeric(scheduledDate);
-  const month = formatShortMonth(scheduledDate);
+  const day = formatDayNumeric(date);
+  const month = formatShortMonth(date);
 
   const color = isToday
     ? '#1e88e5'

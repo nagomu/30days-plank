@@ -1,6 +1,5 @@
 import timekeeper from 'timekeeper';
 
-import { timestampFromDate } from '~/services/firestore';
 import {
   addChallenge,
   addChallengeSuccess,
@@ -12,6 +11,7 @@ import {
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
+import { timestamp } from '~/utils';
 
 describe('challenge: reducers', () => {
   const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
@@ -32,7 +32,7 @@ describe('challenge: reducers', () => {
       description: 'xxx',
       isActive: true,
       workouts: [],
-      createdAt: timestampFromDate(mockToday),
+      createdAt: timestamp(mockToday),
     };
     const expected = {
       isLoading: false,
@@ -48,7 +48,7 @@ describe('challenge: reducers', () => {
       isCompleted: false,
       isRest: false,
       menu: 20,
-      scheduledDate: timestampFromDate(mockToday),
+      date: timestamp(mockToday),
       title: 'Day 1',
     };
 
@@ -57,7 +57,7 @@ describe('challenge: reducers', () => {
       description: 'xxx',
       isActive: true,
       workouts: [],
-      createdAt: timestampFromDate(mockToday),
+      createdAt: timestamp(mockToday),
     };
 
     const state = {

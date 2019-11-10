@@ -1,14 +1,13 @@
 import timekeeper from 'timekeeper';
 
 import Challenge from '~/components/specifics/dashboard/Challenge';
-import { workoutsFactory } from '~/factories/workoutFactory';
-import { timestampFromDate } from '~/services/firestore';
+import { workoutFactory } from '~/factories/workoutFactory';
 import { mockStore, withProvider } from '~/utils';
 
 describe('Challenge', () => {
   const props = {
     challengeId: 'xxx',
-    workouts: workoutsFactory(),
+    workouts: workoutFactory(new Date(Date.UTC(2019, 9, 1, 0, 0, 0))),
   };
 
   const state = {
@@ -22,8 +21,7 @@ describe('Challenge', () => {
       challenge: {
         id: 'xxx',
         isActive: true,
-        workouts: workoutsFactory(),
-        createdAt: timestampFromDate(new Date()),
+        workouts: workoutFactory(new Date(Date.UTC(2019, 9, 1, 0, 0, 0))),
       },
       isLoading: false,
     },
@@ -48,12 +46,9 @@ describe('Challenge', () => {
     const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
 
-    jest
-      .spyOn(global.Date, 'now')
-      .mockImplementationOnce(() => mockToday.valueOf());
-
     const wrapper = withProvider({ Component: Challenge, props, store });
     const workouts = wrapper.find('Workout');
+
     expect(workouts.at(0).prop('isToday')).toEqual(true);
     expect(wrapper.find('Workout[isToday=true]').length).toEqual(1);
 

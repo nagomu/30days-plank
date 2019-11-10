@@ -1,43 +1,22 @@
 import {
-  fetchAllWorkouts,
-  fetchAllWorkoutsSuccess,
-  fetchWorkout,
-  fetchWorkoutSuccess,
+  fetchWorkouts,
+  fetchWorkoutsSuccess,
   initialState,
-  setWorkout,
   updateWorkout,
   updateWorkoutSuccess,
   workoutReducer as reducer,
 } from '~/store/workout';
 
 describe('workout: reducers', () => {
-  it('handles FETCH_WORKOUT', () => {
+  it('handles FETCH_WORKOUTS', () => {
     const expected = { isLoading: true };
-    const action = fetchWorkout();
+    const action = fetchWorkouts();
     expect(reducer(initialState, action)).toEqual(expected);
   });
 
-  it('handles FETCH_WORKOUT_SUCCESS', () => {
+  it('handles FETCH_WORKOUTS_SUCCESS', () => {
     const expected = { isLoading: false };
-    const action = fetchWorkoutSuccess();
-    expect(reducer(initialState, action)).toEqual(expected);
-  });
-
-  it('handles FETCH_ALL_WORKOUTS', () => {
-    const expected = { isLoading: true };
-    const action = fetchAllWorkouts();
-    expect(reducer(initialState, action)).toEqual(expected);
-  });
-
-  it('handles FETCH_ALL_SUCCESS', () => {
-    const expected = { isLoading: false };
-    const action = fetchAllWorkoutsSuccess();
-    expect(reducer(initialState, action)).toEqual(expected);
-  });
-
-  it('handles SET_WORKOUT', () => {
-    const expected = { isLoading: false };
-    const action = setWorkout();
+    const action = fetchWorkoutsSuccess();
     expect(reducer(initialState, action)).toEqual(expected);
   });
 

@@ -1,6 +1,5 @@
 import Archives from '~/containers/specifics/archive/Archives';
-import { timestampFromDate } from '~/services/firestore';
-import { mockStore, withProvider } from '~/utils';
+import { mockStore, timestamp, withProvider } from '~/utils';
 
 describe('ArchivesContainer', () => {
   const props = {
@@ -16,23 +15,23 @@ describe('ArchivesContainer', () => {
       archive: {
         archives: [
           {
-            achievementRate: 80,
+            rate: 80,
             challengeId: '1',
-            createdAt: timestampFromDate(new Date()),
+            createdAt: timestamp(new Date()),
             id: '1',
             title: 'title1',
           },
           {
-            achievementRate: 100,
+            rate: 100,
             challengeId: '2',
-            createdAt: timestampFromDate(new Date()),
+            createdAt: timestamp(new Date()),
             id: '2',
             title: 'title1',
           },
           {
-            achievementRate: 79,
+            rate: 79,
             challengeId: '3',
-            createdAt: timestampFromDate(new Date()),
+            createdAt: timestamp(new Date()),
             id: '3',
             title: 'title1',
           },

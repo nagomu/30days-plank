@@ -1,32 +1,26 @@
 import { Dispatch } from 'redux';
 
-import { QueryDocumentSnapshot, QuerySnapshot } from '~/services/firebase';
-import { archives, postError, timestampFromDate } from '~/services/firestore';
+import * as ArchiveService from '~/services/firebase/archive';
+import { postError } from '~/services/firebase/error';
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
-  Archive,
   ArchiveActionTypes,
   FETCH_ARCHIVES,
-  FETCH_ARCHIVES_SUCCESS,
   SET_ARCHIVES,
 } from '~/store/archive';
-import { Workout } from '~/store/workout';
+import { Archives, Challenge, Next, Workout } from '~/types';
 import { formatUS } from '~/utils';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
 });
 
-export const fetchArchivesSuccess = (): ArchiveActionTypes => ({
-  type: FETCH_ARCHIVES_SUCCESS,
-});
-
-export const setArchives = (archives?: Archive[]): ArchiveActionTypes => ({
+export const setArchives = (archives?: Archives): ArchiveActionTypes => ({
   type: SET_ARCHIVES,
   payload: {
-    archives: archives || [],
-    size: archives ? archives.length : 0,
+    archives: archives ? archives.archives : [],
+    next: archives ? archives.next : undefined,
   },
 });
 
@@ -38,26 +32,18 @@ export const addArchiveSuccess = (): ArchiveActionTypes => ({
   type: ADD_ARCHIVE_SUCCESS,
 });
 
-export const onFetchArchives = async (dispatch: Dispatch): Promise<void> => {
+export const onFetchArchives = async (
+  dispatch: Dispatch,
+  next?: Next,
+): Promise<void> => {
   dispatch(fetchArchives());
 
   try {
-    const snapshot: QuerySnapshot = await archives().get();
-    dispatch(fetchArchivesSuccess());
-    if (snapshot.empty) return;
-
-    const results: Archive[] = [];
-    snapshot.forEach((doc: QueryDocumentSnapshot) => {
-      results.push({
-        id: doc.id,
-        ...doc.data(),
-      } as Archive);
-    });
-    dispatch(setArchives(results));
+    const archives = await ArchiveService.fetchArchives(next);
+    dispatch(setArchives(archives || undefined));
   } catch (error) {
     postError(error);
   }
-  return;
 };
 
 export const calculateRate = (workouts: Workout[]): number => {
@@ -66,30 +52,27 @@ export const calculateRate = (workouts: Workout[]): number => {
 };
 
 export const generateTitle = (workouts: Workout[]): string => {
-  const firstDate = workouts[0].scheduledDate;
-  const lastDate = workouts[workouts.length - 1].scheduledDate;
+  const firstDate = workouts[0].date;
+  const lastDate = workouts[workouts.length - 1].date;
   return `${formatUS(firstDate)} - ${formatUS(lastDate)}`;
 };
 
 export const onAddArchive = async (
   dispatch: Dispatch,
-  challengeId: string,
-  workouts: Workout[],
+  challenge: Challenge,
 ): Promise<void> => {
   dispatch(addArchive());
 
-  try {
-    const params = {
-      challengeId,
-      title: generateTitle(workouts),
-      achievementRate: calculateRate(workouts),
-      createdAt: timestampFromDate(new Date()),
-    };
+  const params = {
+    challenge: challenge.id,
+    title: generateTitle(challenge.workouts),
+    rate: calculateRate(challenge.workouts),
+  };
 
-    await archives().add(params);
+  try {
+    await ArchiveService.addArchive(params);
     dispatch(addArchiveSuccess());
   } catch (error) {
     postError(error);
   }
-  return;
 };

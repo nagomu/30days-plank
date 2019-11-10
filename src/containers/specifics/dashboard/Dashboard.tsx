@@ -2,39 +2,27 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import WrappedComponent from '~/components/specifics/dashboard/Dashboard';
-import { currentUser } from '~/services/firebase/auth';
 import { AppState } from '~/store';
-import {
-  AddChallengeParams,
-  onAddChallenge,
-  onFetchChallenge,
-} from '~/store/challenge';
-import { timestamp } from '~/utils';
+import { onAddChallenge, onFetchChallenge } from '~/store/challenge';
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state: AppState) => state.auth);
   const challenge = useSelector((state: AppState) => state.challenge);
   const workout = useSelector((state: AppState) => state.workout);
-  const uid = currentUser();
 
   React.useEffect(() => {
-    if (uid && !challenge.challenge) {
-      onFetchChallenge(dispatch);
+    if (user && user.challenge && !challenge.challenge) {
+      onFetchChallenge(dispatch, user.challenge);
     }
   }, []);
 
-  const params: AddChallengeParams = {
-    isActive: true,
-    createdAt: timestamp(new Date()),
-    workouts: [],
-  };
-
   const handleAddChallenge = (): void => {
-    if (!uid) return;
-    onAddChallenge(dispatch, params);
+    if (!user) return;
+    onAddChallenge(dispatch);
   };
 
-  const isLoading = !uid || !!challenge.isLoading || !!workout.isLoading;
+  const isLoading = !user || !!challenge.isLoading || !!workout.isLoading;
 
   return (
     <WrappedComponent

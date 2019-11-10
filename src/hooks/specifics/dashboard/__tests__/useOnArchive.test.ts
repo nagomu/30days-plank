@@ -1,11 +1,10 @@
 import timekeeper from 'timekeeper';
 
-import { workoutsFactory } from '~/factories/workoutFactory';
+import { workoutFactory } from '~/factories/workoutFactory';
 import {
   isExpired,
   useOnArchive,
 } from '~/hooks/specifics/dashboard/useOnArchive';
-import { timestampFromDate } from '~/services/firestore';
 import { mockStore, withHook } from '~/utils';
 
 describe('useOnArchive', () => {
@@ -24,12 +23,14 @@ describe('useOnArchive', () => {
     const hook = withHook(useOnArchive, store);
 
     expect(hook.isExpired).toEqual(false);
-    expect(hook.onArchive).toThrowError();
+
+    hook.onArchive();
   });
 
   it('returns correct values if valid state', () => {
-    const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
-    timekeeper.freeze(mockToday);
+    const today = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
+    timekeeper.freeze(today);
+    const factory = new Date(Date.UTC(2000, 0, 1, 0, 0, 0));
 
     const state = {
       auth: {
@@ -42,8 +43,7 @@ describe('useOnArchive', () => {
         challenge: {
           id: 'xxx',
           isActive: true,
-          workouts: workoutsFactory(),
-          createdAt: timestampFromDate(new Date()),
+          workouts: workoutFactory(factory),
         },
         isLoading: false,
       },
@@ -52,7 +52,6 @@ describe('useOnArchive', () => {
     const store = mockStore(state);
     const hook = withHook(useOnArchive, store);
     expect(hook.isExpired).toEqual(true);
-    expect(hook.onArchive).not.toThrowError();
 
     timekeeper.reset();
   });
@@ -60,8 +59,8 @@ describe('useOnArchive', () => {
 
 describe('isExpired', () => {
   it('returns "false" correctly if `workouts` is undefined', () => {
-    const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
-    timekeeper.freeze(mockToday);
+    const today = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
+    timekeeper.freeze(today);
 
     expect(isExpired(undefined)).toEqual(false);
 
@@ -69,11 +68,10 @@ describe('isExpired', () => {
   });
 
   it('returns "expired" correctly', () => {
-    const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
-    timekeeper.freeze(mockToday);
-
-    const workouts = workoutsFactory();
-    expect(isExpired(workouts)).toEqual(true);
+    const today = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
+    timekeeper.freeze(today);
+    const factory = new Date(Date.UTC(2000, 0, 1, 0, 0, 0));
+    expect(isExpired(workoutFactory(factory))).toEqual(true);
 
     timekeeper.reset();
   });
@@ -81,9 +79,7 @@ describe('isExpired', () => {
   it('returns "that today is before the due date" correctly', () => {
     const mockToday = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
-
-    const workouts = workoutsFactory();
-    expect(isExpired(workouts)).toEqual(false);
+    expect(isExpired(workoutFactory())).toEqual(false);
 
     timekeeper.reset();
   });

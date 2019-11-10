@@ -6,7 +6,8 @@ import DrawerScreen from '~/components/common/layouts/DrawerScreen';
 import DonutChart from '~/components/specifics/workout/DonutChart';
 import ResetButton from '~/components/specifics/workout/ResetButton';
 import StartOrPauseButton from '~/components/specifics/workout/StartOrPauseButton';
-import { Status, Workout as WorkoutProps } from '~/store/workout';
+import { Status } from '~/store/workout';
+import { Workout } from '~/types';
 
 const Container = styled.div`
   position: relative;
@@ -34,13 +35,13 @@ type Props = {
   pathname?: string;
   progress: number;
   status: Status;
-  workout?: WorkoutProps;
+  workout?: Workout;
   onReset: () => void;
   onStart: () => void;
   onTogglePause: () => void;
 };
 
-const Workout: React.FC<Props> = props => {
+const WorkoutPage: React.FC<Props> = props => {
   const {
     isLoading,
     onReset,
@@ -87,4 +88,4 @@ const Workout: React.FC<Props> = props => {
   );
 };
 
-export default Workout;
+export default WorkoutPage;

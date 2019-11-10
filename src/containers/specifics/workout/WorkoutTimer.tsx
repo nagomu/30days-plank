@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import WrappedComponent from '~/components/specifics/workout/Workout';
-import { Status, UpdateWorkoutParams, Workout } from '~/store/workout';
+import { Status, UpdateWorkoutParams } from '~/store/workout';
+import { Workout } from '~/types';
 import { isToday } from '~/utils';
 
 export type Props = {
@@ -49,7 +50,7 @@ class WorkoutTimer extends React.Component<Props, State> {
       window.clearInterval(this.state.timer);
     }
 
-    if (!!workout && isToday(workout.scheduledDate) && isCompleted) {
+    if (!!workout && isToday(workout.date) && isCompleted) {
       onUpdate({ id: workout.id, isCompleted });
     }
   }
@@ -104,9 +105,7 @@ class WorkoutTimer extends React.Component<Props, State> {
     this.setState({
       status: Status.finish,
       timer: undefined,
-      isCompleted: isToday(workout.scheduledDate)
-        ? true
-        : this.state.isCompleted,
+      isCompleted: isToday(workout.date) ? true : this.state.isCompleted,
     });
   };
 

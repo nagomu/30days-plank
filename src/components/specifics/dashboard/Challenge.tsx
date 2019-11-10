@@ -3,9 +3,9 @@ import * as React from 'react';
 
 import PrimaryButton from '~/components/common/buttons/PrimaryButton';
 import StartButton from '~/components/specifics/dashboard/StartButton';
-import Workout from '~/components/specifics/dashboard/Workout';
+import Menu from '~/components/specifics/dashboard/Workout';
 import { useOnArchive } from '~/hooks/specifics/dashboard/useOnArchive';
-import { Workout as WorkoutType } from '~/store/workout';
+import { Workout } from '~/types';
 import { isToday } from '~/utils';
 
 const Expired = styled.div`
@@ -21,12 +21,12 @@ const Workouts = styled.ul`
 
 type Props = {
   challengeId: string;
-  workouts: WorkoutType[];
+  workouts: Workout[];
 };
 
 const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
   const { isExpired, onArchive } = useOnArchive();
-  const todaysWorkout = workouts.find(w => isToday(w.scheduledDate));
+  const todaysWorkout = workouts.find(w => isToday(w.date));
   const pathname = (id: string): string =>
     `/challenges/${challengeId}/workouts/${id}`;
 
@@ -42,7 +42,7 @@ const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
       )}
       <Workouts>
         {workouts.map(workout => (
-          <Workout
+          <Menu
             {...workout}
             key={workout.id}
             pathname={`${pathname(workout.id)}`}

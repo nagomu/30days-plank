@@ -7,6 +7,6 @@ import { firebaseConfig } from '~/config';
 
 firebase.initializeApp(firebaseConfig);
 
-export { currentUser } from './currentUser';
-export * from './types';
+export const provider = new firebase.auth.GoogleAuthProvider();
+
 export { firebase };

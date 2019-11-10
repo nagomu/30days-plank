@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import { AppState } from '~/store';
 import { onFetchChallenge } from '~/store/challenge';
-import { onUpdateWorkout, UpdateWorkoutParams, Workout } from '~/store/workout';
+import { onUpdateWorkout, UpdateWorkoutParams } from '~/store/workout';
+import { Workout } from '~/types';
 
 type UseWorkout = {
   isLoading: boolean;
@@ -30,7 +31,8 @@ export const useWorkout = (): UseWorkout => {
   }));
 
   useEffect(() => {
-    if (user && !challenge) onFetchChallenge(dispatch);
+    if (user && user.challenge && !challenge)
+      onFetchChallenge(dispatch, user.challenge);
   }, []);
 
   const isLoading =
@@ -47,7 +49,7 @@ export const useWorkout = (): UseWorkout => {
     if (!user || !challenge || !workout) {
       throw new Error('Could not execute onUpdate');
     }
-    onUpdateWorkout(dispatch, challenge, params);
+    onUpdateWorkout(dispatch, challenge.id, params);
     return;
   };
 

@@ -4,7 +4,7 @@ import * as React from 'react';
 // import { NavLink } from 'react-router-dom';
 import Icon from '~/components/common/icons/Icon';
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
-import { Archive } from '~/store/archive';
+import { Archive } from '~/types';
 import { isEmptyArray, rgba } from '~/utils';
 
 const List = styled.ul`
@@ -86,13 +86,11 @@ const Archives: React.FC<Props> = ({ archives, isLoading }) => (
         {archives.map((archive: Archive) => (
           <Menu key={archive.id}>
             <Link>
-              <Completed
-                className={archive.achievementRate >= 80 ? 'isCompleted' : ''}
-              >
+              <Completed className={archive.rate >= 80 ? 'isCompleted' : ''}>
                 <Icon name="done" />
               </Completed>
               <Title>{archive.title}</Title>
-              {` - ${archive.achievementRate}%`}
+              {` - ${archive.rate}%`}
             </Link>
           </Menu>
         ))}

@@ -1,6 +1,8 @@
 import { useAuth } from '~/hooks/specifics/routes/useAuth';
 import { mockStore, withHook } from '~/utils';
 
+jest.mock('~/store/auth');
+
 describe('useAuth', () => {
   const state = {
     auth: {

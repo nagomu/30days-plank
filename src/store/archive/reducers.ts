@@ -1,18 +1,17 @@
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
-  Archive,
   ArchiveActionTypes,
   ArchiveState,
   FETCH_ARCHIVES,
-  FETCH_ARCHIVES_SUCCESS,
   SET_ARCHIVES,
 } from '~/store/archive';
+import { Archive } from '~/types';
 
 export const initialState: ArchiveState = {
   archives: [],
+  next: undefined,
   isLoading: undefined,
-  size: undefined,
 };
 
 export const mergeArchives = (
@@ -43,9 +42,7 @@ export const archiveReducer = (
           ...state,
           isLoading: false,
           archives: mergeArchives(state.archives, action.payload.archives),
-          size: state.size
-            ? state.size + action.payload.size
-            : action.payload.size,
+          next: action.payload.next,
         };
       }
       return {
@@ -53,7 +50,6 @@ export const archiveReducer = (
         isLoading: false,
       };
     case ADD_ARCHIVE_SUCCESS:
-    case FETCH_ARCHIVES_SUCCESS:
       return {
         ...state,
         isLoading: false,

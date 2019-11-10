@@ -55,7 +55,7 @@ export const onFetchChallenge = async (
   dispatch(fetchChallenge());
 
   try {
-    const challenge = await ChallengeService.fetchChallenge(uid, id);
+    const challenge = await ChallengeService.fetchChallenge(id);
     dispatch(setChallenge(challenge || undefined));
     onFetchWorkouts(dispatch, uid, challenge as Challenge);
   } catch (error) {
@@ -64,14 +64,11 @@ export const onFetchChallenge = async (
   return;
 };
 
-export const onAddChallenge = async (
-  dispatch: Dispatch,
-  uid: string,
-): Promise<void> => {
+export const onAddChallenge = async (dispatch: Dispatch): Promise<void> => {
   dispatch(addChallenge());
 
   try {
-    await ChallengeService.addChallenge(uid);
+    await ChallengeService.addChallenge();
     dispatch(addChallengeSuccess());
   } catch (error) {
     postError(error);
@@ -81,13 +78,12 @@ export const onAddChallenge = async (
 
 export const onUpdateChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   params: UpdateChallengeParams,
 ): Promise<void> => {
   dispatch(updateChallenge());
 
   try {
-    await ChallengeService.updateChallenge(uid, params);
+    await ChallengeService.updateChallenge(params);
     dispatch(updateChallengeSuccess());
   } catch (error) {
     postError(error);
@@ -96,7 +92,6 @@ export const onUpdateChallenge = async (
 
 export const onArchiveChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: Challenge,
 ): Promise<void> => {
   const params = {
@@ -105,7 +100,7 @@ export const onArchiveChallenge = async (
   };
 
   try {
-    onUpdateChallenge(dispatch, uid, params);
+    onUpdateChallenge(dispatch, params);
     await onAddArchive(dispatch, challenge);
   } catch (error) {
     postError(error);

@@ -13,6 +13,7 @@ jest.mock('~/utils/datetime');
 const now = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(now);
 
+const mockCurrentUser = jest.fn();
 const mockGet = jest.fn();
 const mockAdd = jest.fn();
 const mockUpdate = jest.fn();
@@ -22,6 +23,7 @@ jest.mock(
   '~/services/firebase',
   jest.fn().mockReturnValue({
     firebase: {
+      auth: () => mockCurrentUser(),
       firestore: () => ({
         batch: () => ({
           commit: mockAdd,
@@ -68,6 +70,7 @@ describe('challenge', () => {
         updatedAt: ts,
       },
     ];
+    mockCurrentUser.mockImplementation(() => ({ currentUser: { uid: 'uid' } }));
   });
 
   mockGet.mockImplementation((id: string) => {
@@ -87,12 +90,18 @@ describe('challenge', () => {
   describe('fetchChallenge', () => {
     it('returns correct ChallengeData if it exists', async () => {
       const expected = fixture[0];
-      expect(await fetchChallenge('uid', 'cid')).toEqual(expected);
+      expect(await fetchChallenge('cid')).toEqual(expected);
     });
 
     it('returns undefined if it does not exist', async () => {
       const expected = undefined;
-      expect(await fetchChallenge('uid', 'id')).toEqual(expected);
+      expect(await fetchChallenge('id')).toEqual(expected);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await fetchChallenge('id')).toEqual(expected);
     });
   });
 
@@ -111,7 +120,13 @@ describe('challenge', () => {
         fixture.push(challenge);
         return jest.fn().mockResolvedValue(undefined);
       });
-      expect(await addChallenge('uid')).toEqual(challenge);
+      expect(await addChallenge()).toEqual(challenge);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await addChallenge()).toEqual(expected);
     });
   });
 
@@ -127,7 +142,13 @@ describe('challenge', () => {
         isActive: false,
       };
 
-      expect(await updateChallenge('uid', params)).toEqual(expected);
+      expect(await updateChallenge(params)).toEqual(expected);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await updateChallenge(params)).toEqual(expected);
     });
   });
 });

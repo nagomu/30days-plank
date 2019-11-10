@@ -193,7 +193,7 @@ describe('challenge: actions', () => {
   describe('onAddChallenge', () => {
     it('should create valid action', async () => {
       mockAdd.mockImplementation(jest.fn().mockResolvedValue(undefined));
-      await onAddChallenge(store.dispatch, 'uid');
+      await onAddChallenge(store.dispatch);
 
       const expected = [
         { type: 'ADD_CHALLENGE' },
@@ -209,7 +209,7 @@ describe('challenge: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onAddChallenge(store.dispatch, 'uid');
+        await onAddChallenge(store.dispatch);
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }
@@ -225,7 +225,7 @@ describe('challenge: actions', () => {
 
     it('should create valid action', async () => {
       mockUpdate.mockImplementation(jest.fn().mockResolvedValue(undefined));
-      await onUpdateChallenge(store.dispatch, 'uid', params);
+      await onUpdateChallenge(store.dispatch, params);
 
       const expected = [
         { type: 'UPDATE_CHALLENGE' },
@@ -241,7 +241,7 @@ describe('challenge: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onUpdateChallenge(store.dispatch, 'uid', params);
+        await onUpdateChallenge(store.dispatch, params);
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }
@@ -259,7 +259,7 @@ describe('challenge: actions', () => {
 
     it('should create valid action', async () => {
       mockUpdate.mockImplementation(jest.fn().mockResolvedValue(undefined));
-      await onArchiveChallenge(store.dispatch, 'uid', params);
+      await onArchiveChallenge(store.dispatch, params);
 
       const expected = [
         { type: 'UPDATE_CHALLENGE' },
@@ -276,7 +276,7 @@ describe('challenge: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onArchiveChallenge(store.dispatch, 'uid', params);
+        await onArchiveChallenge(store.dispatch, params);
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }

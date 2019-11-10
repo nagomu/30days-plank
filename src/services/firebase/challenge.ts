@@ -1,5 +1,6 @@
 import { workoutFactory } from '~/factories/workoutFactory';
 import { firebase } from '~/services/firebase';
+import { currentUser } from '~/services/firebase/auth';
 import { Challenge } from '~/types';
 import { timestamp } from '~/utils';
 
@@ -11,7 +12,10 @@ type Params = {
 
 type ReturnValue = Promise<Challenge | void>;
 
-export const fetchChallenge = async (uid: string, id: string): ReturnValue => {
+export const fetchChallenge = async (id: string): ReturnValue => {
+  const uid = currentUser();
+  if (!uid) return;
+
   const collectionPath = `/users/${uid}/challenges`;
   const ref = firebase.firestore().collection(collectionPath);
   const snapshot = await ref.doc(id).get();
@@ -20,7 +24,10 @@ export const fetchChallenge = async (uid: string, id: string): ReturnValue => {
   if (challenge) return challenge;
 };
 
-export const addChallenge = async (uid: string): ReturnValue => {
+export const addChallenge = async (): ReturnValue => {
+  const uid = currentUser();
+  if (!uid) return;
+
   const collectionPath = `/users/${uid}/challenges`;
   const db = firebase.firestore();
   const batch = db.batch();
@@ -45,13 +52,13 @@ export const addChallenge = async (uid: string): ReturnValue => {
 
   await batch.commit();
 
-  return await fetchChallenge(uid, id);
+  return await fetchChallenge(id);
 };
 
-export const updateChallenge = async (
-  uid: string,
-  challenge: Params,
-): ReturnValue => {
+export const updateChallenge = async (challenge: Params): ReturnValue => {
+  const uid = currentUser();
+  if (!uid) return;
+
   const collectionPath = `/users/${uid}/challenges`;
   const ref = firebase.firestore().collection(collectionPath);
   const params = {
@@ -60,5 +67,5 @@ export const updateChallenge = async (
   };
   await ref.doc(challenge.id).update(params);
 
-  return await fetchChallenge(uid, challenge.id);
+  return await fetchChallenge(challenge.id);
 };

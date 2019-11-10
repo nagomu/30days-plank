@@ -5,7 +5,6 @@ import {
   addArchiveSuccess,
   archiveReducer as reducer,
   fetchArchives,
-  fetchArchivesSuccess,
   initialState,
   mergeArchives,
   setArchives,
@@ -17,37 +16,30 @@ describe('archive: reducers', () => {
     const expected = {
       isLoading: true,
       archives: [],
-      size: undefined,
     };
     const action = fetchArchives();
     expect(reducer(initialState, action)).toEqual(expected);
   });
 
-  it('handles FETCH_ARCHIVES_SUCCESS', () => {
-    const expected = {
-      isLoading: false,
-      archives: [],
-      size: undefined,
-    };
-    const action = fetchArchivesSuccess();
-    expect(reducer(initialState, action)).toEqual(expected);
-  });
-
   it('handles SET_ARCHIVES', () => {
-    const archives = [
-      {
-        id: 'xxx',
-        challengeId: 'xxx',
-        title: '',
-        description: undefined,
-        achievementRate: 80,
-        createdAt: timestamp(new Date()),
-      },
-    ];
+    const archives = {
+      archives: [
+        {
+          id: 'xxx',
+          challenge: 'xxx',
+          title: '',
+          description: undefined,
+          rate: 80,
+          createdAt: timestamp(new Date()),
+          updatedAt: timestamp(new Date()),
+        },
+      ],
+      next: undefined,
+    };
     const expected = {
       isLoading: false,
-      archives,
-      size: 1,
+      archives: archives.archives,
+      next: archives.next,
     };
     const action = setArchives(archives);
     expect(reducer(initialState, action)).toEqual(expected);
@@ -57,7 +49,6 @@ describe('archive: reducers', () => {
     const expected = {
       isLoading: true,
       archives: [],
-      size: undefined,
     };
     const action = addArchive();
     expect(reducer(initialState, action)).toEqual(expected);
@@ -67,7 +58,6 @@ describe('archive: reducers', () => {
     const expected = {
       isLoading: false,
       archives: [],
-      size: undefined,
     };
     const action = addArchiveSuccess();
     expect(reducer(initialState, action)).toEqual(expected);
@@ -79,96 +69,109 @@ describe('mergeArchives', () => {
   timekeeper.freeze(mockToday);
 
   it('correctly', () => {
+    const ts = timestamp(mockToday);
     const state = [
       {
-        achievementRate: 80,
-        challengeId: '1',
-        createdAt: timestamp(mockToday),
+        rate: 80,
+        challenge: '1',
         id: '1',
         title: 'title1',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 100,
-        challengeId: '2',
-        createdAt: timestamp(mockToday),
+        rate: 100,
+        challenge: '2',
         id: '2',
         title: 'title2',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 79,
-        challengeId: '3',
-        createdAt: timestamp(mockToday),
+        rate: 79,
+        challenge: '3',
         id: '3',
         title: 'title3',
+        createdAt: ts,
+        updatedAt: ts,
       },
     ];
 
     const store = [
       {
-        achievementRate: 79,
-        challengeId: '4',
-        createdAt: timestamp(mockToday),
+        rate: 79,
+        challenge: '4',
         id: '4',
         title: 'title4',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 79,
-        challengeId: '5',
-        createdAt: timestamp(mockToday),
+        rate: 79,
+        challenge: '5',
         id: '5',
         title: 'title5',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 80,
-        challengeId: '1',
-        createdAt: timestamp(mockToday),
+        rate: 80,
+        challenge: '1',
         id: '1',
         title: 'title1',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 100,
-        challengeId: '2',
-        createdAt: timestamp(mockToday),
+        rate: 100,
+        challenge: '2',
         id: '2',
         title: 'title2',
+        createdAt: ts,
+        updatedAt: ts,
       },
     ];
 
     const expected = [
       {
-        achievementRate: 80,
-        challengeId: '1',
-        createdAt: timestamp(mockToday),
+        rate: 80,
+        challenge: '1',
         id: '1',
         title: 'title1',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 100,
-        challengeId: '2',
-        createdAt: timestamp(mockToday),
+        rate: 100,
+        challenge: '2',
         id: '2',
         title: 'title2',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 79,
-        challengeId: '3',
-        createdAt: timestamp(mockToday),
+        rate: 79,
+        challenge: '3',
         id: '3',
         title: 'title3',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 79,
-        challengeId: '4',
-        createdAt: timestamp(mockToday),
+        rate: 79,
+        challenge: '4',
         id: '4',
         title: 'title4',
+        createdAt: ts,
+        updatedAt: ts,
       },
       {
-        achievementRate: 79,
-        challengeId: '5',
-        createdAt: timestamp(mockToday),
+        rate: 79,
+        challenge: '5',
         id: '5',
         title: 'title5',
+        createdAt: ts,
+        updatedAt: ts,
       },
     ];
 

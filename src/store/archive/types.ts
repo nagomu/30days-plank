@@ -1,4 +1,4 @@
-import { Archive, Timestamp } from '~/types';
+import { Archive, Next, Timestamp } from '~/types';
 
 export type AddArchiveParams = {
   challengeId: string;
@@ -10,8 +10,8 @@ export type AddArchiveParams = {
 
 export type ArchiveState = {
   archives?: Archive[];
+  next?: Next;
   isLoading?: boolean;
-  size?: number;
 };
 
 export const FETCH_ARCHIVES = 'FETCH_ARCHIVES';
@@ -19,17 +19,12 @@ export type FetchArchivesAction = {
   type: typeof FETCH_ARCHIVES;
 };
 
-export const FETCH_ARCHIVES_SUCCESS = 'FETCH_ARCHIVES_SUCCESS';
-export type FetchArchivesSuccessAction = {
-  type: typeof FETCH_ARCHIVES_SUCCESS;
-};
-
 export const SET_ARCHIVES = 'SET_ARCHIVES';
 export type SetArchivesAction = {
   type: typeof SET_ARCHIVES;
   payload: {
     archives: Archive[];
-    size: number;
+    next?: Next;
   };
 };
 
@@ -45,7 +40,6 @@ export type AddArchiveSuccessAction = {
 
 export type ArchiveActionTypes =
   | FetchArchivesAction
-  | FetchArchivesSuccessAction
   | SetArchivesAction
   | AddArchiveAction
   | AddArchiveSuccessAction;

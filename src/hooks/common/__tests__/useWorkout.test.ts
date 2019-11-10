@@ -59,14 +59,18 @@ describe('useWorkout', () => {
       auth: {
         user: {
           uid: 'xxx',
+          challenge: 'cid',
         },
         isLoading: false,
       },
       challenge: {
         challenge: {
-          id: 'xxx',
+          id: 'cid',
           isActive: true,
-          workouts: workoutFactory(new Date()),
+          workouts: workoutFactory(new Date()).map((w, i) => ({
+            id: `${i + 1}`,
+            ...w,
+          })),
           createdAt: timestamp(new Date()),
         },
         isLoading: false,

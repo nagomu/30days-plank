@@ -31,7 +31,8 @@ export const useWorkout = (): UseWorkout => {
   }));
 
   useEffect(() => {
-    if (user && !challenge) onFetchChallenge(dispatch);
+    if (user && user.challenge && !challenge)
+      onFetchChallenge(dispatch, user.challenge);
   }, []);
 
   const isLoading =
@@ -48,7 +49,7 @@ export const useWorkout = (): UseWorkout => {
     if (!user || !challenge || !workout) {
       throw new Error('Could not execute onUpdate');
     }
-    onUpdateWorkout(dispatch, challenge, params);
+    onUpdateWorkout(dispatch, challenge.id, params);
     return;
   };
 

@@ -32,12 +32,12 @@ export const challengeReducer = (
           isLoading: false,
           challenge: {
             ...state.challenge,
-            workouts: [
-              ...state.challenge.workouts.filter(
-                w => w.id !== action.payload.workout.id,
-              ),
-              action.payload.workout,
-            ],
+            workouts: state.challenge.workouts.map(w => {
+              if (w.id === action.payload.workout.id) {
+                return action.payload.workout;
+              }
+              return w;
+            }),
           },
         };
       }

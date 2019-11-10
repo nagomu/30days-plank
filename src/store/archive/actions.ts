@@ -9,7 +9,7 @@ import {
   FETCH_ARCHIVES,
   SET_ARCHIVES,
 } from '~/store/archive';
-import { Archives, Next, Workout } from '~/types';
+import { Archives, Challenge, Next, Workout } from '~/types';
 import { formatUS } from '~/utils';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
@@ -59,15 +59,14 @@ export const generateTitle = (workouts: Workout[]): string => {
 
 export const onAddArchive = async (
   dispatch: Dispatch,
-  cid: string,
-  workouts: Workout[],
+  challenge: Challenge,
 ): Promise<void> => {
   dispatch(addArchive());
 
   const params = {
-    challenge: cid,
-    title: generateTitle(workouts),
-    rate: calculateRate(workouts),
+    challenge: challenge.id,
+    title: generateTitle(challenge.workouts),
+    rate: calculateRate(challenge.workouts),
   };
 
   try {

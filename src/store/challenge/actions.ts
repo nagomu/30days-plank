@@ -106,7 +106,7 @@ export const onArchiveChallenge = async (
 
   try {
     onUpdateChallenge(dispatch, uid, params);
-    await onAddArchive(dispatch, challenge.id, challenge.workouts);
+    await onAddArchive(dispatch, challenge);
   } catch (error) {
     postError(error);
   }

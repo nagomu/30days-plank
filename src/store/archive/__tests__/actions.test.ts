@@ -132,9 +132,15 @@ describe('archive: actions', () => {
   });
 
   describe('onAddArchive', () => {
+    const challenge = {
+      id: 'id',
+      isActive: true,
+      workouts,
+    };
+
     it('should create valid action', async () => {
       mockAdd.mockImplementation(jest.fn().mockResolvedValue(undefined));
-      await onAddArchive(store.dispatch, 'cid', workouts);
+      await onAddArchive(store.dispatch, challenge);
 
       const expected = [
         { type: 'ADD_ARCHIVE' },
@@ -150,7 +156,7 @@ describe('archive: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onAddArchive(store.dispatch, 'cid', workouts);
+        await onAddArchive(store.dispatch, challenge);
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
 
-import { postError } from '~/services/firestore';
+import { postError } from '~/services/firebase/error';
 
 const Container = styled.div`
   display: grid;

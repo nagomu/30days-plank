@@ -10,7 +10,7 @@ import Archives from '~/containers/specifics/archive/Archives';
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
 import Workout from '~/containers/specifics/workout/Workout';
 import { useAuth } from '~/hooks/specifics/routes/useAuth';
-import { currentUser } from '~/services/firebase';
+import { currentUser } from '~/services/firebase/auth';
 
 const Routes: React.FC = () => {
   const {

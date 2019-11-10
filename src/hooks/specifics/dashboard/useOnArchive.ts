@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { currentUser } from '~/services/firebase';
+import { currentUser } from '~/services/firebase/auth';
 import { AppState } from '~/store';
 import { onArchiveChallenge } from '~/store/challenge';
 import { Challenge, Workout } from '~/types';

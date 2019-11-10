@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import WrappedComponent from '~/components/specifics/dashboard/Dashboard';
-import { currentUser } from '~/services/firebase';
+import { currentUser } from '~/services/firebase/auth';
 import { AppState } from '~/store';
 import {
   AddChallengeParams,

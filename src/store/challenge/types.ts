@@ -1,15 +1,8 @@
-import { Challenge, Timestamp, Workout } from '~/types';
+import { Challenge, Workout } from '~/types';
 
 export type ChallengeState = {
   challenge?: Challenge;
   isLoading?: boolean;
-};
-
-export type AddChallengeParams = {
-  description?: string;
-  isActive: boolean;
-  createdAt: Timestamp;
-  workouts: Workout[];
 };
 
 export type UpdateChallengeParams = {

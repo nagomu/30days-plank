@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { currentUser } from '~/services/firebase/auth';
 import { AppState } from '~/store';
 import { onArchiveChallenge } from '~/store/challenge';
 import { Challenge, Workout } from '~/types';
@@ -28,14 +27,8 @@ export const isExpired = (workouts?: Workout[]): boolean => {
 };
 
 export const onArchive = (dispatch: Dispatch, challenge?: Challenge): void => {
-  const uid = currentUser();
-  if (!uid || !challenge) {
-    throw new Error('Could not execute onArchive');
-  }
-
+  if (!challenge) return;
   onArchiveChallenge(dispatch, challenge);
-
-  return;
 };
 
 export const useOnArchive = (): useOnArchive => {

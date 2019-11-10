@@ -163,7 +163,7 @@ describe('challenge: actions', () => {
   describe('onFetchChallenge', () => {
     it('should create valid action', async () => {
       mockFetch.mockImplementation(jest.fn().mockResolvedValue(undefined));
-      await onFetchChallenge(store.dispatch, 'uid', 'cid');
+      await onFetchChallenge(store.dispatch, 'cid');
 
       const expected = [
         { type: 'FETCH_CHALLENGE' },
@@ -183,7 +183,7 @@ describe('challenge: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onFetchChallenge(store.dispatch, 'uid', 'cid');
+        await onFetchChallenge(store.dispatch, 'cid');
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }

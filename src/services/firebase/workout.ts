@@ -1,4 +1,5 @@
 import { firebase } from '~/services/firebase';
+import { currentUser } from '~/services/firebase/auth';
 import { Timestamp, Workout } from '~/types';
 import { timestamp } from '~/utils';
 
@@ -17,11 +18,10 @@ type UpdateParams = {
 
 type ReturnValue = Promise<Workout | void>;
 
-export const fetchWorkout = async (
-  uid: string,
-  cid: string,
-  id: string,
-): ReturnValue => {
+export const fetchWorkout = async (cid: string, id: string): ReturnValue => {
+  const uid = currentUser();
+  if (!uid) return;
+
   const collectionPath = `/users/${uid}/challenges/${cid}/workouts`;
   const ref = firebase.firestore().collection(collectionPath);
   const doc = ref.doc(id);
@@ -31,10 +31,10 @@ export const fetchWorkout = async (
   if (workout) return workout;
 };
 
-export const fetchWorkouts = async (
-  uid: string,
-  cid: string,
-): Promise<Workout[]> => {
+export const fetchWorkouts = async (cid: string): Promise<Workout[] | void> => {
+  const uid = currentUser();
+  if (!uid) return;
+
   const collectionPath = `/users/${uid}/challenges/${cid}/workouts`;
   const ref = firebase.firestore().collection(collectionPath);
   const snapshot = await ref.orderBy('date', 'asc').get();
@@ -50,10 +50,12 @@ export const fetchWorkouts = async (
 };
 
 export const addWorkout = async (
-  uid: string,
   cid: string,
   workout: AddParams,
 ): ReturnValue => {
+  const uid = currentUser();
+  if (!uid) return;
+
   const collectionPath = `/users/${uid}/challenges/${cid}/workouts`;
   const ref = firebase.firestore().collection(collectionPath);
   const ts = timestamp(new Date(Date.now()));
@@ -64,14 +66,16 @@ export const addWorkout = async (
   };
 
   await ref.add(params);
-  return await fetchWorkout(uid, cid, ref.doc().id);
+  return await fetchWorkout(cid, ref.doc().id);
 };
 
 export const updateWorkout = async (
-  uid: string,
   cid: string,
   workout: UpdateParams,
 ): ReturnValue => {
+  const uid = currentUser();
+  if (!uid) return;
+
   const collectionPath = `/users/${uid}/challenges/${cid}/workouts`;
   const ref = firebase.firestore().collection(collectionPath);
   const params = {
@@ -80,5 +84,5 @@ export const updateWorkout = async (
   };
 
   await ref.doc(workout.id).update(params);
-  return await fetchWorkout(uid, cid, workout.id);
+  return await fetchWorkout(cid, workout.id);
 };

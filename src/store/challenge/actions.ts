@@ -49,7 +49,6 @@ export const updateChallengeSuccess = (): ChallengeActionTypes => ({
 
 export const onFetchChallenge = async (
   dispatch: Dispatch,
-  uid: string,
   id: string,
 ): Promise<void> => {
   dispatch(fetchChallenge());
@@ -57,7 +56,7 @@ export const onFetchChallenge = async (
   try {
     const challenge = await ChallengeService.fetchChallenge(id);
     dispatch(setChallenge(challenge || undefined));
-    onFetchWorkouts(dispatch, uid, challenge as Challenge);
+    onFetchWorkouts(dispatch, challenge as Challenge);
   } catch (error) {
     postError(error);
   }

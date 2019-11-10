@@ -8,6 +8,7 @@ import { Timestamp, Workout } from '~/types';
 
 jest.mock('~/utils/datetime');
 
+const mockCurrentUser = jest.fn();
 const mockGet = jest.fn();
 const mockOrderBy = jest.fn();
 const mockAdd = jest.fn();
@@ -18,6 +19,7 @@ jest.mock(
   '~/services/firebase',
   jest.fn().mockReturnValue({
     firebase: {
+      auth: () => mockCurrentUser(),
       firestore: () => ({
         collection: () => ({
           add: mockAdd,
@@ -55,6 +57,7 @@ describe('workout', () => {
         updatedAt: ts,
       },
     ];
+    mockCurrentUser.mockImplementation(() => ({ currentUser: { uid: 'uid' } }));
   });
 
   mockGet.mockImplementation((id: string) => {
@@ -99,19 +102,31 @@ describe('workout', () => {
   describe('fetchWorkout', () => {
     it('returns the workout data correctly', async () => {
       const expected = fixture[0];
-      expect(await fetchWorkout('uid', 'cid', 'wid')).toEqual(expected);
+      expect(await fetchWorkout('cid', 'wid')).toEqual(expected);
     });
 
     it('returns undefined if the workout data does not exist', async () => {
       const expected = undefined;
-      expect(await fetchWorkout('uid', 'cid', 'id')).toEqual(expected);
+      expect(await fetchWorkout('cid', 'id')).toEqual(expected);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await fetchWorkout('cid', 'id')).toEqual(expected);
     });
   });
 
   describe('fetchWorkouts', () => {
     it('returns the workout data correctly', async () => {
       const expected = fixture;
-      expect(await fetchWorkouts('uid', 'cid')).toEqual(expected);
+      expect(await fetchWorkouts('cid')).toEqual(expected);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await fetchWorkouts('cid')).toEqual(expected);
     });
   });
 
@@ -132,7 +147,13 @@ describe('workout', () => {
         updatedAt: ts,
       };
 
-      expect(await addWorkout('uid', 'cid', params)).toEqual(expected);
+      expect(await addWorkout('cid', params)).toEqual(expected);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await addWorkout('cid', params)).toEqual(expected);
     });
   });
 
@@ -147,7 +168,13 @@ describe('workout', () => {
         ...fixture[0],
         isCompleted: true,
       };
-      expect(await updateWorkout('uid', 'cid', params)).toEqual(expected);
+      expect(await updateWorkout('cid', params)).toEqual(expected);
+    });
+
+    it('returns undefined if unauthenticated', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
+      const expected = undefined;
+      expect(await updateWorkout('cid', params)).toEqual(expected);
     });
   });
 });

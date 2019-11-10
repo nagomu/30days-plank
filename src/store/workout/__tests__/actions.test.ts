@@ -75,6 +75,29 @@ describe('workout: actions', () => {
     };
 
     it('should create valid action', async () => {
+      mockFetch.mockImplementation(jest.fn().mockResolvedValue([{ id: 'id' }]));
+      const expected = [
+        { type: 'FETCH_WORKOUTS' },
+        { type: 'FETCH_WORKOUTS_SUCCESS' },
+        {
+          type: 'SET_CHALLENGE',
+          payload: {
+            challenge: {
+              createdAt: timestamp(mockToday),
+              description: 'xxx',
+              id: 'xxx',
+              isActive: true,
+              workouts: [{ id: 'id' }],
+            },
+          },
+        },
+      ];
+
+      await onFetchWorkouts(store.dispatch, challenge);
+      expect(store.getActions()).toEqual(expected);
+    });
+
+    it('should create valid action if empty workouts', async () => {
       mockFetch.mockImplementation(jest.fn().mockResolvedValue([]));
       const expected = [
         { type: 'FETCH_WORKOUTS' },
@@ -93,7 +116,18 @@ describe('workout: actions', () => {
         },
       ];
 
-      await onFetchWorkouts(store.dispatch, 'uid', challenge);
+      await onFetchWorkouts(store.dispatch, challenge);
+      expect(store.getActions()).toEqual(expected);
+    });
+
+    it('should create valid action if unauthenticated', async () => {
+      mockFetch.mockImplementation(jest.fn().mockResolvedValue(undefined));
+      const expected = [
+        { type: 'FETCH_WORKOUTS' },
+        { type: 'FETCH_WORKOUTS_SUCCESS' },
+      ];
+
+      await onFetchWorkouts(store.dispatch, challenge);
       expect(store.getActions()).toEqual(expected);
     });
 
@@ -104,7 +138,7 @@ describe('workout: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onFetchWorkouts(store.dispatch, 'uid', challenge);
+        await onFetchWorkouts(store.dispatch, challenge);
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }
@@ -118,13 +152,30 @@ describe('workout: actions', () => {
     };
 
     it('should create valid action', async () => {
+      mockUpdate.mockImplementation(jest.fn().mockResolvedValue({ id: 'id' }));
+      const expected = [
+        { type: 'UPDATE_WORKOUT' },
+        { type: 'UPDATE_WORKOUT_SUCCESS' },
+        {
+          type: 'SET_PARTIAL_WORKOUT',
+          payload: {
+            workout: { id: 'id' },
+          },
+        },
+      ];
+
+      await onUpdateWorkout(store.dispatch, 'cid', workout);
+      expect(store.getActions()).toEqual(expected);
+    });
+
+    it('should create valid action if unauthenticated', async () => {
       mockUpdate.mockImplementation(jest.fn().mockResolvedValue(undefined));
       const expected = [
         { type: 'UPDATE_WORKOUT' },
         { type: 'UPDATE_WORKOUT_SUCCESS' },
       ];
 
-      await onUpdateWorkout(store.dispatch, 'uid', 'cid', workout);
+      await onUpdateWorkout(store.dispatch, 'cid', workout);
       expect(store.getActions()).toEqual(expected);
     });
 
@@ -135,7 +186,7 @@ describe('workout: actions', () => {
       const mock = jest.fn(postError);
 
       try {
-        await onUpdateWorkout(store.dispatch, 'uid', 'cid', workout);
+        await onUpdateWorkout(store.dispatch, 'cid', workout);
       } catch (e) {
         expect(mock).toBeCalledTimes(1);
       }

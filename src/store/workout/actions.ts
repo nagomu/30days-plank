@@ -32,14 +32,16 @@ export const updateWorkoutSuccess = (): WorkoutActionTypes => ({
 
 export const onFetchWorkouts = async (
   dispatch: Dispatch,
-  uid: string,
   challenge: Challenge,
 ): Promise<void> => {
   dispatch(fetchWorkouts());
 
   try {
-    const results = await WorkoutService.fetchWorkouts(uid, challenge.id);
+    const results = await WorkoutService.fetchWorkouts(challenge.id);
     dispatch(fetchWorkoutsSuccess());
+
+    if (!results) return;
+
     const params = {
       ...challenge,
       workouts: isEmptyArray(results) ? challenge.workouts : results,
@@ -52,14 +54,13 @@ export const onFetchWorkouts = async (
 
 export const onUpdateWorkout = async (
   dispatch: Dispatch,
-  uid: string,
   cid: string,
   workout: UpdateWorkoutParams,
 ): Promise<void> => {
   dispatch(updateWorkout());
 
   try {
-    const result = await WorkoutService.updateWorkout(uid, cid, workout);
+    const result = await WorkoutService.updateWorkout(cid, workout);
     dispatch(updateWorkoutSuccess());
     if (result) dispatch(setPartialWorkout(result));
   } catch (error) {

@@ -3,6 +3,7 @@ import { User } from '~/types';
 
 jest.mock('~/utils/datetime');
 
+const mockCurrentUser = jest.fn();
 const mockGet = jest.fn();
 const mockSet = jest.fn();
 const mockUpdate = jest.fn();
@@ -12,6 +13,7 @@ jest.mock(
   '~/services/firebase',
   jest.fn().mockReturnValue({
     firebase: {
+      auth: () => mockCurrentUser(),
       firestore: () => ({
         collection: () => ({
           doc: (uid: string) => ({
@@ -44,6 +46,8 @@ describe('user', () => {
       },
     ];
   });
+
+  mockCurrentUser.mockImplementation(() => ({ currentUser: { uid: 'uid' } }));
 
   mockGet.mockImplementation((uid: string) => {
     const result = fixture.find(user => user.uid === uid);
@@ -135,6 +139,7 @@ describe('user', () => {
     });
 
     it('returns undefined if the user does not exist', async () => {
+      mockCurrentUser.mockImplementation(() => ({ currentUser: null }));
       const params = {
         ...userParams,
         uid: 'new',

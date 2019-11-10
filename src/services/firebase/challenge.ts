@@ -36,6 +36,7 @@ export const addChallenge = async (): ReturnValue => {
   const now = new Date(Date.now());
   const ts = timestamp(now);
   const params = {
+    id,
     isActive: true,
     createdAt: ts,
     updatedAt: ts,
@@ -47,7 +48,7 @@ export const addChallenge = async (): ReturnValue => {
     const collectionPath = `/users/${uid}/challenges/${id}/workouts`;
     const wref = firebase.firestore().collection(collectionPath);
     const wid = wref.doc().id;
-    batch.set(wref.doc(wid), params);
+    batch.set(wref.doc(wid), { id: wid, ...params });
   });
 
   await batch.commit();

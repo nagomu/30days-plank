@@ -45,6 +45,13 @@ jest.mock(
 );
 /* eslint-enable */
 
+jest.mock(
+  '~/services/firebase/user',
+  jest.fn().mockReturnValue({
+    updateUser: () => jest.fn().mockResolvedValue(undefined),
+  }),
+);
+
 describe('archive', () => {
   const ts = {
     seconds: 1569855600,

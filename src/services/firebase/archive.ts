@@ -1,5 +1,6 @@
 import { firebase } from '~/services/firebase';
 import { currentUser } from '~/services/firebase/auth';
+import { updateUser } from '~/services/firebase/user';
 import { Archive, Archives, Next } from '~/types';
 import { timestamp } from '~/utils';
 
@@ -61,5 +62,6 @@ export const addArchive = async (archive: Params): ReturnValue => {
     updatedAt: ts,
   };
   await ref.add(params);
+  await updateUser({ challenge: '' });
   return await fetchArchive(ref.doc().id);
 };

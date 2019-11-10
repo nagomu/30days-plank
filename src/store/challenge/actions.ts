@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 
 import * as ChallengeService from '~/services/firebase/challenge';
 import { postError } from '~/services/firebase/error';
+import { updateUser } from '~/services/firebase/user';
 import { onAddArchive } from '~/store/archive';
 import {
   ADD_CHALLENGE,
@@ -54,8 +55,12 @@ export const onFetchChallenge = async (
   dispatch(fetchChallenge());
 
   try {
-    const challenge = await ChallengeService.fetchChallenge(id);
-    dispatch(setChallenge(challenge || undefined));
+    const results = await ChallengeService.fetchChallenge(id);
+    const challenge = {
+      ...results,
+      id,
+    } as Challenge;
+    dispatch(setChallenge(results ? challenge : undefined));
     onFetchWorkouts(dispatch, challenge as Challenge);
   } catch (error) {
     postError(error);
@@ -67,8 +72,13 @@ export const onAddChallenge = async (dispatch: Dispatch): Promise<void> => {
   dispatch(addChallenge());
 
   try {
-    await ChallengeService.addChallenge();
+    const challenge = await ChallengeService.addChallenge();
     dispatch(addChallengeSuccess());
+
+    if (challenge) {
+      await onFetchWorkouts(dispatch, challenge as Challenge);
+      updateUser({ challenge: challenge.id });
+    }
   } catch (error) {
     postError(error);
   }
@@ -101,6 +111,7 @@ export const onArchiveChallenge = async (
   try {
     onUpdateChallenge(dispatch, params);
     await onAddArchive(dispatch, challenge);
+    dispatch(setChallenge(undefined));
   } catch (error) {
     postError(error);
   }

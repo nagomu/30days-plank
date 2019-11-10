@@ -5,7 +5,7 @@ import {
   isExpired,
   useOnArchive,
 } from '~/hooks/specifics/dashboard/useOnArchive';
-import { WorkoutTemplate, Workout } from '~/types';
+import { Workout, WorkoutTemplate } from '~/types';
 import { mockStore, timestamp, withHook } from '~/utils';
 
 describe('useOnArchive', () => {

@@ -5,7 +5,6 @@ import {
   isExpired,
   useOnArchive,
 } from '~/hooks/specifics/dashboard/useOnArchive';
-import { Workout, WorkoutTemplate } from '~/types';
 import { mockStore, withHook } from '~/utils';
 
 describe('useOnArchive', () => {
@@ -72,14 +71,7 @@ describe('isExpired', () => {
     const today = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
     timekeeper.freeze(today);
     const factory = new Date(Date.UTC(2000, 0, 1, 0, 0, 0));
-
-    const workouts = workoutFactory(factory).map(
-      (w: WorkoutTemplate, i: number) => ({
-        id: `${i}`,
-        ...w,
-      }),
-    ) as Workout[];
-    expect(isExpired(workouts)).toEqual(true);
+    expect(isExpired(workoutFactory(factory))).toEqual(true);
 
     timekeeper.reset();
   });
@@ -87,14 +79,7 @@ describe('isExpired', () => {
   it('returns "that today is before the due date" correctly', () => {
     const mockToday = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
-
-    const workouts = workoutFactory(mockToday).map(
-      (w: WorkoutTemplate, i: number) => ({
-        id: `${i}`,
-        ...w,
-      }),
-    ) as Workout[];
-    expect(isExpired(workouts)).toEqual(false);
+    expect(isExpired(workoutFactory())).toEqual(false);
 
     timekeeper.reset();
   });

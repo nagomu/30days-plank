@@ -29,14 +29,10 @@ jest.mock(
   }),
 );
 
-const workouts = workoutFactory(mockToday).map((w, i) => ({
-  id: `${i}`,
-  ...w,
-}));
-
 describe('archive: actions', () => {
   const ts = timestamp(new Date());
   const store = mockStore({ archive: initialState });
+  const workouts = workoutFactory();
 
   afterEach(() => {
     store.clearActions();
@@ -166,17 +162,19 @@ describe('archive: actions', () => {
 
 describe('calculateRate', () => {
   it('returns rate correctly', () => {
-    const _workouts = workouts.map((workout, i) => ({
+    const workouts = workoutFactory().map((workout, i) => ({
       ...workout,
       isCompleted: i === 5 || i === 10 ? false : true,
     }));
-    expect(calculateRate(_workouts)).toEqual(93);
+    expect(calculateRate(workouts)).toEqual(93);
   });
 });
 
 describe('generateTitle', () => {
   it('returns title correctly', () => {
-    expect(generateTitle(workouts)).toEqual('Oct 1, 2019 - Oct 30, 2019');
+    expect(generateTitle(workoutFactory(mockToday))).toEqual(
+      'Oct 1, 2019 - Oct 30, 2019',
+    );
   });
 });
 

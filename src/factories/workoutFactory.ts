@@ -1,4 +1,4 @@
-import { WorkoutTemplate } from '~/types';
+import { Workout, WorkoutTemplate } from '~/types';
 import { timestamp } from '~/utils';
 
 const menus = [
@@ -34,7 +34,7 @@ const menus = [
   300,
 ];
 
-export const workoutFactory = (now: Date): WorkoutTemplate[] => {
+export const workoutTemplateFactory = (now: Date): WorkoutTemplate[] => {
   const year = now.getFullYear();
   const month = now.getMonth();
   const date = now.getDate();
@@ -50,3 +50,9 @@ export const workoutFactory = (now: Date): WorkoutTemplate[] => {
     updatedAt: ts,
   }));
 };
+
+export const workoutFactory = (now?: Date): Workout[] =>
+  workoutTemplateFactory(now || new Date()).map((w, i) => ({
+    ...w,
+    id: `${i + 1}`,
+  }));

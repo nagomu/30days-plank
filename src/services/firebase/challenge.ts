@@ -1,4 +1,4 @@
-import { workoutFactory } from '~/factories/workoutFactory';
+import { workoutTemplateFactory } from '~/factories/workoutFactory';
 import { firebase } from '~/services/firebase';
 import { currentUser } from '~/services/firebase/auth';
 import { Challenge } from '~/types';
@@ -43,7 +43,7 @@ export const addChallenge = async (): ReturnValue => {
 
   batch.set(ref.doc(id), params);
 
-  workoutFactory(now).forEach(params => {
+  workoutTemplateFactory(now).forEach(params => {
     const collectionPath = `/users/${uid}/challenges/${id}/workouts`;
     const wref = firebase.firestore().collection(collectionPath);
     const wid = wref.doc().id;

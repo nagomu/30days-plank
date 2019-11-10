@@ -1,11 +1,11 @@
 import timekeeper from 'timekeeper';
 
-import { workoutFactory } from '~/factories/workoutFactory';
+import { workoutTemplateFactory } from '~/factories/workoutFactory';
 
 const now = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(now);
 
-describe('workoutFactory', () => {
+describe('workoutTemplateFactory', () => {
   it('returns WorkoutTemplate[] correctly', () => {
     const formatDate = (value: Date): string => {
       const year = value.getFullYear();
@@ -14,7 +14,7 @@ describe('workoutFactory', () => {
       return `${year}/${month}/${date}`;
     };
 
-    const templates = workoutFactory(now);
+    const templates = workoutTemplateFactory(now);
     const first = templates[0];
     const last = templates[29];
 

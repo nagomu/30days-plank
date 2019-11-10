@@ -7,7 +7,7 @@ describe('Challenge', () => {
     challenge: {
       id: 'xxx',
       isActive: true,
-      workouts: workoutFactory(new Date()),
+      workouts: workoutFactory(),
       createdAt: timestamp(new Date()),
     },
     isLoading: false,

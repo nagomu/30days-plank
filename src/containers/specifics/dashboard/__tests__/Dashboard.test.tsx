@@ -14,7 +14,7 @@ describe('DashboardContainer', () => {
           id: 'xxx',
           isActive: true,
           date: timestamp(new Date()),
-          workouts: workoutFactory(new Date()),
+          workouts: workoutFactory(),
         },
         isLoading: false,
       },

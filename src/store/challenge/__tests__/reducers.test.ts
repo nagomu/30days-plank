@@ -48,7 +48,7 @@ describe('challenge: reducers', () => {
       isCompleted: false,
       isRest: false,
       menu: 20,
-      scheduledDate: timestamp(mockToday),
+      date: timestamp(mockToday),
       title: 'Day 1',
     };
 

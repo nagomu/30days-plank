@@ -16,7 +16,7 @@ describe('Workout', () => {
       isCompleted: false,
       isRest: false,
       menu: 20,
-      scheduledDate: timestamp(new Date()),
+      date: timestamp(new Date()),
       title: 'Day 1',
     },
   };

@@ -50,7 +50,7 @@ class WorkoutTimer extends React.Component<Props, State> {
       window.clearInterval(this.state.timer);
     }
 
-    if (!!workout && isToday(workout.scheduledDate) && isCompleted) {
+    if (!!workout && isToday(workout.date) && isCompleted) {
       onUpdate({ id: workout.id, isCompleted });
     }
   }
@@ -105,7 +105,7 @@ class WorkoutTimer extends React.Component<Props, State> {
     this.setState({
       status: Status.finish,
       timer: undefined,
-      isCompleted: isToday(workout.scheduledDate)
+      isCompleted: isToday(workout.date)
         ? true
         : this.state.isCompleted,
     });

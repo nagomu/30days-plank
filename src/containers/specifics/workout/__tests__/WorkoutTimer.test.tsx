@@ -31,7 +31,7 @@ describe('WorkoutTimerContainer', () => {
       isCompleted: false,
       isRest: false,
       menu: 2,
-      scheduledDate: timestamp(mockToday),
+      date: timestamp(mockToday),
       title: 'Day 1',
     },
     onUpdate: mockOnUpdate,

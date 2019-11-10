@@ -15,7 +15,7 @@ export const isExpired = (workouts?: Workout[]): boolean => {
   if (!workouts) return false;
 
   const today = new Date(Date.now());
-  const lastDay = workouts[workouts.length - 1].scheduledDate.toDate();
+  const lastDay = workouts[workouts.length - 1].date.toDate();
 
   const formattedDate = (date: Date): number => {
     const yyyy = date.getFullYear();

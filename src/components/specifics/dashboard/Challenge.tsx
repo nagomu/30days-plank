@@ -26,7 +26,7 @@ type Props = {
 
 const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
   const { isExpired, onArchive } = useOnArchive();
-  const todaysWorkout = workouts.find(w => isToday(w.scheduledDate));
+  const todaysWorkout = workouts.find(w => isToday(w.date));
   const pathname = (id: string): string =>
     `/challenges/${challengeId}/workouts/${id}`;
 

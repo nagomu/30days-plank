@@ -14,7 +14,7 @@ describe('Workout', () => {
     isToday: false,
     menu: 20,
     pathname: '/challenges/1/workout/1',
-    scheduledDate: timestamp(mockToday),
+    date: timestamp(mockToday),
     title: 'Day 1',
   };
 
@@ -50,7 +50,7 @@ describe('Workout', () => {
         props: {
           ...props,
           isToday: true,
-          scheduledDate: timestamp(mockToday),
+          date: timestamp(mockToday),
         },
       };
       const wrapper = withProvider(params).find('Workout');

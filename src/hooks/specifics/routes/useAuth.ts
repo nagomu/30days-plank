@@ -11,7 +11,7 @@ import { AppState } from '~/store';
 import {
   AuthActions,
   AuthState,
-  onAuthStateChanged,
+  onObserveAuthStateChanged,
   onSignIn,
   onSignOut,
 } from '~/store/auth';
@@ -23,7 +23,7 @@ export const useAuth = (): UseAuth => {
   const auth = useSelector((state: AppState) => state.auth);
 
   useEffect(() => {
-    onAuthStateChanged(dispatch);
+    onObserveAuthStateChanged(dispatch);
   }, []);
 
   useEffect(() => {

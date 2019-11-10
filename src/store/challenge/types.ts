@@ -18,14 +18,11 @@ export type UpdateChallengeParams = {
   isActive: boolean;
 };
 
-// Start db.collection('/users/{uid}/challenges').where('isActive', '==', true).get()
 export const FETCH_CHALLENGE = 'FETCH_CHALLENGE';
 export type FetchChallengeAction = {
   type: typeof FETCH_CHALLENGE;
 };
 
-// Set fetch result
-// or Change user to `undefined`
 export const SET_CHALLENGE = 'SET_CHALLENGE';
 export type SetChallengeAction = {
   type: typeof SET_CHALLENGE;
@@ -34,7 +31,6 @@ export type SetChallengeAction = {
   };
 };
 
-// Set fetch result of individual workout
 export const SET_PARTIAL_WORKOUT = 'SET_PARTIAL_WORKOUT';
 export type SetPartialWorkoutAction = {
   type: typeof SET_PARTIAL_WORKOUT;
@@ -43,7 +39,6 @@ export type SetPartialWorkoutAction = {
   };
 };
 
-// Start db.collection('/users/{uid}/challenges').doc().set()
 export const ADD_CHALLENGE = 'ADD_CHALLENGE';
 export type AddChallengeAction = {
   type: typeof ADD_CHALLENGE;
@@ -54,7 +49,6 @@ export type AddChallengeSuccessAction = {
   type: typeof ADD_CHALLENGE_SUCCESS;
 };
 
-// Start db.collection('/users/{uid}/challenges').doc().set()
 export const UPDATE_CHALLENGE = 'UPDATE_CHALLENGE';
 export type UpdateChallengeAction = {
   type: typeof UPDATE_CHALLENGE;

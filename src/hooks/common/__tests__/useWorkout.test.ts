@@ -1,4 +1,4 @@
-import { workoutsFactory } from '~/factories/workoutFactory';
+import { workoutFactory } from '~/factories/workoutFactory';
 import { useWorkout } from '~/hooks/common/useWorkout';
 import { mockStore, timestamp, withHook } from '~/utils';
 
@@ -66,7 +66,7 @@ describe('useWorkout', () => {
         challenge: {
           id: 'xxx',
           isActive: true,
-          workouts: workoutsFactory(),
+          workouts: workoutFactory(new Date()),
           createdAt: timestamp(new Date()),
         },
         isLoading: false,

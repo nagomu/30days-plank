@@ -1,10 +1,11 @@
 import timekeeper from 'timekeeper';
 
-import { workoutsFactory } from '~/factories/workoutFactory';
+import { workoutFactory } from '~/factories/workoutFactory';
 import {
   isExpired,
   useOnArchive,
 } from '~/hooks/specifics/dashboard/useOnArchive';
+import { WorkoutTemplate, Workout } from '~/types';
 import { mockStore, timestamp, withHook } from '~/utils';
 
 describe('useOnArchive', () => {
@@ -41,7 +42,7 @@ describe('useOnArchive', () => {
         challenge: {
           id: 'xxx',
           isActive: true,
-          workouts: workoutsFactory(),
+          workouts: workoutFactory(new Date()),
           createdAt: timestamp(new Date()),
         },
         isLoading: false,
@@ -71,7 +72,12 @@ describe('isExpired', () => {
     const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
 
-    const workouts = workoutsFactory();
+    const workouts = workoutFactory(new Date()).map(
+      (w: WorkoutTemplate, i: number) => ({
+        id: `${i}`,
+        ...w,
+      }),
+    ) as Workout[];
     expect(isExpired(workouts)).toEqual(true);
 
     timekeeper.reset();
@@ -81,7 +87,12 @@ describe('isExpired', () => {
     const mockToday = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
 
-    const workouts = workoutsFactory();
+    const workouts = workoutFactory(new Date()).map(
+      (w: WorkoutTemplate, i: number) => ({
+        id: `${i}`,
+        ...w,
+      }),
+    ) as Workout[];
     expect(isExpired(workouts)).toEqual(false);
 
     timekeeper.reset();

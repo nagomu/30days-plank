@@ -1,5 +1,5 @@
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
-import { workoutsFactory } from '~/factories/workoutFactory';
+import { workoutFactory } from '~/factories/workoutFactory';
 import { mockStore, timestamp, withProvider } from '~/utils';
 
 describe('DashboardContainer', () => {
@@ -14,7 +14,7 @@ describe('DashboardContainer', () => {
           id: 'xxx',
           isActive: true,
           date: timestamp(new Date()),
-          workouts: workoutsFactory(),
+          workouts: workoutFactory(new Date()),
         },
         isLoading: false,
       },

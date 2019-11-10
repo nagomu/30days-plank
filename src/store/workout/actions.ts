@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 import { postError } from '~/services/firebase/error';
 import * as WorkoutService from '~/services/firebase/workout';
-import { setChallenge } from '~/store/challenge';
+import { setChallenge, setPartialWorkout } from '~/store/challenge';
 import {
   FETCH_WORKOUTS,
   FETCH_WORKOUTS_SUCCESS,
@@ -59,8 +59,9 @@ export const onUpdateWorkout = async (
   dispatch(updateWorkout());
 
   try {
-    await WorkoutService.updateWorkout(uid, cid, workout);
+    const result = await WorkoutService.updateWorkout(uid, cid, workout);
     dispatch(updateWorkoutSuccess());
+    if (result) dispatch(setPartialWorkout(result));
   } catch (error) {
     postError(error);
   }

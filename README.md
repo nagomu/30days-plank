@@ -4,6 +4,11 @@ This is a personal application for managing my 30 days plank challenge.
 You can use this application, but it may be discontinued without notice :bow:  
 (I hope this project won't end in a short time for my health :sweat_smile:)
 
+> CAUTION: You may need to add a 3rd party cookie settings.  
+> In order for you to sign-in to this application, you may need to add a 3rd party cookie settings.
+>
+> `e.g. Chrome`: Please add `thirty-days-plank-v1.firebaseapp.com` to `site settings` > `Cookies and site data` > `Allow` in settings
+
 ## Development environment
 
 - `node >= 10.16.0`

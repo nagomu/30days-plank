@@ -15,12 +15,12 @@ export type ArchiveState = {
 };
 
 export const FETCH_ARCHIVES = 'FETCH_ARCHIVES';
-export type FetchArchivesAction = {
+type FetchArchivesAction = {
   type: typeof FETCH_ARCHIVES;
 };
 
 export const SET_ARCHIVES = 'SET_ARCHIVES';
-export type SetArchivesAction = {
+type SetArchivesAction = {
   type: typeof SET_ARCHIVES;
   payload: {
     archives: Archive[];
@@ -29,12 +29,12 @@ export type SetArchivesAction = {
 };
 
 export const ADD_ARCHIVE = 'ADD_ARCHIVE';
-export type AddArchiveAction = {
+type AddArchiveAction = {
   type: typeof ADD_ARCHIVE;
 };
 
 export const ADD_ARCHIVE_SUCCESS = 'ADD_ARCHIVE_SUCCESS';
-export type AddArchiveSuccessAction = {
+type AddArchiveSuccessAction = {
   type: typeof ADD_ARCHIVE_SUCCESS;
 };
 

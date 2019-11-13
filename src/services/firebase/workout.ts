@@ -1,6 +1,6 @@
 import { firebase } from '~/services/firebase';
 import { currentUser } from '~/services/firebase/auth';
-import { Timestamp, Workout } from '~/types';
+import { Timestamp, Workout, WorkoutParams } from '~/types';
 import { timestamp } from '~/utils';
 
 type AddParams = {
@@ -9,11 +9,6 @@ type AddParams = {
   date: Timestamp;
   isCompleted: boolean;
   isRest: boolean;
-};
-
-type UpdateParams = {
-  id: string;
-  isCompleted: boolean;
 };
 
 type ReturnValue = Promise<Workout | void>;
@@ -71,7 +66,7 @@ export const addWorkout = async (
 
 export const updateWorkout = async (
   cid: string,
-  workout: UpdateParams,
+  workout: WorkoutParams,
 ): ReturnValue => {
   const uid = currentUser();
   if (!uid) return;

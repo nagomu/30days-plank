@@ -1,8 +1,7 @@
 import * as React from 'react';
 
 import WrappedComponent from '~/components/specifics/workout/Workout';
-import { Status } from '~/store/workout';
-import { Workout, WorkoutParams } from '~/types';
+import { Timer, Workout, WorkoutParams } from '~/types';
 import { isToday } from '~/utils';
 
 export type Props = {
@@ -13,7 +12,7 @@ export type Props = {
 
 type State = {
   progress: number;
-  status: Status;
+  status: Timer;
   timer?: number;
   isCompleted: boolean;
 };
@@ -24,7 +23,7 @@ class WorkoutTimer extends React.Component<Props, State> {
 
     this.state = {
       progress: props.workout ? props.workout.menu : 0,
-      status: Status.standby,
+      status: Timer.standby,
       timer: undefined,
       isCompleted: props.workout ? props.workout.isCompleted : false,
     };
@@ -63,28 +62,28 @@ class WorkoutTimer extends React.Component<Props, State> {
     this.setState({
       timer: undefined,
       progress: this.props.workout ? this.props.workout.menu : 0,
-      status: Status.standby,
+      status: Timer.standby,
     });
   }
 
   public handleStart(): void {
-    this.setState({ status: Status.start });
+    this.setState({ status: Timer.start });
     const timer = window.setInterval(() => this.countDown(), 1000);
     this.setState({ timer });
   }
 
   public handleTogglePause(): void {
     const { status } = this.state;
-    if (status === Status.pause) {
-      this.setState({ status: Status.restart });
+    if (status === Timer.pause) {
+      this.setState({ status: Timer.restart });
     } else {
-      this.setState({ status: Status.pause });
+      this.setState({ status: Timer.pause });
     }
   }
 
   private countDown(): void {
     const { progress, status } = this.state;
-    if (status === Status.pause) return;
+    if (status === Timer.pause) return;
 
     if (progress <= 0) {
       this.finish();
@@ -103,7 +102,7 @@ class WorkoutTimer extends React.Component<Props, State> {
     }
 
     this.setState({
-      status: Status.finish,
+      status: Timer.finish,
       timer: undefined,
       isCompleted: isToday(workout.date) ? true : this.state.isCompleted,
     });

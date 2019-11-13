@@ -1,11 +1,3 @@
-export enum Status {
-  finish,
-  pause,
-  restart,
-  standby,
-  start,
-}
-
 export type WorkoutState = {
   isLoading?: boolean;
 };

@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import FloatingActionButton from '~/components/common/buttons/FloatingActionButton';
 import Icon from '~/components/common/icons/Icon';
-import { Status } from '~/store/workout';
+import { Timer } from '~/types';
 
 const Button = styled(FloatingActionButton)`
   position: absolute;
@@ -15,7 +15,7 @@ const Button = styled(FloatingActionButton)`
 type Props = {
   onStart: () => void;
   onTogglePause: () => void;
-  status: Status;
+  status: Timer;
 };
 
 const StartOrPauseButton: React.FC<Props> = ({
@@ -24,22 +24,20 @@ const StartOrPauseButton: React.FC<Props> = ({
   status,
 }) => {
   const iconName =
-    status === Status.start || status === Status.restart
-      ? 'pause'
-      : 'play_arrow';
+    status === Timer.start || status === Timer.restart ? 'pause' : 'play_arrow';
 
   const label = (): string => {
-    if (status === Status.finish) {
+    if (status === Timer.finish) {
       return '';
     }
-    if (status === Status.start || status === Status.restart) {
+    if (status === Timer.start || status === Timer.restart) {
       return 'Pause';
     }
     return 'Start';
   };
 
   const handleClick = (): void => {
-    if (status !== Status.standby && status !== Status.finish) {
+    if (status !== Timer.standby && status !== Timer.finish) {
       return onTogglePause();
     }
     return onStart();
@@ -48,7 +46,7 @@ const StartOrPauseButton: React.FC<Props> = ({
   return (
     <Button
       aria-label={label()}
-      disabled={status === Status.finish}
+      disabled={status === Timer.finish}
       onClick={handleClick}
       role="button"
     >

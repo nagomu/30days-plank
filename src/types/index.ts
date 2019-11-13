@@ -30,6 +30,14 @@ export type WorkoutTemplate = Omit<Workout, 'id'>;
 
 export type WorkoutParams = Pick<Workout, 'id' | 'isCompleted'>;
 
+export enum Timer {
+  finish,
+  pause,
+  restart,
+  standby,
+  start,
+}
+
 export type Challenge = {
   id: string;
   description?: string;

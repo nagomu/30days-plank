@@ -6,8 +6,7 @@ import timekeeper from 'timekeeper';
 import WorkoutTimer, {
   Props,
 } from '~/containers/specifics/workout/WorkoutTimer';
-import { Status } from '~/store/workout';
-import { Workout } from '~/types';
+import { Timer, Workout } from '~/types';
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);
@@ -56,7 +55,7 @@ describe('WorkoutTimerContainer', () => {
       wrapper.update();
 
       const state = wrapper.state();
-      expect(state.status).toEqual(Status.start);
+      expect(state.status).toEqual(Timer.start);
       expect(state.timer).not.toEqual(undefined);
     });
   });
@@ -65,7 +64,7 @@ describe('WorkoutTimerContainer', () => {
     it('changes state correctly', () => {
       const wrapper = createWrapper(props).find('WorkoutTimer');
       wrapper.setState({
-        status: Status.start,
+        status: Timer.start,
         timer: 1,
       });
       wrapper.update();
@@ -74,7 +73,7 @@ describe('WorkoutTimerContainer', () => {
       wrapper.update();
 
       const state = wrapper.state();
-      expect(state.status).toEqual(Status.standby);
+      expect(state.status).toEqual(Timer.standby);
       expect(state.timer).toEqual(undefined);
     });
   });
@@ -83,7 +82,7 @@ describe('WorkoutTimerContainer', () => {
     it('changes state correctly', () => {
       const wrapper = createWrapper(props).find('WorkoutTimer');
       wrapper.setState({
-        status: Status.start,
+        status: Timer.start,
         timer: 1,
       });
       wrapper.update();
@@ -91,12 +90,12 @@ describe('WorkoutTimerContainer', () => {
       (wrapper.instance() as WorkoutTimer).handleTogglePause();
       wrapper.update();
 
-      expect(wrapper.state().status).toEqual(Status.pause);
+      expect(wrapper.state().status).toEqual(Timer.pause);
 
       (wrapper.instance() as WorkoutTimer).handleTogglePause();
       wrapper.update();
 
-      expect(wrapper.state().status).toEqual(Status.restart);
+      expect(wrapper.state().status).toEqual(Timer.restart);
     });
   });
 

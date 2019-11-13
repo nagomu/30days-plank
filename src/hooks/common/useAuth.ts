@@ -20,7 +20,7 @@ export type AuthActions = {
   onSignOut: () => Promise<void>;
 };
 
-export type UseAuth = AuthState & AuthActions & RedirectState;
+type UseAuth = AuthState & AuthActions & RedirectState;
 
 export const useAuth = (): UseAuth => {
   const dispatch = useDispatch();

@@ -6,8 +6,7 @@ import DrawerScreen from '~/components/common/layouts/DrawerScreen';
 import DonutChart from '~/components/specifics/workout/DonutChart';
 import ResetButton from '~/components/specifics/workout/ResetButton';
 import StartOrPauseButton from '~/components/specifics/workout/StartOrPauseButton';
-import { Status } from '~/store/workout';
-import { Workout } from '~/types';
+import { Timer, Workout } from '~/types';
 
 const Container = styled.div`
   position: relative;
@@ -34,7 +33,7 @@ type Props = {
   isLoading: boolean;
   pathname?: string;
   progress: number;
-  status: Status;
+  status: Timer;
   workout?: Workout;
   onReset: () => void;
   onStart: () => void;
@@ -76,7 +75,7 @@ const WorkoutPage: React.FC<Props> = props => {
               onTogglePause={onTogglePause}
               status={status}
             />
-            {status !== Status.standby && (
+            {status !== Timer.standby && (
               <ResetButton role="button" onClick={onReset}>
                 Reset
               </ResetButton>

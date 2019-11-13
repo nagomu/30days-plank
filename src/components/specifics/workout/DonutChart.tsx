@@ -2,7 +2,7 @@ import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import * as React from 'react';
 
-import { Status } from '~/store/workout';
+import { Timer } from '~/types';
 import { rgba } from '~/utils';
 
 const circumference = `${Math.PI * 188}px`;
@@ -96,21 +96,21 @@ const Seconds = styled.span`
 type Props = {
   progress: number;
   seconds: number;
-  status: Status;
+  status: Timer;
 };
 
 const DonutChart: React.FC<Props> = props => {
   const { progress, seconds, status } = props;
 
   const playState: 'running' | 'paused' =
-    status === Status.start || status === Status.restart ? 'running' : 'paused';
+    status === Timer.start || status === Timer.restart ? 'running' : 'paused';
 
   const progressStyle: React.CSSProperties = {
     animationDuration: `${seconds}s`,
     animationPlayState: playState,
   };
 
-  const isStandby: boolean = status === Status.standby;
+  const isStandby: boolean = status === Timer.standby;
 
   return (
     <Container>

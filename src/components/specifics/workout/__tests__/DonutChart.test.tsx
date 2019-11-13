@@ -2,13 +2,13 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 
 import DonutChart from '~/components/specifics/workout/DonutChart';
-import { Status } from '~/store/workout';
+import { Timer } from '~/types';
 
 describe('DonutChart', () => {
   const props = {
     progress: 20,
     seconds: 20,
-    status: Status.standby,
+    status: Timer.standby,
   };
 
   it('renders correctly', () => {
@@ -27,7 +27,7 @@ describe('DonutChart', () => {
     it('renders correctly', () => {
       const started = {
         ...props,
-        status: Status.start,
+        status: Timer.start,
       };
 
       const wrapper = mount(<DonutChart {...started} />);

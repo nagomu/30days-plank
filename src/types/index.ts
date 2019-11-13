@@ -28,6 +28,16 @@ export type Workout = {
 
 export type WorkoutTemplate = Omit<Workout, 'id'>;
 
+export type WorkoutParams = Pick<Workout, 'id' | 'isCompleted'>;
+
+export enum Timer {
+  finish,
+  pause,
+  restart,
+  standby,
+  start,
+}
+
 export type Challenge = {
   id: string;
   description?: string;
@@ -36,6 +46,11 @@ export type Challenge = {
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 };
+
+export type ChallengeParams = Pick<
+  Challenge,
+  'id' | 'description' | 'isActive'
+>;
 
 export type Archive = {
   id: string;

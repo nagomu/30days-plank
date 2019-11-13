@@ -1,21 +1,9 @@
 import { firebase } from '~/services/firebase';
 import { currentUser } from '~/services/firebase/auth';
-import { Timestamp, Workout } from '~/types';
+import { Workout, WorkoutParams as UpdateParams } from '~/types';
 import { timestamp } from '~/utils';
 
-type AddParams = {
-  title: string;
-  menu: number;
-  date: Timestamp;
-  isCompleted: boolean;
-  isRest: boolean;
-};
-
-type UpdateParams = {
-  id: string;
-  isCompleted: boolean;
-};
-
+type AddParams = Omit<Workout, 'id' | 'createdAt' | 'updatedAt'>;
 type ReturnValue = Promise<Workout | void>;
 
 export const fetchWorkout = async (cid: string, id: string): ReturnValue => {

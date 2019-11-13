@@ -1,4 +1,4 @@
-import { useAuth } from '~/hooks/specifics/routes/useAuth';
+import { useAuth } from '~/hooks/common/useAuth';
 import { mockStore, withHook } from '~/utils';
 
 jest.mock('~/store/auth');

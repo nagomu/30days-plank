@@ -7,7 +7,8 @@ import Icon from '~/components/common/icons/Icon';
 import config from '~/config';
 import { screenEffect } from '~/config';
 import { useLayout } from '~/hooks/common/useLayout';
-import { AuthActions, AuthState } from '~/store/auth';
+import { AuthActions } from '~/hooks/specifics/routes/useAuth';
+import { AuthState } from '~/store/auth';
 import { rgba } from '~/utils';
 
 const Screen = styled.div`

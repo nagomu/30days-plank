@@ -9,12 +9,16 @@ import {
 } from '~/services/auth';
 import { AppState } from '~/store';
 import {
-  AuthActions,
   AuthState,
   onObserveAuthStateChanged,
   onSignIn,
   onSignOut,
 } from '~/store/auth';
+
+export type AuthActions = {
+  onSignIn: () => Promise<void>;
+  onSignOut: () => Promise<void>;
+};
 
 export type UseAuth = AuthState & AuthActions & RedirectState;
 

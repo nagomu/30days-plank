@@ -3,7 +3,7 @@ import AddToHomeScreen from 'a2hs.js';
 import * as React from 'react';
 
 import SignInButton from '~/components/specifics/signIn/SignInButton';
-import { AuthActions } from '~/store/auth';
+import { AuthActions } from '~/hooks/specifics/routes/useAuth';
 
 if (!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)) {
   AddToHomeScreen({

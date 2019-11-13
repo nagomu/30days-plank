@@ -5,11 +5,6 @@ export type AuthState = {
   isLoading?: boolean;
 };
 
-export type AuthActions = {
-  onSignIn: () => Promise<void>;
-  onSignOut: () => Promise<void>;
-};
-
 export const OBSERVE_AUTH_STATE_CHANGED = 'OBSERVE_AUTH_STATE_CHANGED';
 type ObserveAuthStateChangedAction = {
   type: typeof OBSERVE_AUTH_STATE_CHANGED;

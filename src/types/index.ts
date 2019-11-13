@@ -47,6 +47,11 @@ export type Challenge = {
   updatedAt?: Timestamp;
 };
 
+export type ChallengeParams = Pick<
+  Challenge,
+  'id' | 'description' | 'isActive'
+>;
+
 export type Archive = {
   id: string;
   challenge: string;

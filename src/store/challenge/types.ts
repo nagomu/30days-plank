@@ -5,12 +5,6 @@ export type ChallengeState = {
   isLoading?: boolean;
 };
 
-export type UpdateChallengeParams = {
-  id: string;
-  description?: string;
-  isActive: boolean;
-};
-
 export const FETCH_CHALLENGE = 'FETCH_CHALLENGE';
 type FetchChallengeAction = {
   type: typeof FETCH_CHALLENGE;

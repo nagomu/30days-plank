@@ -1,12 +1,4 @@
-import { Archive, Next, Timestamp } from '~/types';
-
-export type AddArchiveParams = {
-  challengeId: string;
-  title: string;
-  description?: string;
-  rate: number;
-  createdAt: Timestamp;
-};
+import { Archive, Next } from '~/types';
 
 export type ArchiveState = {
   archives?: Archive[];

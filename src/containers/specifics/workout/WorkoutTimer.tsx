@@ -1,14 +1,14 @@
 import * as React from 'react';
 
 import WrappedComponent from '~/components/specifics/workout/Workout';
-import { Status, UpdateWorkoutParams } from '~/store/workout';
-import { Workout } from '~/types';
+import { Status } from '~/store/workout';
+import { Workout, WorkoutParams } from '~/types';
 import { isToday } from '~/utils';
 
 export type Props = {
   isLoading: boolean;
   workout?: Workout;
-  onUpdate: (params: UpdateWorkoutParams) => void;
+  onUpdate: (params: WorkoutParams) => void;
 };
 
 type State = {

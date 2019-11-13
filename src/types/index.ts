@@ -28,6 +28,8 @@ export type Workout = {
 
 export type WorkoutTemplate = Omit<Workout, 'id'>;
 
+export type WorkoutParams = Pick<Workout, 'id' | 'isCompleted'>;
+
 export type Challenge = {
   id: string;
   description?: string;

@@ -10,11 +10,6 @@ export type WorkoutState = {
   isLoading?: boolean;
 };
 
-export type UpdateWorkoutParams = {
-  id: string;
-  isCompleted: boolean;
-};
-
 export const FETCH_WORKOUTS = 'FETCH_WORKOUTS';
 export type FetchWorkoutsAction = {
   type: typeof FETCH_WORKOUTS;

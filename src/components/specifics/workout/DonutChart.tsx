@@ -1,5 +1,5 @@
 import { keyframes } from '@emotion/core';
-import styled from '@emotion/styled';
+import { styled } from 'linaria/react';
 import * as React from 'react';
 
 import { Timer } from '~/types';

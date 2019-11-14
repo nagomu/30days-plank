@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import { styled } from 'linaria/react';
 import * as React from 'react';
 
 import FloatingActionButton from '~/components/common/buttons/FloatingActionButton';

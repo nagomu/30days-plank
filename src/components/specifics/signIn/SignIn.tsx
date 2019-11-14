@@ -1,22 +1,8 @@
 import styled from '@emotion/styled';
-import AddToHomeScreen from 'a2hs.js';
 import * as React from 'react';
 
 import SignInButton from '~/components/specifics/signIn/SignInButton';
 import { AuthActions } from '~/hooks/common/useAuth';
-
-if (!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)) {
-  AddToHomeScreen({
-    brandName: '30d',
-    logoImage:
-      '<svg role="img" style="width:48px;height:48px;margin-bottom:-8px;color:#1e88e5"><use xlink:href="#logo" /></svg>',
-    htmlContent:
-      'Install <strong>30d</strong> on your iOS device: tap share and <strong>Add to Home Screen</strong>',
-    fontFamily: 'Roboto, sans-serif',
-    backgroundColor: '#eee',
-    padding: '4px 8px',
-  });
-}
 
 const Container = styled.div`
   display: flex;

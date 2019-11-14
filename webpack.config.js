@@ -8,6 +8,7 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 
@@ -73,6 +74,10 @@ const config = {
         .toString()
         .trim(),
     }),
+    new MiniCssExtractPlugin({
+      filename: 'static/css/[name].[hash:8].css',
+      chunkFilename: 'static/css/[name].[hash:8].css',
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(env),
   ],
@@ -89,12 +94,36 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV !== 'production',
+            },
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: process.env.NODE_ENV !== 'production',
+            },
+          },
+        ],
+      },
+      {
         test: /\.(ts|tsx)$/,
         include: path.resolve('src'),
         exclude: /node_modules/,
         use: [
           {
             loader: require.resolve('babel-loader'),
+          },
+          {
+            loader: 'linaria/loader',
+            options: {
+              cacheDirectory: '.cache',
+              sourceMap: process.env.NODE_ENV !== 'production',
+            },
           },
           {
             loader: require.resolve('ts-loader'),

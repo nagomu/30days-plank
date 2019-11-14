@@ -111,8 +111,6 @@ const SignOutButton = styled.button`
   }
 `;
 
-const Button = SignOutButton.withComponent(NavLink);
-
 const ButtonText = styled.span`
   display: block;
   margin-left: 18px;
@@ -140,7 +138,8 @@ const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
         {user && (
           <Menu>
             {config.nav.map(nav => (
-              <Button
+              <SignOutButton
+                as={NavLink}
                 exact
                 key={nav.pathname}
                 onClick={onToggleNav}
@@ -149,7 +148,7 @@ const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
               >
                 <Icon name={nav.icon} />
                 <ButtonText>{nav.label}</ButtonText>
-              </Button>
+              </SignOutButton>
             ))}
             <SignOutButton onClick={onClick} type="button">
               <Icon name="exit_to_app" />

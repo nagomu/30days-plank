@@ -22,8 +22,6 @@ const Container = styled.div`
   }
 `;
 
-const Button = Container.withComponent('button');
-
 const Image = styled.img`
   display: block;
   width: 100%;
@@ -55,7 +53,8 @@ const Avatar: React.FC<Props> = ({ asButton, user }) => {
   return (
     <>
       {asButton ? (
-        <Button
+        <Container
+          as="button"
           aria-label="Toggle Nav"
           aria-disabled={!user}
           disabled={!user}
@@ -63,7 +62,7 @@ const Avatar: React.FC<Props> = ({ asButton, user }) => {
           type="button"
         >
           {ImageOrLogo()}
-        </Button>
+        </Container>
       ) : (
         <Container>{ImageOrLogo()}</Container>
       )}

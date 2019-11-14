@@ -31,7 +31,7 @@ const StyledContainer = styled(Container)`
 `;
 /* eslint-enable */
 
-const SpanButton = styled.span`
+const Button = styled.span`
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
@@ -44,8 +44,6 @@ const SpanButton = styled.span`
   text-decoration: none;
   text-transform: uppercase;
 `;
-
-const Button = SpanButton.withComponent(NavLink);
 
 type Props = {
   id: string;
@@ -73,7 +71,7 @@ const Workout: React.FC<Props> = props => {
   return (
     <StyledContainer color={color}>
       {isRest ? (
-        <SpanButton>
+        <Button>
           <Label
             day={day}
             isCompleted={isCompleted}
@@ -82,9 +80,9 @@ const Workout: React.FC<Props> = props => {
             month={month}
             title={title}
           />
-        </SpanButton>
+        </Button>
       ) : (
-        <Button exact to={pathname} role="button">
+        <Button as={NavLink} exact to={pathname} role="button">
           <Label
             day={day}
             isCompleted={isCompleted}

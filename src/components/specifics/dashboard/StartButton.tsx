@@ -11,16 +11,14 @@ const Button = styled(FloatingActionButton)`
   bottom: 48px;
 `;
 
-const NavButton = Button.withComponent(NavLink);
-
 type Props = {
   pathname: string;
 };
 
 const StartButton: React.FC<Props> = ({ pathname }) => (
-  <NavButton exact to={pathname}>
+  <Button as={NavLink} exact to={pathname}>
     <Icon name="play_arrow" />
-  </NavButton>
+  </Button>
 );
 
 export default StartButton;

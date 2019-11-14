@@ -1,14 +1,8 @@
 import { workoutTemplateFactory } from '~/factories/workoutFactory';
 import { firebase } from '~/services/firebase';
 import { currentUser } from '~/services/firebase/auth';
-import { Challenge } from '~/types';
+import { Challenge, ChallengeParams as Params } from '~/types';
 import { timestamp } from '~/utils';
-
-type Params = {
-  id: string;
-  description?: string;
-  isActive: boolean;
-};
 
 type ReturnValue = Promise<Challenge | void>;
 

@@ -13,10 +13,9 @@ import {
   SET_PARTIAL_WORKOUT,
   UPDATE_CHALLENGE,
   UPDATE_CHALLENGE_SUCCESS,
-  UpdateChallengeParams,
 } from '~/store/challenge';
 import { onFetchWorkouts } from '~/store/workout';
-import { Challenge, Workout } from '~/types';
+import { Challenge, ChallengeParams, Workout } from '~/types';
 
 export const fetchChallenge = (): ChallengeActionTypes => ({
   type: FETCH_CHALLENGE,
@@ -87,7 +86,7 @@ export const onAddChallenge = async (dispatch: Dispatch): Promise<void> => {
 
 export const onUpdateChallenge = async (
   dispatch: Dispatch,
-  params: UpdateChallengeParams,
+  params: ChallengeParams,
 ): Promise<void> => {
   dispatch(updateChallenge());
 

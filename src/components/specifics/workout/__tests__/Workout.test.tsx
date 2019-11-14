@@ -1,5 +1,5 @@
 import Workout from '~/components/specifics/workout/Workout';
-import { Status } from '~/store/workout';
+import { Timer } from '~/types';
 import { timestamp, withProvider } from '~/utils';
 
 describe('Workout', () => {
@@ -10,7 +10,7 @@ describe('Workout', () => {
     onTogglePause: jest.fn(),
     pathname: '/',
     progress: 20,
-    status: Status.standby,
+    status: Timer.standby,
     workout: {
       id: '1',
       isCompleted: false,
@@ -38,7 +38,7 @@ describe('Workout', () => {
         Component: Workout,
         props: {
           ...props,
-          status: Status.start,
+          status: Timer.start,
         },
       };
       const wrapper = withProvider(params).find(Workout);

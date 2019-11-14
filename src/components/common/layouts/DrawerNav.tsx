@@ -6,8 +6,9 @@ import Avatar from '~/components/common/icons/Avatar';
 import Icon from '~/components/common/icons/Icon';
 import config from '~/config';
 import { screenEffect } from '~/config';
+import { AuthActions } from '~/hooks/common/useAuth';
 import { useLayout } from '~/hooks/common/useLayout';
-import { AuthActions, AuthState } from '~/store/auth';
+import { AuthState } from '~/store/auth';
 import { rgba } from '~/utils';
 
 const Screen = styled.div`

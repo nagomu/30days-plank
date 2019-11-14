@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 
 import StartOrPauseButton from '~/components/specifics/workout/StartOrPauseButton';
-import { Status } from '~/store/workout';
+import { Timer } from '~/types';
 
 describe('StartOrPauseButton', () => {
   const mockStart = jest.fn();
@@ -11,7 +11,7 @@ describe('StartOrPauseButton', () => {
   const props = {
     onStart: mockStart,
     onTogglePause: mockPause,
-    status: Status.standby,
+    status: Timer.standby,
   };
 
   it('renders correctly', () => {
@@ -29,7 +29,7 @@ describe('StartOrPauseButton', () => {
   describe('if started', () => {
     const started = {
       ...props,
-      status: Status.start,
+      status: Timer.start,
     };
 
     it('renders correctly', () => {
@@ -48,7 +48,7 @@ describe('StartOrPauseButton', () => {
   describe('if finished', () => {
     const finished = {
       ...props,
-      status: Status.start,
+      status: Timer.start,
     };
 
     it('renders correctly', () => {

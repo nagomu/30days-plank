@@ -8,10 +8,9 @@ import {
   FETCH_WORKOUTS_SUCCESS,
   UPDATE_WORKOUT,
   UPDATE_WORKOUT_SUCCESS,
-  UpdateWorkoutParams,
   WorkoutActionTypes,
 } from '~/store/workout';
-import { Challenge } from '~/types';
+import { Challenge, WorkoutParams } from '~/types';
 import { isEmptyArray } from '~/utils';
 
 export const fetchWorkouts = (): WorkoutActionTypes => ({
@@ -55,7 +54,7 @@ export const onFetchWorkouts = async (
 export const onUpdateWorkout = async (
   dispatch: Dispatch,
   cid: string,
-  workout: UpdateWorkoutParams,
+  workout: WorkoutParams,
 ): Promise<void> => {
   dispatch(updateWorkout());
 

@@ -2,7 +2,7 @@ import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import * as React from 'react';
 
-import { Status } from '~/store/workout';
+import { Timer } from '~/types';
 import { rgba } from '~/utils';
 
 const circumference = `${Math.PI * 188}px`;
@@ -30,9 +30,6 @@ const Svg = styled.svg`
 `;
 
 const Stroke = styled.circle`
-  r: 94;
-  cx: 96;
-  cy: 96;
   stroke-width: 2;
   stroke: #e0e0e0;
   fill: #fff;
@@ -51,9 +48,6 @@ const countdown = keyframes`
 const Progress = styled.circle`
   animation-name: ${countdown};
   animation-timing-function: linear;
-  r: 94;
-  cx: 96;
-  cy: 96;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-dasharray: ${circumference};
@@ -96,28 +90,30 @@ const Seconds = styled.span`
 type Props = {
   progress: number;
   seconds: number;
-  status: Status;
+  status: Timer;
 };
 
 const DonutChart: React.FC<Props> = props => {
   const { progress, seconds, status } = props;
 
   const playState: 'running' | 'paused' =
-    status === Status.start || status === Status.restart ? 'running' : 'paused';
+    status === Timer.start || status === Timer.restart ? 'running' : 'paused';
 
   const progressStyle: React.CSSProperties = {
     animationDuration: `${seconds}s`,
     animationPlayState: playState,
   };
 
-  const isStandby: boolean = status === Status.standby;
+  const isStandby: boolean = status === Timer.standby;
 
   return (
     <Container>
       <Svg xmlns="http://www.w3.org/2000/svg">
         <g>
-          <Stroke />
-          {!isStandby && <Progress style={progressStyle} />}
+          <Stroke r="94" cx="96" cy="96" />
+          {!isStandby && (
+            <Progress r="94" cx="96" cy="96" style={progressStyle} />
+          )}
         </g>
       </Svg>
       <Label>

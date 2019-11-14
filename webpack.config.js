@@ -108,6 +108,17 @@ const config = {
               sourceMap: process.env.NODE_ENV !== 'production',
             },
           },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              sourceMap: process.env.NODE_ENV !== 'production',
+              plugins: [
+                require('postcss-flexbugs-fixes'),
+                require('autoprefixer')({ grid: 'autoplace' }),
+              ],
+            },
+          },
         ],
       },
       {

@@ -43,11 +43,6 @@
   },
   "babel": {
     "env": {
-      "production": {
-        "plugins": [
-          "emotion"
-        ]
-      },
       "development": {
         "plugins": [
           [

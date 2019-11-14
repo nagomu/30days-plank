@@ -118,7 +118,6 @@
   "dependencies": {
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.23",
-    "a2hs.js": "^0.4.5",
     "firebase": "^7.1.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",

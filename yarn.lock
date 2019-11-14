@@ -1181,11 +1181,6 @@ JSONStream@^1.2.1:
     jsonparse "^1.2.0"
     through ">=2.2.7 <3"
 
-a2hs.js@^0.4.5:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/a2hs.js/-/a2hs.js-0.4.5.tgz#f44f8f5d133cf84700097c42e88dd04ce380816a"
-  integrity sha512-vGhAXn70g7yOkVqTg8Xj4EHJE+YxzqgAIBhLxnyTbS0z9p5nyaZFd7HJahgaKIIuOLHSB1dZ7zqItu+YlTp/gQ==
-
 abab@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.2.tgz#a2fba1b122c69a85caa02d10f9270c7219709a9d"

@@ -89,23 +89,19 @@ const config = {
   module: {
     rules: [
       {
-        oneOf: [
+        test: /\.(ts|tsx)$/,
+        include: path.resolve('src'),
+        exclude: /node_modules/,
+        use: [
           {
-            test: /\.(ts|tsx)$/,
-            include: path.resolve('src'),
-            exclude: /node_modules/,
-            use: [
-              {
-                loader: require.resolve('babel-loader'),
-              },
-              {
-                loader: require.resolve('ts-loader'),
-                options: {
-                  transpileOnly: true,
-                  experimentalWatchApi: true,
-                },
-              },
-            ],
+            loader: require.resolve('babel-loader'),
+          },
+          {
+            loader: require.resolve('ts-loader'),
+            options: {
+              transpileOnly: true,
+              experimentalWatchApi: true,
+            },
           },
         ],
       },

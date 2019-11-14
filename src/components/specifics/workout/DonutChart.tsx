@@ -30,9 +30,6 @@ const Svg = styled.svg`
 `;
 
 const Stroke = styled.circle`
-  r: 94;
-  cx: 96;
-  cy: 96;
   stroke-width: 2;
   stroke: #e0e0e0;
   fill: #fff;
@@ -51,9 +48,6 @@ const countdown = keyframes`
 const Progress = styled.circle`
   animation-name: ${countdown};
   animation-timing-function: linear;
-  r: 94;
-  cx: 96;
-  cy: 96;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-dasharray: ${circumference};
@@ -116,8 +110,10 @@ const DonutChart: React.FC<Props> = props => {
     <Container>
       <Svg xmlns="http://www.w3.org/2000/svg">
         <g>
-          <Stroke />
-          {!isStandby && <Progress style={progressStyle} />}
+          <Stroke r="94" cx="96" cy="96" />
+          {!isStandby && (
+            <Progress r="94" cx="96" cy="96" style={progressStyle} />
+          )}
         </g>
       </Svg>
       <Label>

@@ -1,27 +1,12 @@
-import { keyframes } from '@emotion/core';
 import { styled } from 'linaria/react';
 
 import { rgba } from '~/utils';
-
-const pulse = keyframes`
-  0% {
-    opacity: 0.3;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.3;
-  }
-`;
 
 const Skeleton = styled.div`
   display: block;
   width: 120px;
   height: 22px;
-  animation: ${pulse} 2s ease-in-out infinite;
+  animation: pulse 2s ease-in-out infinite;
 
   &::before {
     width: 100%;
@@ -39,6 +24,20 @@ const Skeleton = styled.div`
     content: '';
     display: block;
     height: 8px;
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0.3;
+    }
   }
 `;
 

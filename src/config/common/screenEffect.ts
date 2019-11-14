@@ -1,15 +1,15 @@
-import { css, keyframes } from '@emotion/core';
-
-const popup = keyframes`
-  0% {
-    transform: translateY(16px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-`;
+import { css } from 'linaria';
 
 export const screenEffect = css`
-  animation: ${popup} 0.2s ease-in-out;
+  animation: popup 0.2s ease-in-out;
+
+  @keyframes popup {
+    0% {
+      transform: translateY(16px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
 `;

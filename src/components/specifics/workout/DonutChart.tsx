@@ -1,4 +1,3 @@
-import { keyframes } from '@emotion/core';
 import { styled } from 'linaria/react';
 import * as React from 'react';
 
@@ -35,18 +34,8 @@ const Stroke = styled.circle`
   fill: #fff;
 `;
 
-const countdown = keyframes`
-  from {
-    stroke-dashoffset: -${circumference};
-  }
-
-  to {
-    stroke-dashoffset: 0;
-  }
-`;
-
 const Progress = styled.circle`
-  animation-name: ${countdown};
+  animation-name: countdown;
   animation-timing-function: linear;
   stroke-width: 2;
   stroke-linecap: round;
@@ -54,6 +43,16 @@ const Progress = styled.circle`
   stroke-dashoffset: -${circumference};
   stroke: #1e88e5;
   fill: transparent;
+
+  @keyframes countdown {
+    from {
+      stroke-dashoffset: -${circumference};
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
 `;
 
 const Label = styled.figcaption`

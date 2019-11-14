@@ -1,4 +1,3 @@
-import { keyframes } from '@emotion/core';
 import { styled } from 'linaria/react';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
@@ -11,16 +10,6 @@ import Loading from '~/components/common/loaders/Loading';
 import { AppState } from '~/store';
 import { User } from '~/types';
 import { rgba } from '~/utils';
-
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-`;
 
 const Screen = styled.div`
   position: absolute;
@@ -39,7 +28,7 @@ const Container = styled.div`
   grid-template-rows: 56px 1fr;
   width: 100%;
   height: 100%;
-  animation: ${fadeIn} 0.25s ease-in-out;
+  animation: fadeIn 0.25s ease-in-out;
   background-color: #fff;
 
   @media (min-width: 512px) {
@@ -52,6 +41,16 @@ const Container = styled.div`
     border: 1px solid #e0e0e0;
     border-radius: 4px;
     box-shadow: 0 2px 4px ${rgba('#000', 0.1)};
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 `;
 

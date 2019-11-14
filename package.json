@@ -42,18 +42,6 @@
     }
   },
   "babel": {
-    "env": {
-      "development": {
-        "plugins": [
-          [
-            "emotion",
-            {
-              "sourceMap": true
-            }
-          ]
-        ]
-      }
-    },
     "presets": [
       [
         "@babel/preset-env",
@@ -125,8 +113,6 @@
     }
   },
   "dependencies": {
-    "@emotion/core": "^10.0.22",
-    "@emotion/styled": "^10.0.23",
     "core-js": "^3.4.1",
     "firebase": "^7.1.0",
     "react": "^16.10.2",
@@ -151,7 +137,6 @@
     "@typescript-eslint/eslint-plugin": "^2.4.0",
     "@typescript-eslint/parser": "^2.4.0",
     "babel-loader": "^8.0.6",
-    "babel-plugin-emotion": "^10.0.23",
     "copy-webpack-plugin": "^5.0.4",
     "dotenv": "^8.2.0",
     "enzyme": "^3.10.0",

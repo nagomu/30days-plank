@@ -55,7 +55,12 @@
       },
       "production": {
         "plugins": [
-          "emotion"
+          [
+            "emotion",
+            {
+              "sourceMap": false
+            }
+          ]
         ]
       }
     },

@@ -1,16 +1,43 @@
+import loadable from '@loadable/component';
 import * as React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import ErrorBoundary from '~/components/common/errors/ErrorBoundary';
-import NotFound from '~/components/common/errors/NotFound';
 import App from '~/components/common/layouts/App';
-import SignIn from '~/components/specifics/signIn/SignIn';
-import Terms from '~/components/specifics/terms/Terms';
-import Archives from '~/containers/specifics/archive/Archives';
-import Dashboard from '~/containers/specifics/dashboard/Dashboard';
-import Workout from '~/containers/specifics/workout/Workout';
-import { useAuth } from '~/hooks/common/useAuth';
+import Loading from '~/components/common/loaders/Loading';
+import { AuthActions, useAuth } from '~/hooks/common/useAuth';
 import { currentUser } from '~/services/firebase/auth';
+
+const NotFound = loadable(() => import('~/components/common/errors/NotFound'), {
+  fallback: <Loading />,
+});
+
+const Archives = loadable(
+  () => import('~/containers/specifics/archive/Archives'),
+  { fallback: <Loading /> },
+);
+
+const Dashboard = loadable(
+  () => import('~/containers/specifics/dashboard/Dashboard'),
+  { fallback: <Loading /> },
+);
+
+const LoadableSignIn = loadable(
+  () => import('~/components/specifics/signIn/SignIn'),
+  { fallback: <Loading /> },
+);
+
+type SignInProps = Pick<AuthActions, 'onSignIn'>;
+const SignIn: React.FC<SignInProps> = props => <LoadableSignIn {...props} />;
+
+const Terms = loadable(() => import('~/components/specifics/terms/Terms'), {
+  fallback: <Loading />,
+});
+
+const Workout = loadable(
+  () => import('~/containers/specifics/workout/Workout'),
+  { fallback: <Loading /> },
+);
 
 const Routes: React.FC = () => {
   const {

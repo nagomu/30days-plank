@@ -26,6 +26,8 @@ const svg = fs.readFileSync(svgPath).toString();
 const cssPath = path.resolve(__dirname, 'src/index.css');
 const css = fs.readFileSync(cssPath).toString();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const config = {
   entry: path.resolve('src/index.tsx'),
   output: {
@@ -41,7 +43,7 @@ const config = {
     extensions: ['.tsx', '.ts', '.js'],
     plugins: [new TsconfigPathsPlugin()],
   },
-  devtool: 'cheap-module-source-map',
+  devtool: isProduction ? false : 'cheap-module-source-map',
   devServer: {
     clientLogLevel: 'warning',
     disableHostCheck: true,
@@ -73,7 +75,6 @@ const config = {
         .toString()
         .trim(),
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(env),
   ],
   optimization: {
@@ -180,11 +181,12 @@ const serviceWorkerConfig = new GenerateSW({
   ],
 });
 
-if (
-  process.env.NODE_ENV === 'production' ||
-  process.env.APP_SERVICE_WORKER === 'enable'
-) {
+if (isProduction || process.env.APP_SERVICE_WORKER === 'enable') {
   config.plugins.push(serviceWorkerConfig);
+}
+
+if (isProduction) {
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
 module.exports = config;

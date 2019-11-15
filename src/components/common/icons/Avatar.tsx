@@ -4,7 +4,6 @@ import * as React from 'react';
 import Icon from '~/components/common/icons/Icon';
 import { useLayout } from '~/hooks/common/useLayout';
 import { User } from '~/types';
-import { rgba } from '~/utils';
 
 const Container = styled.div`
   display: block;
@@ -26,7 +25,7 @@ const Image = styled.img`
   display: block;
   width: 100%;
   height: 100%;
-  border: 1px solid ${rgba('#212121', 0.3)};
+  border: 1px solid rgba(33, 33, 33, 0.3);
   border-radius: 999em;
 `;
 
@@ -53,14 +52,7 @@ const Avatar: React.FC<Props> = ({ asButton, user }) => {
   return (
     <>
       {asButton ? (
-        <Container
-          as="button"
-          aria-label="Toggle Nav"
-          aria-disabled={!user}
-          disabled={!user}
-          onClick={onToggleNav}
-          type="button"
-        >
+        <Container onClick={user ? onToggleNav : undefined}>
           {ImageOrLogo()}
         </Container>
       ) : (

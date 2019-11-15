@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 
 import Icon from '~/components/common/icons/Icon';
 import Loading from '~/components/common/loaders/Loading';
-import { screenEffect } from '~/config';
 
 const Screen = styled.div`
   display: grid;
@@ -15,8 +14,18 @@ const Screen = styled.div`
   grid-template-rows: 48px 1fr;
   width: 100%;
   height: 100%;
+  animation: popup 0.2s ease-in-out;
   background-color: #fff;
-  ${screenEffect}
+
+  @keyframes popup {
+    0% {
+      transform: translateY(16px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
 
   @media all and (min-width: 680px) {
     position: absolute;

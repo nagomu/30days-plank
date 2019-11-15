@@ -1,7 +1,5 @@
 import { styled } from 'linaria/react';
 
-import { rgba } from '~/utils';
-
 const PrimaryButton = styled.button`
   display: flex;
   position: relative;
@@ -16,7 +14,7 @@ const PrimaryButton = styled.button`
   border: 0;
   border-radius: 2px;
   background-color: #1e88e5;
-  box-shadow: 0 2px 4px ${rgba('#000', 0)};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
   color: #fff;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 16px;
@@ -29,7 +27,7 @@ const PrimaryButton = styled.button`
 
   &:disabled {
     background-color: #e0e0e0;
-    color: ${rgba('#212121', 0.5)};
+    color: rgba(33, 33, 33, 0.5);
   }
 
   &:not(:disabled) {
@@ -41,12 +39,12 @@ const PrimaryButton = styled.button`
   }
 
   &:hover:not(:disabled) {
-    box-shadow: 0 2px 4px ${rgba('#000', 0.4)};
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   }
 
   &:active:not(:disabled),
   &:focus:not(:disabled) {
-    box-shadow: 0 2px 8px ${rgba('#000', 0.4)};
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 `;
 

@@ -2,7 +2,6 @@ import { styled } from 'linaria/react';
 import * as React from 'react';
 
 import Icon from '~/components/common/icons/Icon';
-import { rgba } from '~/utils';
 
 const Button = styled.button`
   display: block;
@@ -15,7 +14,7 @@ const Button = styled.button`
   border: 1px solid #e0e0e0;
   border-radius: 2px;
   background-color: #fff;
-  box-shadow: 0 2px 4px ${rgba('#000', 0)};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
   color: inherit;
   font-size: 14px;
   font-weight: 500;
@@ -28,12 +27,12 @@ const Button = styled.button`
   }
 
   &:hover {
-    box-shadow: 0 2px 4px ${rgba('#000', 0.4)};
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   }
 
   &:active,
   &:focus {
-    box-shadow: 0 2px 8px ${rgba('#000', 0.4)};
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 `;
 

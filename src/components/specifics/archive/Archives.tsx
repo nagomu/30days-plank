@@ -5,7 +5,7 @@ import * as React from 'react';
 import Icon from '~/components/common/icons/Icon';
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
 import { Archive } from '~/types';
-import { isEmptyArray, rgba } from '~/utils';
+import { isEmptyArray } from '~/utils';
 
 const List = styled.ul`
   margin: 0;
@@ -34,7 +34,7 @@ const Link = styled(NavLink)`
   width: 100%;
   margin: 0;
   padding: 0;
-  color: ${rgba('#212121', 0.6)};
+  color: rgba(33, 33, 33,, 0.6);
   font-size: 12px;
   text-decoration: none;
 `;
@@ -46,7 +46,7 @@ const Link = styled.span`
   width: 100%;
   margin: 0;
   padding: 0;
-  color: ${rgba('#212121', 0.6)};
+  color: rgba(33, 33, 33, , 0.6);
   font-size: 12px;
   text-decoration: none;
 `;

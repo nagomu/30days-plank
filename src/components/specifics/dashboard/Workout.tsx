@@ -31,7 +31,7 @@ const StyledContainer = styled(Container)`
 `;
 /* eslint-enable */
 
-const Button = styled.span`
+const buttonStyles = `
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
@@ -43,6 +43,14 @@ const Button = styled.span`
   font-weight: 700;
   text-decoration: none;
   text-transform: uppercase;
+`;
+
+const Button = styled.span`
+  ${buttonStyles}
+`;
+
+const NavButton = styled(NavLink)`
+  ${buttonStyles}
 `;
 
 type Props = {
@@ -82,7 +90,7 @@ const Workout: React.FC<Props> = props => {
           />
         </Button>
       ) : (
-        <Button as={NavLink} exact to={pathname} role="button">
+        <NavButton exact to={pathname} role="button">
           <Label
             day={day}
             isCompleted={isCompleted}
@@ -91,7 +99,7 @@ const Workout: React.FC<Props> = props => {
             month={month}
             title={title}
           />
-        </Button>
+        </NavButton>
       )}
     </StyledContainer>
   );

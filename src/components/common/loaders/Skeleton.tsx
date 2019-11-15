@@ -1,7 +1,5 @@
 import { styled } from 'linaria/react';
 
-import { rgba } from '~/utils';
-
 const Skeleton = styled.div`
   display: block;
   width: 120px;
@@ -16,7 +14,7 @@ const Skeleton = styled.div`
   &::after {
     width: 88px;
     margin-top: 6px;
-    background-color: ${rgba('#e0e0e0', 0.6)};
+    background-color: rgba(224, 224, 224, 0.6);
   }
 
   &::before,

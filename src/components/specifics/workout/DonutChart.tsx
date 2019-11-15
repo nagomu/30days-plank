@@ -2,7 +2,6 @@ import { styled } from 'linaria/react';
 import * as React from 'react';
 
 import { Timer } from '~/types';
-import { rgba } from '~/utils';
 
 const circumference = `${Math.PI * 188}px`;
 
@@ -82,7 +81,7 @@ const CountDown = styled.span`
 const Seconds = styled.span`
   display: block;
   min-height: 16px;
-  color: ${rgba('#212121', 0.6)};
+  color: rgba(33, 33, 33, , 0.6);
   font-size: 16px;
 `;
 

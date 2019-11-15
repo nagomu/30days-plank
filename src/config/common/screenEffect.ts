@@ -1,6 +1,4 @@
-import { css } from 'linaria';
-
-export const screenEffect = css`
+export const screenEffect = `
   animation: popup 0.2s ease-in-out;
 
   @keyframes popup {

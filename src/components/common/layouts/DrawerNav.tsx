@@ -5,11 +5,9 @@ import { NavLink } from 'react-router-dom';
 import Avatar from '~/components/common/icons/Avatar';
 import Icon from '~/components/common/icons/Icon';
 import config from '~/config';
-import { screenEffect } from '~/config';
 import { AuthActions } from '~/hooks/common/useAuth';
 import { useLayout } from '~/hooks/common/useLayout';
 import { AuthState } from '~/store/auth';
-import { rgba } from '~/utils';
 
 const Screen = styled.div`
   display: grid;
@@ -30,7 +28,7 @@ const Screen = styled.div`
     transform: translate(-50%, -50%);
     border: 1px solid #e0e0e0;
     border-radius: 4px;
-    box-shadow: 0 2px 4px ${rgba('#000', 0.1)};
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -38,8 +36,18 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  animation: popup 0.2s ease-in-out;
   background-color: #fff;
-  ${screenEffect}
+
+  @keyframes popup {
+    0% {
+      transform: translateY(16px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
 `;
 
 const CloseButton = styled.button`
@@ -73,7 +81,7 @@ const Menu = styled.nav`
   margin-top: 16px;
 `;
 
-const SignOutButton = styled.button`
+const navStyles = `
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -81,34 +89,41 @@ const SignOutButton = styled.button`
   height: 40px;
   margin-bottom: 8px;
   padding: 8px 16px;
-  transition: background-color 0.25s ease-in-out,
-    background-color 0.25s ease-in-out;
+  transition: background-color 0.25s ease-in-out;
   border-width: 1px;
   border-style: solid;
-  border-color: ${rgba('#1e88e5', 0)};
-  background-color: ${rgba('#1e88e5', 0)};
+  border-color: rgba(30, 136, 229, 0);
+  background-color: rgba(30, 136, 229, 0);
   color: inherit;
   font-size: 30px;
   text-decoration: none;
   cursor: pointer;
 
   &:hover {
-    background-color: ${rgba('#1e88e5', 0.1)};
+    background-color: rgba(30, 136, 229, 0.1);
   }
 
   &:active {
-    background-color: ${rgba('#1e88e5', 0.3)};
+    background-color: rgba(30, 136, 229, 0.3);
   }
 
   &:focus {
-    border-color: ${rgba('#1e88e5', 0.5)};
+    border-color: rgba(30, 136, 229, 0.5);
     outline: none;
-    background-color: ${rgba('#1e88e5', 0)};
+    background-color: rgba(30, 136, 229, 0);
   }
 
   &.active {
     color: #1e88e5;
   }
+`;
+
+const Nav = styled(NavLink)`
+  ${navStyles}
+`;
+
+const SignOutButton = styled.button`
+  ${navStyles}
 `;
 
 const ButtonText = styled.span`
@@ -138,8 +153,7 @@ const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
         {user && (
           <Menu>
             {config.nav.map(nav => (
-              <SignOutButton
-                as={NavLink}
+              <Nav
                 exact
                 key={nav.pathname}
                 onClick={onToggleNav}
@@ -148,7 +162,7 @@ const DrawerNav: React.FC<Props> = ({ onSignOut, user }) => {
               >
                 <Icon name={nav.icon} />
                 <ButtonText>{nav.label}</ButtonText>
-              </SignOutButton>
+              </Nav>
             ))}
             <SignOutButton onClick={onClick} type="button">
               <Icon name="exit_to_app" />

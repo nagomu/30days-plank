@@ -1,7 +1,5 @@
 import { styled } from 'linaria/react';
 
-import { rgba } from '~/utils';
-
 enum Color {
   primary,
 }
@@ -20,7 +18,7 @@ const TextButton = styled.button`
   transition: background-color 0.25s ease-in-out;
   border: 0;
   border-radius: 2px;
-  background-color: ${rgba('#000', 0)};
+  background-color: rgba(0, 0, 0, 0);
   color: ${(props: Props): string =>
     props.color === Color.primary ? '#1e88e5' : '#212121'};
   font-family: 'Roboto Condensed', sans-serif;
@@ -30,8 +28,8 @@ const TextButton = styled.button`
   text-transform: uppercase;
 
   &:disabled {
-    background-color: ${rgba('#000', 0.38)};
-    color: ${rgba('#212121', 0.6)};
+    background-color: rgba(0, 0, 0, 0.38);
+    color: rgba(33, 33, 33, 0.6);
   }
 
   &:not(:disabled) {
@@ -45,7 +43,7 @@ const TextButton = styled.button`
   &:active:not(:disabled),
   &:focus:not(:disabled),
   &:hover:not(:disabled) {
-    background-color: ${rgba('#000', 0.15)};
+    background-color: rgba(0, 0, 0, 0.15);
   }
 `;
 

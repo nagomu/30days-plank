@@ -1,8 +1,6 @@
 import { styled } from 'linaria/react';
 
-import { rgba } from '~/utils';
-
-const FloatingActionButton = styled.button`
+export const floatingActionButtonStyles = `
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,14 +12,14 @@ const FloatingActionButton = styled.button`
   border: 0;
   border-radius: 999em;
   background-color: #1e88e5;
-  box-shadow: 0 2px 4px ${rgba('#000', 0.4)};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   color: #fff;
   font-size: 24px;
 
   &:disabled {
-    background-color: ${rgba('#000', 0.38)};
-    box-shadow: 0 2px 4px ${rgba('#000', 0)};
-    color: ${rgba('#212121', 0.6)};
+    background-color: rgba(0, 0, 0, 0.38);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+    color: rgba(33, 33, 33, 0.6);
   }
 
   &:not(:disabled) {
@@ -33,13 +31,17 @@ const FloatingActionButton = styled.button`
   }
 
   &:hover:not(:disabled) {
-    box-shadow: 0 2px 8px ${rgba('#000', 0.4)};
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 
   &:active:not(:disabled),
   &:focus:not(:disabled) {
-    box-shadow: 0 0 4px ${rgba('#000', 0.4)};
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
   }
+`;
+
+const FloatingActionButton = styled.button`
+  ${floatingActionButtonStyles}
 `;
 
 export default FloatingActionButton;

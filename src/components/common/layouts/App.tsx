@@ -9,7 +9,6 @@ import Footer from '~/components/common/layouts/Footer';
 import Loading from '~/components/common/loaders/Loading';
 import { AppState } from '~/store';
 import { User } from '~/types';
-import { rgba } from '~/utils';
 
 const Screen = styled.div`
   position: absolute;
@@ -40,7 +39,7 @@ const Container = styled.div`
     transform: translate(-50%, -50%);
     border: 1px solid #e0e0e0;
     border-radius: 4px;
-    box-shadow: 0 2px 4px ${rgba('#000', 0.1)};
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   @keyframes fadeIn {

@@ -115,7 +115,7 @@ const config = {
               sourceMap: process.env.NODE_ENV !== 'production',
               plugins: [
                 require('postcss-flexbugs-fixes'),
-                require('autoprefixer')({ grid: 'autoplace' }),
+                require('autoprefixer')({ grid: 'autoplace', remove: true }),
               ],
             },
           },
@@ -132,8 +132,7 @@ const config = {
           {
             loader: 'linaria/loader',
             options: {
-              cacheDirectory: '.cache',
-              sourceMap: process.env.NODE_ENV !== 'production',
+              cacheDirectory: '.cache/linaria',
             },
           },
           {

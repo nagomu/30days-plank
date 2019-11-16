@@ -171,7 +171,6 @@ describe('challenge: actions', () => {
           type: 'SET_CHALLENGE',
           payload: { challenge: undefined },
         },
-        { type: 'FETCH_WORKOUTS' },
       ];
       expect(store.getActions()).toEqual(expected);
     });

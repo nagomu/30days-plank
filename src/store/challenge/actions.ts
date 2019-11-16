@@ -55,12 +55,12 @@ export const onFetchChallenge = async (
 
   try {
     const results = await ChallengeService.fetchChallenge(id);
-    const challenge = {
-      ...results,
-      id,
-    } as Challenge;
-    dispatch(setChallenge(results ? challenge : undefined));
-    onFetchWorkouts(dispatch, challenge as Challenge);
+    if (!results) {
+      dispatch(setChallenge(undefined));
+      return;
+    }
+    const challenge = { ...results, id } as Challenge;
+    await onFetchWorkouts(dispatch, challenge as Challenge);
   } catch (error) {
     postError(error);
   }

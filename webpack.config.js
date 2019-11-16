@@ -32,8 +32,8 @@ const config = {
   entry: path.resolve('src/index.tsx'),
   output: {
     path: path.resolve('public'),
-    filename: 'bundle.[hash:8].js',
-    chunkFilename: '[name].[hash:8].chunk.js',
+    filename: '30d-[hash].js',
+    chunkFilename: '30d-[chunkhash].js',
     publicPath: '/',
     pathinfo: false,
     devtoolModuleFilenameTemplate: info =>
@@ -131,15 +131,89 @@ const serviceWorkerConfig = new GenerateSW({
   ],
   runtimeCaching: [
     {
+      urlPattern: '/',
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'sign-in',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
+          maxAgeSeconds: 30 * 24 * 60,
+        },
+      },
+    },
+    {
+      urlPattern: '/dashboard',
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'dashboard',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
+          maxAgeSeconds: 30 * 24 * 60,
+        },
+      },
+    },
+    {
+      urlPattern: new RegExp('/challenges/.*/workouts/.*'),
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'workout',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
+          maxAgeSeconds: 30 * 24 * 60,
+        },
+      },
+    },
+    {
       urlPattern: /\.(?:js)$/,
       handler: 'StaleWhileRevalidate',
       options: {
         cacheName: 'static-resources',
         cacheableResponse: { statuses: [0, 200] },
         expiration: {
-          maxEntries: 5,
+          maxEntries: 255,
           maxAgeSeconds: 30 * 24 * 60,
           purgeOnQuotaError: true,
+        },
+      },
+    },
+    {
+      urlPattern: new RegExp('/static/images/.*'),
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'images',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
+          maxAgeSeconds: 30 * 24 * 60,
+          purgeOnQuotaError: true,
+        },
+      },
+    },
+    {
+      urlPattern:
+        'https://thirty-days-plank-v1.firebaseapp.com/__/auth/iframe.js',
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'auth',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
+          maxAgeSeconds: 30 * 24 * 60,
+          purgeOnQuotaError: true,
+        },
+      },
+    },
+    {
+      urlPattern: new RegExp('^https://firestore.googleapis.com/.*'),
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'firestore',
+        cacheableResponse: { statuses: [0, 200] },
+        expiration: {
+          maxEntries: 255,
         },
       },
     },

@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
     if (user && user.challenge && !challenge.challenge) {
       onFetchChallenge(dispatch, user.challenge);
     }
-  }, []);
+  }, [user]);
 
   const handleAddChallenge = (): void => {
     if (!user) return;

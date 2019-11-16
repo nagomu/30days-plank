@@ -259,7 +259,7 @@ if (isProduction || process.env.APP_SERVICE_WORKER === 'enable') {
   config.plugins.push(serviceWorkerConfig);
 }
 
-if (isProduction) {
+if (!isProduction) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 

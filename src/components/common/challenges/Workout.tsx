@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import Label from '~/components/specifics/dashboard/Label';
+import Label from '~/components/common/challenges/Label';
 import { Timestamp } from '~/types';
 import { formatDayNumeric, formatShortMonth, rgba } from '~/utils';
 

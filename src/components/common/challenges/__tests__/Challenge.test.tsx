@@ -1,6 +1,6 @@
 import timekeeper from 'timekeeper';
 
-import Challenge from '~/components/specifics/dashboard/Challenge';
+import Challenge from '~/components/common/challenges/Challenge';
 import { workoutFactory } from '~/factories/workoutFactory';
 import { mockStore, withProvider } from '~/utils';
 

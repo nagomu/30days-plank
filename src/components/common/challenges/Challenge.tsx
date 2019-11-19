@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import PrimaryButton from '~/components/common/buttons/PrimaryButton';
 import StartButton from '~/components/specifics/dashboard/StartButton';
-import Menu from '~/components/specifics/dashboard/Workout';
+import Menu from '~/components/common/challenges/Workout';
 import { useOnArchive } from '~/hooks/specifics/dashboard/useOnArchive';
 import { Workout } from '~/types';
 import { isToday } from '~/utils';

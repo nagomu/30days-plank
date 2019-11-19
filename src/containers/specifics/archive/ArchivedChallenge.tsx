@@ -2,9 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import Workouts from '~/components/common/challenges/Workouts';
-import NotFound from '~/components/common/errors/NotFound';
-import DrawerScreen from '~/components/common/layouts/DrawerScreen';
+import WrappedComponent from '~/components/specifics/archive/ArchivedChallenge';
 import { AppState } from '~/store';
 import { onFetchArchivedChallenge } from '~/store/archive';
 import { ChallengeState } from '~/store/challenge';
@@ -40,17 +38,12 @@ const ArchivedChallenge: React.FC = () => {
     : 'Archive';
 
   return (
-    <DrawerScreen title={title} pathname="/archives" isLoading={isLoading}>
-      {!challengeId || !existsWorkouts(challenge) ? (
-        <NotFound />
-      ) : (
-        <Workouts
-          challengeId={challengeId}
-          todaysWorkout={undefined}
-          workouts={challenge.challenge.workouts}
-        />
-      )}
-    </DrawerScreen>
+    <WrappedComponent
+      challenge={challenge.challenge}
+      challengeId={challengeId}
+      isLoading={isLoading}
+      title={title}
+    />
   );
 };
 

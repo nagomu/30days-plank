@@ -8,7 +8,6 @@ import {
   calculateRate,
   fetchArchivedChallenge,
   fetchArchives,
-  generateTitle,
   initialState,
   onAddArchive,
   onFetchArchives,
@@ -201,14 +200,6 @@ describe('calculateRate', () => {
       isCompleted: i === 5 || i === 10 ? false : true,
     }));
     expect(calculateRate(workouts)).toEqual(93);
-  });
-});
-
-describe('generateTitle', () => {
-  it('returns title correctly', () => {
-    expect(generateTitle(workoutFactory(mockToday))).toEqual(
-      'Oct 1, 2019 - Oct 30, 2019',
-    );
   });
 });
 

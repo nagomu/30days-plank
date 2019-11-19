@@ -12,7 +12,7 @@ import {
   SET_ARCHIVES,
 } from '~/store/archive';
 import { Archives, Challenge, Next, Workout } from '~/types';
-import { formatUS } from '~/utils';
+import { generateTitle } from '~/utils';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
@@ -62,12 +62,6 @@ export const onFetchArchives = async (
 export const calculateRate = (workouts: Workout[]): number => {
   const completed = workouts.filter(w => w.isCompleted === true);
   return Math.round((completed.length / workouts.length) * 100);
-};
-
-export const generateTitle = (workouts: Workout[]): string => {
-  const firstDate = workouts[0].date;
-  const lastDate = workouts[workouts.length - 1].date;
-  return `${formatUS(firstDate)} - ${formatUS(lastDate)}`;
 };
 
 export const onAddArchive = async (

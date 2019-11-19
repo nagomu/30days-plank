@@ -8,9 +8,9 @@ import {
   calculateRate,
   fetchArchivedChallenge,
   fetchArchives,
-  generateTitle,
   initialState,
   onAddArchive,
+  onFetchArchivedChallenge,
   onFetchArchives,
   setArchivedChallenge,
   setArchives,
@@ -22,12 +22,20 @@ timekeeper.freeze(mockToday);
 
 const mockFetch = jest.fn();
 const mockAdd = jest.fn();
+const mockFetchChallenge = jest.fn();
 
 jest.mock(
   '~/services/firebase/archive',
   jest.fn().mockReturnValue({
     fetchArchives: () => mockFetch(),
     addArchive: () => mockAdd(),
+  }),
+);
+
+jest.mock(
+  '~/services/firebase/challenge',
+  jest.fn().mockReturnValue({
+    fetchChallenge: () => mockFetchChallenge(),
   }),
 );
 
@@ -192,6 +200,37 @@ describe('archive: actions', () => {
       }
     });
   });
+
+  describe('onFetchArchivedChallenge', () => {
+    it('should create valid action', async () => {
+      mockFetchChallenge.mockImplementation(
+        jest.fn().mockResolvedValue(undefined),
+      );
+      await onFetchArchivedChallenge(store.dispatch, 'cid');
+
+      const expected = [
+        { type: 'FETCH_ARCHIVED_CHALLENGE' },
+        {
+          type: 'SET_ARCHIVED_CHALLENGE',
+          payload: { detail: undefined },
+        },
+      ];
+      expect(store.getActions()).toEqual(expected);
+    });
+
+    it('calls postError if catch', async () => {
+      mockFetchChallenge.mockImplementation(
+        jest.fn().mockRejectedValue(new Error('Error')),
+      );
+      const mock = jest.fn(postError);
+
+      try {
+        await onFetchArchivedChallenge(store.dispatch, 'cid');
+      } catch (e) {
+        expect(mock).toBeCalledTimes(1);
+      }
+    });
+  });
 });
 
 describe('calculateRate', () => {
@@ -201,14 +240,6 @@ describe('calculateRate', () => {
       isCompleted: i === 5 || i === 10 ? false : true,
     }));
     expect(calculateRate(workouts)).toEqual(93);
-  });
-});
-
-describe('generateTitle', () => {
-  it('returns title correctly', () => {
-    expect(generateTitle(workoutFactory(mockToday))).toEqual(
-      'Oct 1, 2019 - Oct 30, 2019',
-    );
   });
 });
 

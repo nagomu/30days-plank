@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
 import * as ArchiveService from '~/services/firebase/archive';
+import { fetchChallenge } from '~/services/firebase/challenge';
 import { postError } from '~/services/firebase/error';
 import {
   ADD_ARCHIVE,
@@ -11,8 +12,9 @@ import {
   SET_ARCHIVED_CHALLENGE,
   SET_ARCHIVES,
 } from '~/store/archive';
+import { onFetchWorkouts } from '~/store/workout';
 import { Archives, Challenge, Next, Workout } from '~/types';
-import { formatUS } from '~/utils';
+import { generateTitle } from '~/utils';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
@@ -64,12 +66,6 @@ export const calculateRate = (workouts: Workout[]): number => {
   return Math.round((completed.length / workouts.length) * 100);
 };
 
-export const generateTitle = (workouts: Workout[]): string => {
-  const firstDate = workouts[0].date;
-  const lastDate = workouts[workouts.length - 1].date;
-  return `${formatUS(firstDate)} - ${formatUS(lastDate)}`;
-};
-
 export const onAddArchive = async (
   dispatch: Dispatch,
   challenge: Challenge,
@@ -88,4 +84,24 @@ export const onAddArchive = async (
   } catch (error) {
     postError(error);
   }
+};
+
+export const onFetchArchivedChallenge = async (
+  dispatch: Dispatch,
+  id: string,
+): Promise<void> => {
+  dispatch(fetchArchivedChallenge());
+
+  try {
+    const results = await fetchChallenge(id);
+    if (!results) {
+      dispatch(setArchivedChallenge(undefined));
+      return;
+    }
+    const challenge = { ...results, id } as Challenge;
+    await onFetchWorkouts(dispatch, challenge as Challenge);
+  } catch (error) {
+    postError(error);
+  }
+  return;
 };

@@ -1,7 +1,8 @@
-import { Archive, Next } from '~/types';
+import { Archive, Challenge, Next } from '~/types';
 
 export type ArchiveState = {
   archives?: Archive[];
+  detail?: Challenge;
   next?: Next;
   isLoading?: boolean;
 };

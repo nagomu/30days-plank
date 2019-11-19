@@ -1,10 +1,10 @@
 import timekeeper from 'timekeeper';
 
-import Challenge from '~/components/common/challenges/Challenge';
+import Workouts from '~/components/common/challenges/Workouts';
 import { workoutFactory } from '~/factories/workoutFactory';
 import { mockStore, withProvider } from '~/utils';
 
-describe('Challenge', () => {
+describe('Workouts', () => {
   const workouts = workoutFactory(new Date(Date.UTC(2019, 9, 1, 0, 0, 0)));
   const props = {
     challengeId: 'xxx',
@@ -35,10 +35,9 @@ describe('Challenge', () => {
     const mockToday = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
 
-    const wrapper = withProvider({ Component: Challenge, props, store });
+    const wrapper = withProvider({ Component: Workouts, props, store });
 
-    expect(wrapper.html()).not.toContain('Archive now');
-    expect(wrapper.find('Challenge').length).toEqual(1);
+    expect(wrapper.find('Workouts').length).toEqual(1);
     expect(wrapper.find('Workout').length).toEqual(30);
 
     timekeeper.reset();
@@ -48,7 +47,7 @@ describe('Challenge', () => {
     const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
     timekeeper.freeze(mockToday);
 
-    const wrapper = withProvider({ Component: Challenge, props, store });
+    const wrapper = withProvider({ Component: Workouts, props, store });
     const workouts = wrapper.find('Workout');
 
     expect(workouts.at(0).prop('isToday')).toEqual(true);

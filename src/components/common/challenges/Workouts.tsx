@@ -4,7 +4,7 @@ import * as React from 'react';
 import Menu from '~/components/common/challenges/Workout';
 import { Workout } from '~/types';
 
-const Workouts = styled.ul`
+const List = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
@@ -16,7 +16,7 @@ type Props = {
   workouts: Workout[];
 };
 
-const Challenge: React.FC<Props> = ({
+const Workouts: React.FC<Props> = ({
   challengeId,
   todaysWorkout,
   workouts,
@@ -27,7 +27,7 @@ const Challenge: React.FC<Props> = ({
     `/challenges/${challengeId}/workouts/${id}`;
 
   return (
-    <Workouts>
+    <List>
       {workouts.map(workout => (
         <Menu
           {...workout}
@@ -36,7 +36,8 @@ const Challenge: React.FC<Props> = ({
           isToday={isToday(workout)}
         />
       ))}
-    </Workouts>
+    </List>
   );
 };
-export default Challenge;
+
+export default Workouts;

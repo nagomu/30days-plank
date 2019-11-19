@@ -33,8 +33,8 @@ describe('Archives', () => {
     const wrapper = withProvider({ Component: Archives, props });
 
     expect(wrapper.find('DrawerScreen').length).toEqual(1);
-    // expect(wrapper.find('ul NavLink').length).toEqual(3);
     expect(wrapper.find('ul li').length).toEqual(3);
+    expect(wrapper.find('ul NavLink').length).toEqual(3);
     expect(wrapper.find('span.isCompleted').length).toEqual(2);
   });
 

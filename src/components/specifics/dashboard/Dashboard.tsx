@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 
 import PrimaryButton from '~/components/common/buttons/PrimaryButton';
-import Workouts from '~/components/common/challenges/Challenge';
+import Workouts from '~/components/common/challenges/Workouts';
 import Loading from '~/components/common/loaders/Loading';
 import NotStarted from '~/components/specifics/dashboard/NotStarted';
 import StartButton from '~/components/specifics/dashboard/StartButton';

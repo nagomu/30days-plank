@@ -1,16 +1,20 @@
 import { Dispatch } from 'redux';
 
 import * as ArchiveService from '~/services/firebase/archive';
+import { fetchChallenge } from '~/services/firebase/challenge';
 import { postError } from '~/services/firebase/error';
 import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
   ArchiveActionTypes,
+  FETCH_ARCHIVED_CHALLENGE,
   FETCH_ARCHIVES,
+  SET_ARCHIVED_CHALLENGE,
   SET_ARCHIVES,
 } from '~/store/archive';
+import { onFetchWorkouts } from '~/store/workout';
 import { Archives, Challenge, Next, Workout } from '~/types';
-import { formatUS } from '~/utils';
+import { generateTitle } from '~/utils';
 
 export const fetchArchives = (): ArchiveActionTypes => ({
   type: FETCH_ARCHIVES,
@@ -32,6 +36,17 @@ export const addArchiveSuccess = (): ArchiveActionTypes => ({
   type: ADD_ARCHIVE_SUCCESS,
 });
 
+export const fetchArchivedChallenge = (): ArchiveActionTypes => ({
+  type: FETCH_ARCHIVED_CHALLENGE,
+});
+
+export const setArchivedChallenge = (
+  detail?: Challenge,
+): ArchiveActionTypes => ({
+  type: SET_ARCHIVED_CHALLENGE,
+  payload: { detail },
+});
+
 export const onFetchArchives = async (
   dispatch: Dispatch,
   next?: Next,
@@ -49,12 +64,6 @@ export const onFetchArchives = async (
 export const calculateRate = (workouts: Workout[]): number => {
   const completed = workouts.filter(w => w.isCompleted === true);
   return Math.round((completed.length / workouts.length) * 100);
-};
-
-export const generateTitle = (workouts: Workout[]): string => {
-  const firstDate = workouts[0].date;
-  const lastDate = workouts[workouts.length - 1].date;
-  return `${formatUS(firstDate)} - ${formatUS(lastDate)}`;
 };
 
 export const onAddArchive = async (
@@ -75,4 +84,24 @@ export const onAddArchive = async (
   } catch (error) {
     postError(error);
   }
+};
+
+export const onFetchArchivedChallenge = async (
+  dispatch: Dispatch,
+  id: string,
+): Promise<void> => {
+  dispatch(fetchArchivedChallenge());
+
+  try {
+    const results = await fetchChallenge(id);
+    if (!results) {
+      dispatch(setArchivedChallenge(undefined));
+      return;
+    }
+    const challenge = { ...results, id } as Challenge;
+    await onFetchWorkouts(dispatch, challenge as Challenge);
+  } catch (error) {
+    postError(error);
+  }
+  return;
 };

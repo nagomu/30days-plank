@@ -1,6 +1,6 @@
 {
   "name": "30days-plank",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "repository": "git@github.com:nagomu/30days-plank.git",
   "author": "@nagomu",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "test": "NODE_ENV=test jest --env=jsdom --cache",
     "test:ci": "NODE_ENV=test jest --env=jsdom --cache --coverage --runInBand --forceExit",
     "lint": "yarn eslint && yarn stylelint",
-    "lint:fix": "yarn eslint --fix --cache && yarn stylelint",
+    "lint:fix": "yarn eslint --fix && yarn stylelint",
     "eslint": "eslint src --ext .ts,.tsx --cache --cache-location=.cache/eslint",
     "stylelint": "stylelint src/**/*.{ts,tsx} --cache --cache-location=.cache/stylelint",
     "sprite": "svg-sprite -s --symbol-dest=src/assets --symbol-sprite=sprite.svg src/assets/icons/*.svg",

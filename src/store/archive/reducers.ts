@@ -3,13 +3,16 @@ import {
   ADD_ARCHIVE_SUCCESS,
   ArchiveActionTypes,
   ArchiveState,
+  FETCH_ARCHIVED_CHALLENGE,
   FETCH_ARCHIVES,
+  SET_ARCHIVED_CHALLENGE,
   SET_ARCHIVES,
 } from '~/store/archive';
 import { Archive } from '~/types';
 
 export const initialState: ArchiveState = {
   archives: [],
+  detail: undefined,
   next: undefined,
   isLoading: undefined,
 };
@@ -49,6 +52,12 @@ export const archiveReducer = (
         ...state,
         isLoading: false,
       };
+    case SET_ARCHIVED_CHALLENGE:
+      return {
+        ...state,
+        detail: action.payload.detail,
+        isLoading: false,
+      };
     case ADD_ARCHIVE_SUCCESS:
       return {
         ...state,
@@ -56,6 +65,7 @@ export const archiveReducer = (
       };
     case ADD_ARCHIVE:
     case FETCH_ARCHIVES:
+    case FETCH_ARCHIVED_CHALLENGE:
       return {
         ...state,
         isLoading: true,

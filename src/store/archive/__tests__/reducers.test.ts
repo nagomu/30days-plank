@@ -4,9 +4,11 @@ import {
   addArchive,
   addArchiveSuccess,
   archiveReducer as reducer,
+  fetchArchivedChallenge,
   fetchArchives,
   initialState,
   mergeArchives,
+  setArchivedChallenge,
   setArchives,
 } from '~/store/archive';
 import { timestamp } from '~/utils';
@@ -14,8 +16,9 @@ import { timestamp } from '~/utils';
 describe('archive: reducers', () => {
   it('handles FETCH_ARCHIVES', () => {
     const expected = {
-      isLoading: true,
       archives: [],
+      details: undefined,
+      isLoading: true,
     };
     const action = fetchArchives();
     expect(reducer(initialState, action)).toEqual(expected);
@@ -37,8 +40,9 @@ describe('archive: reducers', () => {
       next: undefined,
     };
     const expected = {
-      isLoading: false,
       archives: archives.archives,
+      details: undefined,
+      isLoading: false,
       next: archives.next,
     };
     const action = setArchives(archives);
@@ -47,8 +51,9 @@ describe('archive: reducers', () => {
 
   it('handles ADD_ARCHIVE', () => {
     const expected = {
-      isLoading: true,
       archives: [],
+      details: undefined,
+      isLoading: true,
     };
     const action = addArchive();
     expect(reducer(initialState, action)).toEqual(expected);
@@ -56,11 +61,48 @@ describe('archive: reducers', () => {
 
   it('handles ADD_ARCHIVE_SUCCESS', () => {
     const expected = {
-      isLoading: false,
       archives: [],
+      details: undefined,
+      isLoading: false,
     };
     const action = addArchiveSuccess();
     expect(reducer(initialState, action)).toEqual(expected);
+  });
+
+  it('handles FETCH_ARCHIVED_CHALLENGE', () => {
+    const expected = {
+      archives: [],
+      detail: undefined,
+      next: undefined,
+      isLoading: true,
+    };
+    const action = fetchArchivedChallenge();
+    expect(reducer(initialState, action)).toEqual(expected);
+  });
+
+  it('handles SET_ARCHIVED_CHALLENGE', () => {
+    const mockToday = new Date(Date.UTC(2018, 0, 1, 0, 0, 0));
+    timekeeper.freeze(mockToday);
+
+    const detail = {
+      id: 'xxx',
+      description: 'xxx',
+      isActive: false,
+      workouts: [],
+      createdAt: timestamp(mockToday),
+    };
+
+    const expected = {
+      archives: [],
+      detail,
+      isLoading: false,
+      next: undefined,
+    };
+
+    const action = setArchivedChallenge(detail);
+    expect(reducer(initialState, action)).toEqual(expected);
+
+    timekeeper.reset();
   });
 });
 

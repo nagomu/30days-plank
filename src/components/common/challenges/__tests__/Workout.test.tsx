@@ -1,6 +1,6 @@
 import timekeeper from 'timekeeper';
 
-import Workout from '~/components/specifics/dashboard/Workout';
+import Workout from '~/components/common/challenges/Workout';
 import { timestamp, withProvider } from '~/utils';
 
 describe('Workout', () => {
@@ -43,36 +43,44 @@ describe('Workout', () => {
     expect(title.text()).toEqual('Day 1');
   });
 
-  describe('if today', () => {
-    it('renders correctly', () => {
-      const params = {
-        Component: Workout,
-        props: {
-          ...props,
-          isToday: true,
-          date: timestamp(mockToday),
-        },
-      };
-      const wrapper = withProvider(params).find('Workout');
-      const container = wrapper.find('Container');
-      expect(container.prop('color')).toEqual('#1e88e5');
-    });
+  it('renders correctly if today', () => {
+    const params = {
+      Component: Workout,
+      props: {
+        ...props,
+        isToday: true,
+        date: timestamp(mockToday),
+      },
+    };
+    const wrapper = withProvider(params).find('Workout');
+    const container = wrapper.find('Container');
+    expect(container.prop('color')).toEqual('#1e88e5');
   });
 
-  describe('if rest', () => {
-    it('renders correctly', () => {
-      const params = {
-        Component: Workout,
-        props: {
-          ...props,
-          isRest: true,
-        },
-      };
-      const wrapper = withProvider(params).find('Workout');
-      const container = wrapper.find('Container');
-      expect(wrapper.find('a').length).toEqual(0);
-      expect(container.prop('color')).toEqual('rgba(211, 47, 47, 0.6)');
-    });
+  it('renders correctly if rest', () => {
+    const params = {
+      Component: Workout,
+      props: {
+        ...props,
+        isRest: true,
+      },
+    };
+    const wrapper = withProvider(params).find('Workout');
+    const container = wrapper.find('Container');
+    expect(wrapper.find('a').length).toEqual(0);
+    expect(container.prop('color')).toEqual('rgba(211, 47, 47, 0.6)');
+  });
+
+  it('renders correctly if archived', () => {
+    const params = {
+      Component: Workout,
+      props: {
+        ...props,
+        isArchived: true,
+      },
+    };
+    const wrapper = withProvider(params).find('Workout');
+    expect(wrapper.find('a').length).toEqual(0);
   });
 
   timekeeper.reset();

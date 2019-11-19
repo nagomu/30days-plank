@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import Label from '~/components/specifics/dashboard/Label';
+import Label from '~/components/common/challenges/Label';
 import { Timestamp } from '~/types';
 import { formatDayNumeric, formatShortMonth, rgba } from '~/utils';
 
@@ -49,6 +49,7 @@ const Button = SpanButton.withComponent(NavLink);
 
 type Props = {
   id: string;
+  isArchived: boolean;
   isCompleted: boolean;
   isRest: boolean;
   isToday: boolean;
@@ -59,7 +60,16 @@ type Props = {
 };
 
 const Workout: React.FC<Props> = props => {
-  const { isCompleted, isRest, isToday, menu, pathname, date, title } = props;
+  const {
+    isArchived,
+    isCompleted,
+    isRest,
+    isToday,
+    menu,
+    pathname,
+    date,
+    title,
+  } = props;
 
   const day = formatDayNumeric(date);
   const month = formatShortMonth(date);
@@ -72,7 +82,7 @@ const Workout: React.FC<Props> = props => {
 
   return (
     <StyledContainer color={color}>
-      {isRest ? (
+      {isArchived || isRest ? (
         <SpanButton>
           <Label
             day={day}

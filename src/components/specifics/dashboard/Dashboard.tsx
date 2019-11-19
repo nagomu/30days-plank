@@ -49,6 +49,7 @@ const Dashboard: React.FC<Props> = props => {
           )}
           <Workouts
             challengeId={challenge.id}
+            isArchived={false}
             todaysWorkout={todaysWorkout}
             workouts={challenge.workouts}
           />

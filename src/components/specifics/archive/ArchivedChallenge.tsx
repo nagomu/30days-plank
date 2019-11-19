@@ -22,6 +22,7 @@ const ArchivedChallenge: React.FC<Props> = props => {
       ) : (
         <Workouts
           challengeId={challengeId}
+          isArchived={true}
           todaysWorkout={undefined}
           workouts={challenge.workouts}
         />

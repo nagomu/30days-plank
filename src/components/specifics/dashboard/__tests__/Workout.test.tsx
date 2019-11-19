@@ -1,6 +1,6 @@
 import timekeeper from 'timekeeper';
 
-import Workout from '~/components/common/challenges/Workout';
+import Workout from '~/components/specifics/dashboard/Workout';
 import { timestamp, withProvider } from '~/utils';
 
 describe('Workout', () => {

@@ -6,7 +6,8 @@ import Workouts from '~/components/common/challenges/Workouts';
 import NotFound from '~/components/common/errors/NotFound';
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
 import { AppState } from '~/store';
-import { ChallengeState, onFetchChallenge } from '~/store/challenge';
+import { onFetchArchivedChallenge } from '~/store/archive';
+import { ChallengeState } from '~/store/challenge';
 import { Challenge } from '~/types';
 import { generateTitle, isEmptyArray } from '~/utils';
 
@@ -30,10 +31,7 @@ const ArchivedChallenge: React.FC = () => {
   }));
 
   React.useEffect(() => {
-    if (user && challengeId) {
-      // TODO: Should we add a specific method?
-      onFetchChallenge(dispatch, challengeId);
-    }
+    if (user && challengeId) onFetchArchivedChallenge(dispatch, challengeId);
   }, [user]);
 
   const isLoading = !user || !!challenge.isLoading || !!workout.isLoading;

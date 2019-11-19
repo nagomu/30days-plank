@@ -10,8 +10,8 @@ import {
   fetchArchives,
   initialState,
   onAddArchive,
-  onFetchArchives,
   onFetchArchivedChallenge,
+  onFetchArchives,
   setArchivedChallenge,
   setArchives,
 } from '~/store/archive';

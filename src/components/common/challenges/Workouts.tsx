@@ -12,12 +12,14 @@ const List = styled.ul`
 
 type Props = {
   challengeId: string;
+  isArchived: boolean;
   todaysWorkout?: Workout;
   workouts: Workout[];
 };
 
 const Workouts: React.FC<Props> = ({
   challengeId,
+  isArchived,
   todaysWorkout,
   workouts,
 }) => {
@@ -33,6 +35,7 @@ const Workouts: React.FC<Props> = ({
           {...workout}
           key={workout.id}
           pathname={`${pathname(workout.id)}`}
+          isArchived={isArchived}
           isToday={isToday(workout)}
         />
       ))}

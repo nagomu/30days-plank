@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
 
-import Label from '~/components/common/challenges/Label';
+import Label from '~/components/specifics/dashboard/Label';
 
 describe('Label', () => {
   const props = {

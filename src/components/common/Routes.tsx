@@ -12,11 +12,6 @@ const NotFound = loadable(() => import('~/components/common/errors/NotFound'), {
   fallback: <Loading />,
 });
 
-const ArchivedChallenge = loadable(
-  () => import('~/containers/specifics/archive/ArchivedChallenge'),
-  { fallback: <Loading /> },
-);
-
 const Archives = loadable(
   () => import('~/containers/specifics/archive/Archives'),
   { fallback: <Loading /> },
@@ -65,11 +60,6 @@ const Routes: React.FC = () => {
             <Switch>
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/archives" component={Archives} />
-              <Route
-                exact
-                path="/archives/:challengeId"
-                component={ArchivedChallenge}
-              />
               <Route
                 exact
                 path="/challenges/:challengeId/workouts/:id"

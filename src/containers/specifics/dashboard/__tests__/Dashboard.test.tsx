@@ -28,7 +28,7 @@ describe('DashboardContainer', () => {
       store: mockStore(store),
     }).find('Dashboard');
 
-    expect(wrapper.find('Workouts').length).toEqual(1);
+    expect(wrapper.find('Challenge').length).toEqual(1);
     expect(wrapper.find('Workout').length).toEqual(30);
   });
 });

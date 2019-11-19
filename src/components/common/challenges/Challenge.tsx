@@ -1,17 +1,8 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
 
-import PrimaryButton from '~/components/common/buttons/PrimaryButton';
-import StartButton from '~/components/specifics/dashboard/StartButton';
 import Menu from '~/components/common/challenges/Workout';
-import { useOnArchive } from '~/hooks/specifics/dashboard/useOnArchive';
 import { Workout } from '~/types';
-import { isToday } from '~/utils';
-
-const Expired = styled.div`
-  padding: 0 16px;
-  border-bottom: 1px solid #e0e0e0;
-`;
 
 const Workouts = styled.ul`
   margin: 0;
@@ -21,45 +12,31 @@ const Workouts = styled.ul`
 
 type Props = {
   challengeId: string;
+  todaysWorkout?: Workout;
   workouts: Workout[];
 };
 
-const Challenge: React.FC<Props> = ({ challengeId, workouts }) => {
-  const { isExpired, onArchive } = useOnArchive();
-  const todaysWorkout = workouts.find(w => isToday(w.date));
+const Challenge: React.FC<Props> = ({
+  challengeId,
+  todaysWorkout,
+  workouts,
+}) => {
+  const isToday = (workout: Workout): boolean =>
+    !!todaysWorkout && todaysWorkout.id === workout.id;
   const pathname = (id: string): string =>
     `/challenges/${challengeId}/workouts/${id}`;
 
   return (
-    <>
-      {isExpired && (
-        <Expired>
-          <p>This challenge seems to be out of date</p>
-          <p>
-            <PrimaryButton onClick={onArchive}>Archive now</PrimaryButton>
-          </p>
-        </Expired>
-      )}
-      <Workouts>
-        {workouts.map(workout => (
-          <Menu
-            {...workout}
-            key={workout.id}
-            pathname={`${pathname(workout.id)}`}
-            isToday={
-              !!todaysWorkout &&
-              !workout.isRest &&
-              todaysWorkout.id === workout.id
-            }
-          />
-        ))}
-      </Workouts>
-      {!!todaysWorkout &&
-        !todaysWorkout.isRest &&
-        !todaysWorkout.isCompleted && (
-          <StartButton pathname={`${pathname(todaysWorkout.id)}`} />
-        )}
-    </>
+    <Workouts>
+      {workouts.map(workout => (
+        <Menu
+          {...workout}
+          key={workout.id}
+          pathname={`${pathname(workout.id)}`}
+          isToday={isToday(workout)}
+        />
+      ))}
+    </Workouts>
   );
 };
 export default Challenge;

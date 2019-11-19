@@ -5,9 +5,11 @@ import { workoutFactory } from '~/factories/workoutFactory';
 import { mockStore, withProvider } from '~/utils';
 
 describe('Challenge', () => {
+  const workouts = workoutFactory(new Date(Date.UTC(2019, 9, 1, 0, 0, 0)));
   const props = {
     challengeId: 'xxx',
-    workouts: workoutFactory(new Date(Date.UTC(2019, 9, 1, 0, 0, 0))),
+    todaysWorkout: workouts[0],
+    workouts,
   };
 
   const state = {
@@ -21,7 +23,7 @@ describe('Challenge', () => {
       challenge: {
         id: 'xxx',
         isActive: true,
-        workouts: workoutFactory(new Date(Date.UTC(2019, 9, 1, 0, 0, 0))),
+        workouts,
       },
       isLoading: false,
     },
@@ -51,44 +53,6 @@ describe('Challenge', () => {
 
     expect(workouts.at(0).prop('isToday')).toEqual(true);
     expect(wrapper.find('Workout[isToday=true]').length).toEqual(1);
-
-    timekeeper.reset();
-  });
-
-  it('renders archive button if expired', () => {
-    const mockToday = new Date(Date.UTC(2020, 0, 1, 0, 0, 0));
-    timekeeper.freeze(mockToday);
-
-    const wrapper = withProvider({ Component: Challenge, props, store });
-
-    expect(wrapper.html()).toContain('Archive now');
-    expect(wrapper.find('Challenge').length).toEqual(1);
-    expect(wrapper.find('Workout').length).toEqual(30);
-
-    timekeeper.reset();
-  });
-
-  it('renders start button if today', () => {
-    const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
-    timekeeper.freeze(mockToday);
-
-    const _props = {
-      ...props,
-      workouts: props.workouts.map(workout => ({
-        ...workout,
-        isCompleted: false,
-      })),
-    };
-
-    const wrapper = withProvider({
-      Component: Challenge,
-      props: _props,
-      store,
-    });
-    const startButton = wrapper.find(
-      'StartButton[pathname="/challenges/xxx/workouts/1"]',
-    );
-    expect(startButton.length).toEqual(1);
 
     timekeeper.reset();
   });

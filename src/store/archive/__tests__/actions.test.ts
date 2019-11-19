@@ -6,11 +6,13 @@ import {
   addArchive,
   addArchiveSuccess,
   calculateRate,
+  fetchArchivedChallenge,
   fetchArchives,
   generateTitle,
   initialState,
   onAddArchive,
   onFetchArchives,
+  setArchivedChallenge,
   setArchives,
 } from '~/store/archive';
 import { mockStore, timestamp } from '~/utils';
@@ -89,6 +91,38 @@ describe('archive: actions', () => {
     it('should create valid action', () => {
       store.dispatch(addArchiveSuccess());
       const expected = [{ type: 'ADD_ARCHIVE_SUCCESS' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('fetchArchivedChallenge', () => {
+    it('should create valid action', () => {
+      store.dispatch(fetchArchivedChallenge());
+      const expected = [{ type: 'FETCH_ARCHIVED_CHALLENGE' }];
+      expect(store.getActions()).toEqual(expected);
+    });
+  });
+
+  describe('setArchivedChallenge', () => {
+    it('should create valid action', () => {
+      const detail = {
+        id: 'xxx',
+        description: 'xxx',
+        isActive: false,
+        workouts: [],
+        createdAt: timestamp(mockToday),
+      };
+
+      store.dispatch(setArchivedChallenge(detail));
+
+      const expected = [
+        {
+          type: 'SET_ARCHIVED_CHALLENGE',
+          payload: {
+            detail,
+          },
+        },
+      ];
       expect(store.getActions()).toEqual(expected);
     });
   });

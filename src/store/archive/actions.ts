@@ -6,7 +6,9 @@ import {
   ADD_ARCHIVE,
   ADD_ARCHIVE_SUCCESS,
   ArchiveActionTypes,
+  FETCH_ARCHIVED_CHALLENGE,
   FETCH_ARCHIVES,
+  SET_ARCHIVED_CHALLENGE,
   SET_ARCHIVES,
 } from '~/store/archive';
 import { Archives, Challenge, Next, Workout } from '~/types';
@@ -30,6 +32,17 @@ export const addArchive = (): ArchiveActionTypes => ({
 
 export const addArchiveSuccess = (): ArchiveActionTypes => ({
   type: ADD_ARCHIVE_SUCCESS,
+});
+
+export const fetchArchivedChallenge = (): ArchiveActionTypes => ({
+  type: FETCH_ARCHIVED_CHALLENGE,
+});
+
+export const setArchivedChallenge = (
+  detail?: Challenge,
+): ArchiveActionTypes => ({
+  type: SET_ARCHIVED_CHALLENGE,
+  payload: { detail },
 });
 
 export const onFetchArchives = async (

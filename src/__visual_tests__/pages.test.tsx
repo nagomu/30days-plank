@@ -9,21 +9,6 @@ import { injectAppToHtml, launch } from './utils/testHelpers';
 
 const ts = timestamp(new Date());
 
-const MOCK_LENGTH = 10;
-const props = {
-  archives: [...Array(MOCK_LENGTH).keys()].map(i => ({
-    id: `${i + 1}`,
-    challenge: `c${i + 1}`,
-    title: `${generateTitle(
-      workoutFactory(new Date(Date.UTC(2019, MOCK_LENGTH - i, 1, 0, 0, 0))),
-    )}`,
-    rate: i === 0 ? 10 : 100,
-    createdAt: ts,
-    updatedAt: ts,
-  })),
-  isLoading: false,
-};
-
 describe('Visual regression test', () => {
   let browser: puppeteer.Browser;
   let page: puppeteer.Page;
@@ -41,6 +26,21 @@ describe('Visual regression test', () => {
   });
 
   describe('/archives', () => {
+    const MOCK_LENGTH = 10;
+    const props = {
+      archives: [...Array(MOCK_LENGTH).keys()].map(i => ({
+        id: `${i + 1}`,
+        challenge: `c${i + 1}`,
+        title: `${generateTitle(
+          workoutFactory(new Date(Date.UTC(2019, MOCK_LENGTH - i, 1, 0, 0, 0))),
+        )}`,
+        rate: i === 0 ? 10 : 100,
+        createdAt: ts,
+        updatedAt: ts,
+      })),
+      isLoading: false,
+    };
+
     it('renders correctly', async () => {
       await page.setContent(injectAppToHtml(<Archives {...props} />));
       await page.waitForSelector('#root');

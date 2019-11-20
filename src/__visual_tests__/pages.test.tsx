@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import Archives from '~/components/specifics/archive/Archives';
 import ArchivedChallenge from '~/components/specifics/archive/ArchivedChallenge';
+import SignIn from '~/components/specifics/signIn/SignIn';
 import { workoutFactory } from '~/factories/workoutFactory';
 import { generateTitle, timestamp } from '~/utils';
 
@@ -25,6 +26,22 @@ describe('Visual regression test', () => {
     await page.close();
     await browser.close();
     done();
+  });
+
+  describe('/', () => {
+    const props = {
+      onSignIn: jest.fn(),
+    };
+
+    it('renders correctly', async () => {
+      await page.setContent(injectAppToHtml(<SignIn {...props} />));
+      await page.waitForSelector('#root');
+
+      const screenshot = await page.screenshot({ fullPage: true });
+      expect(screenshot).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'sign-in',
+      });
+    });
   });
 
   describe('/archives', () => {

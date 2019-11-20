@@ -10,7 +10,7 @@ jest.setTimeout(60000);
 
 expect.extend({ toMatchImageSnapshot });
 
-const launch = async (): Promise<puppeteer.Browser> =>
+export const launch = async (): Promise<puppeteer.Browser> =>
   await puppeteer.launch({
     defaultViewport: {
       width: 320,
@@ -20,16 +20,6 @@ const launch = async (): Promise<puppeteer.Browser> =>
     },
     timeout: 50000,
   });
-
-const incognito = async (): Promise<puppeteer.BrowserContext> => {
-  const browser = await launch();
-  return await browser.createIncognitoBrowserContext();
-};
-
-export const newPage = async (): Promise<puppeteer.Page> => {
-  const context = await incognito();
-  return await context.newPage();
-};
 
 export const injectAppToHtml = (component: React.ReactNode): string => {
   const cssPath = path.resolve(__dirname, '../../', 'index.css');

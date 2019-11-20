@@ -5,7 +5,7 @@ import Archives from '~/components/specifics/archive/Archives';
 import { workoutFactory } from '~/factories/workoutFactory';
 import { generateTitle, timestamp } from '~/utils';
 
-import { injectAppToHtml, newPage } from './utils/testHelpers';
+import { injectAppToHtml, launch } from './utils/testHelpers';
 
 const ts = timestamp(new Date());
 
@@ -24,38 +24,45 @@ const props = {
   isLoading: false,
 };
 
-describe('/archives', () => {
+describe('Visual regression test', () => {
+  let browser: puppeteer.Browser;
   let page: puppeteer.Page;
 
   beforeAll(async () => {
-    page = await newPage();
+    browser = await launch();
+    const context = await browser.createIncognitoBrowserContext();
+    page = await context.newPage();
   });
 
-  afterAll(() => {
-    page.close();
+  afterAll(async done => {
+    await page.close();
+    await browser.close();
+    done();
   });
 
-  it('renders correctly', async () => {
-    await page.setContent(injectAppToHtml(<Archives {...props} />));
-    await page.waitForSelector('#root');
+  describe('/archives', () => {
+    it('renders correctly', async () => {
+      await page.setContent(injectAppToHtml(<Archives {...props} />));
+      await page.waitForSelector('#root');
 
-    const screenshot = await page.screenshot({ fullPage: true });
-    expect(screenshot).toMatchImageSnapshot({
-      customSnapshotIdentifier: 'archives',
+      const screenshot = await page.screenshot({ fullPage: true });
+      expect(screenshot).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'archives',
+      });
     });
-  });
 
-  it('renders correctly if archives are empty', async () => {
-    const _props = {
-      ...props,
-      archives: [],
-    };
-    await page.setContent(injectAppToHtml(<Archives {..._props} />));
-    await page.waitForSelector('#root');
+    it('renders correctly if archives are empty', async () => {
+      const _props = {
+        ...props,
+        archives: [],
+      };
+      await page.setContent(injectAppToHtml(<Archives {..._props} />));
+      await page.waitForSelector('#root');
 
-    const screenshot = await page.screenshot({ fullPage: true });
-    expect(screenshot).toMatchImageSnapshot({
-      customSnapshotIdentifier: 'archives-empty',
+      const screenshot = await page.screenshot({ fullPage: true });
+      expect(screenshot).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'archives-empty',
+      });
     });
   });
 });

@@ -15,7 +15,8 @@ import {
   updateChallenge,
   updateChallengeSuccess,
 } from '~/store/challenge';
-import { mockStore, timestamp } from '~/utils';
+import { timestamp } from '~/utils';
+import { mockStore } from '~/utils/testHelpers';
 
 const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(mockToday);

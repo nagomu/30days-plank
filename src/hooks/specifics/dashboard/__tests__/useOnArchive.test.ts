@@ -5,7 +5,7 @@ import {
   isExpired,
   useOnArchive,
 } from '~/hooks/specifics/dashboard/useOnArchive';
-import { mockStore, withHook } from '~/utils';
+import { mockStore, withHook } from '~/utils/testHelpers';
 
 describe('useOnArchive', () => {
   it('returns correct values if initial state', () => {

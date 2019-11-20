@@ -1,5 +1,5 @@
 import StartButton from '~/components/specifics/dashboard/StartButton';
-import { withProvider } from '~/utils';
+import { withProvider } from '~/utils/testHelpers';
 
 describe('StartButton', () => {
   const props = { pathname: '/' };

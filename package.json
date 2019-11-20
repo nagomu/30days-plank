@@ -12,8 +12,9 @@
   "scripts": {
     "dev": "yarn sprite && NODE_ENV=development webpack-dev-server",
     "build": "yarn clean && yarn sprite && NODE_ENV=production webpack --config webpack.config.js --mode=production",
-    "test": "NODE_ENV=test jest --cache",
-    "test:ci": "NODE_ENV=test jest --cache --coverage --runInBand --forceExit",
+    "test": "NODE_ENV=test jest",
+    "test:vrt": "NODE_ENV=test jest -c ./jest.vrt.config.js",
+    "test:ci": "yarn test --runInBand --forceExit && yarn test:vrt --runInBand --forceExit",
     "lint": "yarn eslint && yarn stylelint",
     "lint:fix": "yarn eslint --fix && yarn stylelint",
     "eslint": "eslint src --ext .ts,.tsx --cache --cache-location=.cache/eslint",

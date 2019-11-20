@@ -2,12 +2,14 @@ import puppeteer from 'puppeteer';
 import * as React from 'react';
 
 import Archives from '~/components/specifics/archive/Archives';
+import ArchivedChallenge from '~/components/specifics/archive/ArchivedChallenge';
 import { workoutFactory } from '~/factories/workoutFactory';
 import { generateTitle, timestamp } from '~/utils';
 
 import { injectAppToHtml, launch } from './utils/testHelpers';
 
-const ts = timestamp(new Date());
+const today = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
+const ts = timestamp(today);
 
 describe('Visual regression test', () => {
   let browser: puppeteer.Browser;
@@ -62,6 +64,45 @@ describe('Visual regression test', () => {
       const screenshot = await page.screenshot({ fullPage: true });
       expect(screenshot).toMatchImageSnapshot({
         customSnapshotIdentifier: 'archives-empty',
+      });
+    });
+  });
+
+  describe('/archives/:challengeId', () => {
+    const props = {
+      challengeId: 'id',
+      title: 'title',
+      challenge: {
+        id: 'id',
+        isActive: false,
+        workouts: workoutFactory(today),
+        createdAt: ts,
+        updatedAt: ts,
+      },
+      isLoading: false,
+    };
+
+    it('renders correctly', async () => {
+      await page.setContent(injectAppToHtml(<ArchivedChallenge {...props} />));
+      await page.waitForSelector('#root');
+
+      const screenshot = await page.screenshot({ fullPage: true });
+      expect(screenshot).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'archived-challenge',
+      });
+    });
+
+    it('renders correctly if challenge does not exist', async () => {
+      const _props = {
+        ...props,
+        challenge: undefined,
+      };
+      await page.setContent(injectAppToHtml(<ArchivedChallenge {..._props} />));
+      await page.waitForSelector('#root');
+
+      const screenshot = await page.screenshot({ fullPage: true });
+      expect(screenshot).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'archived-challenge-not-found',
       });
     });
   });

@@ -12,8 +12,8 @@
   "scripts": {
     "dev": "yarn sprite && NODE_ENV=development webpack-dev-server",
     "build": "yarn clean && yarn sprite && NODE_ENV=production webpack --config webpack.config.js --mode=production",
-    "test": "NODE_ENV=test jest --env=jsdom --cache",
-    "test:ci": "NODE_ENV=test jest --env=jsdom --cache --coverage --runInBand --forceExit",
+    "test": "NODE_ENV=test jest --cache",
+    "test:ci": "NODE_ENV=test jest --cache --coverage --runInBand --forceExit",
     "lint": "yarn eslint && yarn stylelint",
     "lint:fix": "yarn eslint --fix && yarn stylelint",
     "eslint": "eslint src --ext .ts,.tsx --cache --cache-location=.cache/eslint",
@@ -33,7 +33,6 @@
     "setupFiles": [
       "<rootDir>/jest.setup.ts"
     ],
-    "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/"
     ],

@@ -14,7 +14,7 @@
     "build": "yarn clean && yarn sprite && NODE_ENV=production webpack --config webpack.config.js --mode=production",
     "test": "NODE_ENV=test jest",
     "test:vrt": "NODE_ENV=test jest -c ./jest.vrt.config.js --runInBand",
-    "test:ci": "yarn test --runInBand --forceExit && yarn test:vrt --forceExit",
+    "test:ci": "yarn test --runInBand --forceExit",
     "lint": "yarn eslint && yarn stylelint",
     "lint:fix": "yarn eslint --fix && yarn stylelint",
     "eslint": "eslint src --ext .ts,.tsx --cache --cache-location=.cache/eslint",

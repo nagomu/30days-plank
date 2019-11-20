@@ -6,7 +6,7 @@ import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 
-jest.setTimeout(10000);
+jest.setTimeout(60000);
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -18,6 +18,7 @@ const launch = async (): Promise<puppeteer.Browser> =>
       isMobile: true,
       hasTouch: true,
     },
+    timeout: 50000,
   });
 
 const incognito = async (): Promise<puppeteer.BrowserContext> => {

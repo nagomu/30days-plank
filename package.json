@@ -34,7 +34,8 @@
       "<rootDir>/jest.setup.ts"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/__visual_tests__/"
     ],
     "moduleNameMapper": {
       "^~/(.+)": "<rootDir>/src/$1"

@@ -70,6 +70,11 @@ describe('Visual regression test', () => {
         customSnapshotIdentifier: 'dashboard',
       });
     });
+
+    // TODO:
+    //   Add expired
+    //   Add StartButton
+    //   Add Not started yet
   });
 
   describe('/archives', () => {

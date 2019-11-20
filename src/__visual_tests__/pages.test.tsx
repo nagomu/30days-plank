@@ -3,9 +3,11 @@ import * as React from 'react';
 
 import Archives from '~/components/specifics/archive/Archives';
 import ArchivedChallenge from '~/components/specifics/archive/ArchivedChallenge';
+import Dashboard from '~/components/specifics/dashboard/Dashboard';
 import SignIn from '~/components/specifics/signIn/SignIn';
 import { workoutFactory } from '~/factories/workoutFactory';
 import { generateTitle, timestamp } from '~/utils';
+import { mockStore } from '~/utils/testHelpers';
 
 import { injectAppToHtml, launch } from './utils/testHelpers';
 
@@ -40,6 +42,32 @@ describe('Visual regression test', () => {
       const screenshot = await page.screenshot({ fullPage: true });
       expect(screenshot).toMatchImageSnapshot({
         customSnapshotIdentifier: 'sign-in',
+      });
+    });
+  });
+
+  describe('/dashboard', () => {
+    const props = {
+      challenge: {
+        id: 'id',
+        isActive: false,
+        workouts: workoutFactory(today),
+        createdAt: ts,
+        updatedAt: ts,
+      },
+      isLoading: false,
+      onAddChallenge: jest.fn(),
+    };
+
+    const store = mockStore({ challenge: props.challenge });
+
+    it('renders correctly', async () => {
+      await page.setContent(injectAppToHtml(<Dashboard {...props} />, store));
+      await page.waitForSelector('#root');
+
+      const screenshot = await page.screenshot({ fullPage: true });
+      expect(screenshot).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'dashboard',
       });
     });
   });

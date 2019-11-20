@@ -23,7 +23,14 @@ export const launch = async (): Promise<puppeteer.Browser> =>
 
 export const injectAppToHtml = (component: React.ReactNode): string => {
   const cssPath = path.resolve(__dirname, '../../', 'index.css');
-  const css = fs.readFileSync(cssPath).toString();
+  let css = fs.readFileSync(cssPath).toString();
+  css = `
+  ${css}
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  `;
   const svgPath = path.resolve(__dirname, '../../', 'assets', 'sprite.svg');
   const svg = fs.readFileSync(svgPath).toString();
   const templatePath = path.resolve(__dirname, '../../', 'index.html');

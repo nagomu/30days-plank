@@ -4,7 +4,10 @@ import path from 'path';
 import puppeteer from 'puppeteer';
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+
+import { mockStore } from '~/utils/testHelpers';
 
 jest.setTimeout(60000);
 
@@ -21,7 +24,10 @@ export const launch = async (): Promise<puppeteer.Browser> =>
     timeout: 50000,
   });
 
-export const injectAppToHtml = (component: React.ReactNode): string => {
+export const injectAppToHtml = (
+  component: React.ReactNode,
+  store?: any,
+): string => {
   const cssPath = path.resolve(__dirname, '../../', 'index.css');
   let css = fs.readFileSync(cssPath).toString();
   css = `
@@ -45,7 +51,11 @@ export const injectAppToHtml = (component: React.ReactNode): string => {
   const svg = fs.readFileSync(svgPath).toString();
   const templatePath = path.resolve(__dirname, '../../', 'index.html');
 
-  const html = renderToString(<MemoryRouter>{component}</MemoryRouter>);
+  const html = renderToString(
+    <Provider store={store || mockStore()}>
+      <MemoryRouter>{component}</MemoryRouter>
+    </Provider>,
+  );
 
   let template = fs.readFileSync(templatePath).toString();
 

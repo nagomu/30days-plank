@@ -26,6 +26,7 @@ export const launch = async (): Promise<puppeteer.Browser> =>
 
 export const injectAppToHtml = (
   component: React.ReactNode,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   store?: any,
 ): string => {
   const cssPath = path.resolve(__dirname, '../../', 'index.css');

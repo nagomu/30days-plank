@@ -1,11 +1,13 @@
 import puppeteer from 'puppeteer';
 import * as React from 'react';
 
-import Archives from '~/components/specifics/archive/Archives';
 import ArchivedChallenge from '~/components/specifics/archive/ArchivedChallenge';
+import Archives from '~/components/specifics/archive/Archives';
 import Dashboard from '~/components/specifics/dashboard/Dashboard';
 import SignIn from '~/components/specifics/signIn/SignIn';
+import Workout from '~/components/specifics/workout/Workout';
 import { workoutFactory } from '~/factories/workoutFactory';
+import { Timer } from '~/types';
 import { generateTitle, timestamp } from '~/utils';
 import { mockStore } from '~/utils/testHelpers';
 
@@ -75,6 +77,36 @@ describe('Visual regression test', () => {
     //   Add expired
     //   Add StartButton
     //   Add Not started yet
+  });
+
+  describe('/challenges/:challengeId/workouts/:id', () => {
+    const props = {
+      isLoading: false,
+      onReset: jest.fn(),
+      onStart: jest.fn(),
+      onTogglePause: jest.fn(),
+      pathname: '/',
+      progress: 20,
+      status: Timer.standby,
+      workout: {
+        id: '1',
+        isCompleted: false,
+        isRest: false,
+        menu: 20,
+        date: ts,
+        title: 'Day 1',
+      },
+    };
+
+    it('renders correctly', async () => {
+      await page.setContent(injectAppToHtml(<Workout {...props} />));
+      await page.waitForSelector('#root');
+
+      const screenshot = await page.screenshot({ fullPage: true });
+      expect(screenshot).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'workout',
+      });
+    });
   });
 
   describe('/archives', () => {

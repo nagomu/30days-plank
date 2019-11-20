@@ -124,6 +124,11 @@
       "simple-import-sort/sort": "error"
     }
   },
+  "eslintIgnore": [
+    "coverage",
+    "node_modules",
+    "public"
+  ],
   "stylelint": {
     "processors": [
       "stylelint-processor-styled-components"

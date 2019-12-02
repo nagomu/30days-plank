@@ -42,9 +42,7 @@ describe('Visual regression test', () => {
       await page.waitForSelector('#root');
 
       const screenshot = await page.screenshot({ fullPage: true });
-      expect(screenshot).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'sign-in',
-      });
+      expect(screenshot).toMatchImageSnapshot();
     });
   });
 
@@ -68,9 +66,7 @@ describe('Visual regression test', () => {
       await page.waitForSelector('#root');
 
       const screenshot = await page.screenshot({ fullPage: true });
-      expect(screenshot).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'dashboard',
-      });
+      expect(screenshot).toMatchImageSnapshot();
     });
 
     // TODO:
@@ -103,9 +99,7 @@ describe('Visual regression test', () => {
       await page.waitForSelector('#root');
 
       const screenshot = await page.screenshot({ fullPage: true });
-      expect(screenshot).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'workout',
-      });
+      expect(screenshot).toMatchImageSnapshot();
     });
   });
 
@@ -130,9 +124,7 @@ describe('Visual regression test', () => {
       await page.waitForSelector('#root');
 
       const screenshot = await page.screenshot({ fullPage: true });
-      expect(screenshot).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'archives',
-      });
+      expect(screenshot).toMatchImageSnapshot();
     });
 
     it('renders correctly if archives are empty', async () => {
@@ -144,9 +136,7 @@ describe('Visual regression test', () => {
       await page.waitForSelector('#root');
 
       const screenshot = await page.screenshot({ fullPage: true });
-      expect(screenshot).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'archives-empty',
-      });
+      expect(screenshot).toMatchImageSnapshot();
     });
   });
 
@@ -169,9 +159,7 @@ describe('Visual regression test', () => {
       await page.waitForSelector('#root');
 
       const screenshot = await page.screenshot({ fullPage: true });
-      expect(screenshot).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'archived-challenge',
-      });
+      expect(screenshot).toMatchImageSnapshot();
     });
 
     it('renders correctly if challenge does not exist', async () => {
@@ -183,9 +171,7 @@ describe('Visual regression test', () => {
       await page.waitForSelector('#root');
 
       const screenshot = await page.screenshot({ fullPage: true });
-      expect(screenshot).toMatchImageSnapshot({
-        customSnapshotIdentifier: 'archived-challenge-not-found',
-      });
+      expect(screenshot).toMatchImageSnapshot();
     });
   });
 });

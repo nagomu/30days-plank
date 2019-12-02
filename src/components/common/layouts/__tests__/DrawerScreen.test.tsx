@@ -1,5 +1,5 @@
 import DrawerScreen from '~/components/common/layouts/DrawerScreen';
-import { withProvider } from '~/utils';
+import { withProvider } from '~/utils/testHelpers';
 
 describe('DrawerScreen', () => {
   const props = {

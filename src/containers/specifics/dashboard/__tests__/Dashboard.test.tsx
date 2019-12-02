@@ -1,6 +1,7 @@
 import Dashboard from '~/containers/specifics/dashboard/Dashboard';
 import { workoutFactory } from '~/factories/workoutFactory';
-import { mockStore, timestamp, withProvider } from '~/utils';
+import { timestamp } from '~/utils';
+import { mockStore, withProvider } from '~/utils/testHelpers';
 
 describe('DashboardContainer', () => {
   it('renders correctly if challenge is not empty', () => {

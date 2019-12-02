@@ -2,7 +2,8 @@ import timekeeper from 'timekeeper';
 
 import Dashboard from '~/components/specifics/dashboard/Dashboard';
 import { workoutFactory } from '~/factories/workoutFactory';
-import { mockStore, timestamp, withProvider } from '~/utils';
+import { timestamp } from '~/utils';
+import { mockStore, withProvider } from '~/utils/testHelpers';
 
 const mockIsExpired = jest.fn();
 

@@ -1,6 +1,6 @@
 import { useLayout } from '~/hooks/common/useLayout';
 import { initialState } from '~/store/layout';
-import { mockStore, withHook } from '~/utils';
+import { mockStore, withHook } from '~/utils/testHelpers';
 
 describe('useLayout', () => {
   it('returns correct actions if closed', () => {

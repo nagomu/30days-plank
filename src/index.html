@@ -1,72 +1,16 @@
 <!doctype html>
-<html lang="en" data-app-build-version="<%= htmlWebpackPlugin.options.APP_BUILD_VERSION %>">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,viewport-fit=cover" />
-<meta name="data-app-version" content="<%= htmlWebpackPlugin.options.APP_VERSION %>" />
 <meta name="theme-color" content="#ffffff" />
 <title>30days plank challenge</title>
-<link rel="dns-prefetch preconnect" href="//ajax.googleapis.com" />
-<link rel="dns-prefetch preconnect" href="//apis.googleapis.com" />
-<link rel="dns-prefetch preconnect" href="//cdnjs.cloudflare.com" />
-<link rel="dns-prefetch preconnect" href="//fonts.googleapis.com" />
-<link rel="dns-prefetch preconnect" href="//fonts.gstatic.com" />
-<link rel="dns-prefetch preconnect" href="//thirty-days-plank-v1.firebaseapp.com" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png" />
-<link rel="manifest" href="/static/manifest.json" />
-<script>
-window.WebFontConfig = {
-  google: { families: ['Roboto:400,500', 'Roboto+Condensed:400,700'] },
-  active: function() { sessionStorage.fonts = true }
-};
-(function() {
-  var wf = document.createElement('script');
-  wf.src = '//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
-  wf.type = 'text/javascript';
-  wf.async = 'true';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(wf, s);
-})();
-</script>
 <style type="text/css">
 <%= htmlWebpackPlugin.options.css %>
 </style>
 </head>
 <body>
-<div id="root"></div>
-<div class="static-screen">
-  <div class="static-container">
-    <header class="static-header">
-      <svg role="img" title="30days plank challenge" class="static-logo">
-        <use xlink:href="#logo" />
-      </svg>
-    </header>
-    <main class="static-main">
-      <noscript>
-        <p class="static-error">To use 30days plank challenge, please enable JavaScript.</p>
-      </noscript>
-      <p class="static-error static-ie-message js-render-if-ie">
-        This page will not work in your browser. Please upgrade your browser.
-        <br />
-        refs: <a href="https://bestvpn.org/outdatedbrowser">https://bestvpn.org/outdatedbrowser</a>
-      </p>
-    </main>
-  </div>
-</div>
-<div hidden><%= htmlWebpackPlugin.options.svg %></div>
-<script>
-(function() {
-  function showMessageIfIE() {
-    var isIE = /*@cc_on!@*/false || !!document.documentMode;
-    if (!isIE) return;
-    var message = document.querySelector('.js-render-if-ie');
-    if (message) message.style.display = 'block';
-  }
-  document.addEventListener('DOMContentLoaded', showMessageIfIE);
-})();
-</script>
+<p>Closed</p>
 </body>
 </html>

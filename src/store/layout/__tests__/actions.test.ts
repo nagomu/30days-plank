@@ -1,5 +1,5 @@
 import { initialState, toggleNav } from '~/store/layout';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore } from '~/utils';
 
 describe('layout: actions', () => {
   describe('toggleNav', () => {

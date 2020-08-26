@@ -2,8 +2,7 @@ import timekeeper from 'timekeeper';
 
 import ArchivedChallenge from '~/components/specifics/archive/ArchivedChallenge';
 import { workoutFactory } from '~/factories/workoutFactory';
-import { timestamp } from '~/utils';
-import { withProvider } from '~/utils/testHelpers';
+import { timestamp, withProvider } from '~/utils';
 
 const today = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(today);

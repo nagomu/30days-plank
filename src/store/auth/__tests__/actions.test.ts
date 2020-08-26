@@ -15,7 +15,7 @@ import {
   signOut,
 } from '~/store/auth';
 import { FirebaseUser } from '~/types';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore } from '~/utils';
 
 const mockAuthStateChanged = jest.fn();
 const mockSignIn = jest.fn();

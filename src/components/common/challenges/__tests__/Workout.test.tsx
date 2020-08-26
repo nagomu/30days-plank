@@ -1,7 +1,8 @@
 import timekeeper from 'timekeeper';
 
 import Workout from '~/components/common/challenges/Workout';
-import { timestamp, withProvider } from '~/utils';
+import { timestamp } from '~/utils';
+import { withProvider } from '~/utils/testHelpers';
 
 describe('Workout', () => {
   const mockToday = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));

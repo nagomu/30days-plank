@@ -1,5 +1,5 @@
 import DrawerNav from '~/components/common/layouts/DrawerNav';
-import { withProvider } from '~/utils';
+import { withProvider } from '~/utils/testHelpers';
 
 describe('DrawerNav', () => {
   const mockSignOut = jest.fn();

@@ -2,7 +2,7 @@ import timekeeper from 'timekeeper';
 
 import Workouts from '~/components/common/challenges/Workouts';
 import { workoutFactory } from '~/factories/workoutFactory';
-import { mockStore, withProvider } from '~/utils';
+import { mockStore, withProvider } from '~/utils/testHelpers';
 
 describe('Workouts', () => {
   const workouts = workoutFactory(new Date(Date.UTC(2019, 9, 1, 0, 0, 0)));

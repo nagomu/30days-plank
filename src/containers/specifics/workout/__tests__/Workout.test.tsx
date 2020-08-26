@@ -1,5 +1,5 @@
 import Workout from '~/containers/specifics/workout/Workout';
-import { mockStore, withProvider } from '~/utils';
+import { mockStore, withProvider } from '~/utils/testHelpers';
 
 describe('WorkoutContainer', () => {
   const props = {

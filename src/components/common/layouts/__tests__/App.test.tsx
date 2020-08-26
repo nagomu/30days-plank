@@ -1,5 +1,5 @@
 import App from '~/components/common/layouts/App';
-import { mockStore, withProvider } from '~/utils/testHelpers';
+import { mockStore, withProvider } from '~/utils';
 
 describe('App', () => {
   const mockSignOut = jest.fn();

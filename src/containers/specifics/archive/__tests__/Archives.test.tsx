@@ -1,6 +1,5 @@
 import Archives from '~/containers/specifics/archive/Archives';
-import { timestamp } from '~/utils';
-import { mockStore, withProvider } from '~/utils/testHelpers';
+import { mockStore, timestamp, withProvider } from '~/utils';
 
 describe('ArchivesContainer', () => {
   const props = {

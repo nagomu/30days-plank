@@ -1,6 +1,5 @@
 import Archives from '~/components/specifics/archive/Archives';
-import { timestamp } from '~/utils';
-import { withProvider } from '~/utils/testHelpers';
+import { timestamp, withProvider } from '~/utils';
 
 describe('Archives', () => {
   const props = {

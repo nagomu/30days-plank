@@ -1,7 +1,6 @@
 import Workout from '~/components/specifics/workout/Workout';
 import { Timer } from '~/types';
-import { timestamp } from '~/utils';
-import { withProvider } from '~/utils/testHelpers';
+import { timestamp, withProvider } from '~/utils';
 
 describe('Workout', () => {
   const props = {

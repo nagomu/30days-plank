@@ -5,7 +5,7 @@ import WrappedComponent from '~/components/specifics/archive/Archives';
 import { AppState } from '~/store';
 import { onFetchArchives } from '~/store/archive';
 
-const Archives: React.FC = () => {
+const Workout: React.FC = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticating, archives, isArchiveLoading } = useSelector(
     (state: AppState) => ({
@@ -25,4 +25,4 @@ const Archives: React.FC = () => {
   return <WrappedComponent archives={archives} isLoading={isLoading} />;
 };
 
-export default Archives;
+export default Workout;

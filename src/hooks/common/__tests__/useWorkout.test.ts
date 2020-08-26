@@ -1,7 +1,6 @@
 import { workoutFactory } from '~/factories/workoutFactory';
 import { useWorkout } from '~/hooks/common/useWorkout';
-import { timestamp } from '~/utils';
-import { mockStore, withHook } from '~/utils/testHelpers';
+import { mockStore, timestamp, withHook } from '~/utils';
 
 type useParams = {
   id: string;

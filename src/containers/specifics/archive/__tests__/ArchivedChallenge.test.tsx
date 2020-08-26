@@ -6,8 +6,7 @@ import timekeeper from 'timekeeper';
 
 import ArchivedChallenge from '~/containers/specifics/archive/ArchivedChallenge';
 import { workoutFactory } from '~/factories/workoutFactory';
-import { timestamp } from '~/utils';
-import { mockStore } from '~/utils/testHelpers';
+import { mockStore, timestamp } from '~/utils';
 
 const today = new Date(Date.UTC(2019, 9, 1, 0, 0, 0));
 timekeeper.freeze(today);
